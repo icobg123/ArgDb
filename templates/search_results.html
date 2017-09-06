@@ -1,0 +1,158 @@
+{% extends "header.html" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Results for: "{{ argString }}" in Nodes->Text</h1>
+                <h2>Found: {{ cursor }}</h2>
+                <h2>with_regex :{{ with_regex }}</h2>
+                {#        {% for item in json %}#}
+                {#            <span>{{ item }}</span>#}
+                {##}
+                {#        {% endfor %}#}
+                {#        <button data-toggle="collapse" data-target="#demo">Collapsible</button>#}
+                {##}
+                {#        <div id="demo" class="collapse">#}
+                {#            <pre>{{ json }}</pre>#}
+                {#        </div>#}
+
+
+                {#                <div class="col-md-6">#}
+                {#                    <div class="panel panel-primary">#}
+                {#                        <div class="panel-heading">#}
+                {#                            <h3 class="panel-title">Panel 1</h3>#}
+                {#                            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>#}
+                {#                        </div>#}
+                {#                        <div class="panel-body">Panel content</div>#}
+                {#                    </div>#}
+                {#                </div>#}
+
+
+                {% for item in json %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="panel-group" id="accordion">
+                                <div class="panel panel-default" id="panel{{ loop.index }}">
+                                    <div class="panel-heading">
+                                        <a data-toggle="collapse" data-target="#{{ loop.index }}" class="collapsed"
+                                           href="#"><h4 class="panel-title">
+{#                                           href="#{{ loop.index }}"><h4 class="panel-title">#}
+
+                                            Result: {{ loop.index }}
+
+                                        </h4></a>
+
+                                    </div>
+                                    <div id="{{ loop.index }}" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <pre>{{ item|tojson_pretty|safe }}</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                {# <div class="panel-collapse panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"></h3>
+                                <span class="pull-right clickable"><i
+                                        class="glyphicon glyphicon-chevron-up"></i></span>
+                                <div class="panel-body">
+                                    <pre>{{ item|tojson_pretty|safe }}</pre>
+                                </div>
+                            </div>
+                        </div>#}
+                            </div>
+                            {#                        <div class="col-sm-12">#}
+                            {#                            <button data-toggle="collapse" data-target="#{{ loop.index }}">#}
+                            {#                                Result{{ loop.index }}</button>#}
+                            {#                            <div id="{{ loop.index }}" class="collapse">#}
+                            {#                                <pre>{{ item|tojson_pretty|safe }}</pre>#}
+                            {#                            </div>#}
+                            {##}
+                            {#                        </div>#}
+                        </div>
+                    </div>
+                {% endfor %}
+
+                cursor{{ cursor }}
+                output{{ argString }}<br>
+                TYPE oF JSON{{ typeof }}<br>
+
+                {#        {% for item in json %}#}
+                {#            <span>{{ item }}</span>#}
+                {##}
+                {#        {% endfor %}#}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default" id="panel1">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-target="#collapseOne"
+                   href="#collapseOne">
+                    Collapsible Group Item #1
+                </a>
+            </h4>
+
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+            <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa
+                nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin
+                coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore
+                sustainable VHS.
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default" id="panel2">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-target="#collapseTwo"
+                   href="#collapseTwo" class="collapsed">
+                    Collapsible Group Item #2
+                </a>
+            </h4>
+
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse">
+            <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa
+                nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin
+                coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore
+                sustainable VHS.
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default" id="panel3">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-target="#collapseThree"
+                   href="#collapseThree" class="collapsed">
+                    Collapsible Group Item #3
+                </a>
+            </h4>
+
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse">
+            <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa
+                nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin
+                coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore
+                sustainable VHS.
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Post Info -->

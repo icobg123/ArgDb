@@ -1,0 +1,58 @@
+{% extends "header.html" %}
+{% block content %}
+    <header class="siteheader clearfix" xmlns="http://www.w3.org/1999/html">
+        {#        <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Morgana_0.jpg">#}
+    </header>
+    <div class="spacer">&nbsp;</div>
+
+
+    <div class="container">
+        <div class="col-sm-12 icara clearfix">
+            <div id="logo" style="    background-size: 272px 92px;
+    height: 92px;
+    width: 272px;">
+
+            </div>
+            <div class="bot-page">
+                {#                <h2>Welcome to League of Stats</h2>#}
+                {% if err %}
+                    <div class="err"><strong>Error:</strong> {{ err }}</div>
+                {% endif %}
+
+                {{ json }}
+                <form class="form-inline" action='' method="post">
+
+                    <div class="form-group">
+                        <label for="argumentString"></label>
+                        <input type="text" name="argumentString" class="form-control"
+                               value="{{ request.form.argumentString }}">
+                    </div>
+
+                    {#<div class="form-group">
+
+                    <select class="form-control" id="sel1" name="region">
+                        <option value="EUNE">EUNE</option>
+                        <option value="EUW">EUW</option>
+                        <option value="NA">NA</option>
+                    </select>
+                </div>#}
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                    {#                    <input class="btn btn-primary" type="submit" value="Search">#}
+                </form>
+                <p>Professionally leverage existing go forward platforms through impactful relationships. Intrinsicly
+                    supply cross-unit resources rather than impactful portals. </p>
+               {# <ul class="list-group">
+                    <li class="list-group-item">Match Results</li>
+                    <li class="list-group-item">Profile Analytics</li>
+                    <li class="list-group-item">Items</li>
+                    <li class="list-group-item">and more to come</li>
+                </ul>#}
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

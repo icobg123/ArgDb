@@ -1,0 +1,28 @@
+{% extends "header.html" %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                {#                argument_schema#}
+                <title>Upload new File</title>
+                <h1>Upload new File</h1>
+                <p>
+                    The document you are trying to upload must be in the SadFace format described by the JSON schema to
+                    the right.
+                </p>
+
+                {#<form method=post action="{{ url_for('handle_data') }}" enctype=multipart/form-data>#}
+                {% if err %}
+                    <div class="err"><strong>Error:</strong> {{ err }}</div>
+                {% endif %}
+                <form method=post enctype=multipart/form-data>
+                    <p><input type=file name=fileaccept=".json">
+                        <input type=submit value=Upload></p>
+                </form>
+            </div>
+            <div class="col-sm-6">
+                <pre>{{ argument_schema|tojson_pretty|safe }}</pre>
+            </div>
+        </div>
+    </div>
+{% endblock %}
