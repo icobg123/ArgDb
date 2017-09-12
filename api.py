@@ -537,27 +537,48 @@ def upload_file():
 
             if filename and allowed_file(file.filename):
                 parsed_to_string = file.read().decode("utf-8")
+                # To Dict
                 parsed_to_json = json.loads(parsed_to_string)
                 # parsed_to_json = request.get_json()
                 # TODO: the validator checks against the schema and inserts the provided json only if it contains the
                 # TODO: required fields and it will upload it to the
                 v = Draft4Validator(argument_schema)
+
                 # if Draft3Validator(schema).is_valid([2, 3, 4]):
                 if v.is_valid(parsed_to_json):
                     post_id = argument.insert_one(parsed_to_json).inserted_id
                 valid = v.is_valid(parsed_to_json)
+                parsed_to_json_type = type(parsed_to_json)
                 if valid:
                     outcome = "Successful Upload"
-                else:
-                    outcome = "Unsuccessful Upload"
+                    # return render_template('homepage.html', doomed=parsed_to_json_type)
+                    return json.dumps({'argument IDs': ({
+                        "Analyst Email": parsed_to_json.get("analyst_email"),
+                        "Analyst Name": parsed_to_json.get("analyst_name"),
+                        "Created": parsed_to_json.get("created"),
+                        "Edges": parsed_to_json.get("edges"),
+                        "Edited": parsed_to_json.get("edited"),
+                        "id": parsed_to_json.get("id"),
+                        "Metadata": parsed_to_json.get("metadata"),
+                        "Nodes": parsed_to_json.get("nodes"),
+                        "Resources": parsed_to_json.get("resources"),
 
-                # if validate(parsed_to_json, schema):
-                #     post_id = argument.insert_one(parsed_to_json).inserted_id
-                # parsed_to_json_type = json.dumps(parsed_to_json)
-                return render_template('upload_results.html', json_parsed=parsed_to_json, outcome=outcome, validator=v,
-                                       req_headers=req_headers,
-                                       string_parsed=parsed_to_string,
-                                       type=valid)  # 201 to show that the upload was successful
+                    })}, sort_keys=False, indent=2), 200, {
+                               'Content-Type': 'application/json'}
+                else:
+                    errors = []
+                    for error in sorted(v.iter_errors(parsed_to_json), key=str):
+                        errors.append(error.message)
+                    outcome = "Unsuccessful Upload, invalid Json"
+
+                    # if validate(parsed_to_json, schema):
+                    #     post_id = argument.insert_one(parsed_to_json).inserted_id
+                    # parsed_to_json_type = json.dumps(parsed_to_json)
+                    return render_template('upload_results.html', json_parsed=errors, outcome=outcome,
+                                           validator=v,
+                                           req_headers=req_headers,
+                                           string_parsed=parsed_to_string,
+                                           type=valid)  # 201 to show that the upload was successful
             else:
                 err = "Wrong file extension. Please upload a JSON document."
                 return render_template('upload.html', err=err, argument_schema=argument_schema)
@@ -596,7 +617,7 @@ def home():
         else:
             argumentString = request.form['argumentString']
 
-            return redirect(url_for('get_one_argument', argString=argumentString))
+            return redirect(url_for('get_arguments_with_txt', argString=argumentString))
 
     return render_template('homepage.html', err=err)
 
@@ -610,6 +631,22 @@ def get_all_arguments():
     for q in argument.find():
         output.append({"name": q["name"], "contents": q["contents"]})
 
+    # output = []
+    # for q in argument.find():
+    #     output.append({
+    #         # "MongoDB ID": q["_id"],
+    #         "Analyst Email": q["analyst_email"],
+    #         "Analyst Name": q["analyst_name"],
+    #         "Created": q["created"],
+    #         "Edges": q["edges"],
+    #         "Edited": q["edited"],
+    #         "id": q["id"],
+    #         "Metadata": q["metadata"],
+    #         "Nodes": q["nodes"],
+    #         "Resources": q["resources"],
+    #
+    #     })
+
     output = json.dumps(output)
     # jsont = ({'result': output})
     # r = json.dumps(output)
@@ -618,8 +655,8 @@ def get_all_arguments():
     return render_template('search_results.html', json=output)
 
 
-@app.route('/argument/<argString>', methods=['GET'])
-def get_one_argument(argString):
+@app.route('/api/argument/<argString>', methods=['GET'])
+def get_arguments_with_txt(argString):
     argument = mongo.db.argument
     argString = argString.replace(" ", "|")
     typeOF = type(argString)
@@ -640,13 +677,13 @@ def get_one_argument(argString):
     qss = argument.find({"$text": {"$search": argString}}).count()
     # qss = argument.find({"$text": {"$search": argString}}).count()
 
-    with_regex = argument.find(
+    search_result = argument.find(
         {"nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}})
     # with_regex_1 = argument.find(
     #     {"name": {'$regex': ".*" + argString + ".*", '$options': 'i'}})
     # TODO: counts how many results were found
 
-    count_me = with_regex.count()
+    count_me = search_result.count()
     # q = list(argument.find({'$text:': {'$search': argString}}))
 
     # if q:
@@ -654,9 +691,9 @@ def get_one_argument(argString):
     # else:
     #     output = 'No results Found'
 
-    output = []
-    for q in with_regex:
-        output.append({
+    results = []
+    for q in search_result:
+        results.append({
             # "MongoDB ID": q["_id"],
             "Analyst Email": q["analyst_email"],
             "Analyst Name": q["analyst_name"],
@@ -670,16 +707,56 @@ def get_one_argument(argString):
 
         })
 
-        # output = json.dumps(output, sort_keys=True, indent=4, separators=(',', ': '))
+    return json.dumps({'argument': results}), 200, {'Content-Type': 'application/json'}
+
+    # output = json.dumps(output, sort_keys=True, indent=4, separators=(',', ': '))
     # with_regex = jsonify(with_regex)
-    typeOF = type(output)
-    return render_template('search_results.html', json=output, typeof=typeOF,
-                           argString=argString,
-                           with_regex=with_regex,
-                           cursor=count_me)
+    # typeOF = type(output)
+    # return render_template('search_results.html', json=output, typeof=typeOF,
+    #                        argString=argString,
+    #                        with_regex=with_regex,
+    #                        cursor=count_me)
 
 
-# return jsonify({'result': output})
+@app.route('/api/argumentIDs/<argString>', methods=['GET'])
+def get_list_argument_id(argString):
+    # TODO: returned ids should be categorized depending on which search phrase they contain?
+    argument = mongo.db.argument
+    argString = argString.replace(" ", "|")
+    search_results = argument.find(
+        {"nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}})
+
+    argument_ids_list = []
+    for argument in search_results:
+        argument_ids_list.append({
+            "id": argument["id"]
+        })
+
+    return json.dumps({'argument IDs': argument_ids_list}, sort_keys=False, indent=2), 200, {
+        'Content-Type': 'application/json'}
+
+
+@app.route('/api/argument/by/<ArgId>', methods=['GET'])
+def get_argument_by_id(ArgId):
+    argument = mongo.db.argument
+    # ArgId = ArgId.replace(" ", "|")
+    search_results = argument.find_one({"id": {'$regex': ".*" + ArgId + ".*", "$options": "i"}})
+
+    result = search_results.get('id')
+
+    # return render_template('homepage.html', doomed=result)
+    return json.dumps({'argument IDs': ({
+        "Analyst Email": search_results.get("analyst_email"),
+        "Analyst Name": search_results.get("analyst_name"),
+        "Created": search_results.get("created"),
+        "Edges": search_results.get("edges"),
+        "Edited": search_results.get("edited"),
+        "id": search_results.get("id"),
+        "Metadata": search_results.get("metadata"),
+        "Nodes": search_results.get("nodes"),
+        "Resources": search_results.get("resources"),
+
+    })}, sort_keys=False, indent=2), 200, {'Content-Type': 'application/json'}
 
 
 @app.route('/argument', methods=['POST'])
