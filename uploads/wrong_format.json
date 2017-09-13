@@ -1,0 +1,60 @@
+{
+  "edited": "dolore officia aute",
+  "analyst_name": "sam the wise",
+  "analyst_email": "W7OFrqoMcE@DtPqQXCqBHx.dol",
+  "created": "ullamco in",
+  "edges": [
+    {
+      "source": "non minim",
+      "id": "ea commodo",
+      "target": "anim aliquip"
+    },
+    {
+      "source": "in cillum",
+      "id": "et mollit velit dolore laborum",
+      "target": "consequat"
+    },
+    {
+      "source": "veniam sunt nulla",
+      "id": "laboris Duis eu anim",
+      "target": "aute ea Excepteur"
+    },
+    {
+      "source": "officia",
+      "id": "irure aute",
+      "target": "adipisicing dolor"
+    }
+  ],
+  "nodes": [
+    {
+      "sources": [
+        {
+          "text": "amet",
+          "length": -15124920,
+          "resource_id": "dolore in",
+          "offset": -36416574
+        }
+      ],
+      "type": "tempor",
+      "id": "irure repreh",
+      "canonical_text": "sed Excepteur tempor laboris esse"
+    }
+  ],
+  "id": "Duis m",
+  "resources": [
+    {
+      "content": "dolore Excepteur nulla quis id",
+      "type": "dolore",
+      "id": "laborum laboris Duis"
+    },
+    {
+      "content": "officia quis est sint voluptate",
+      "type": "voluptate est id aliqua",
+      "id": "in nostrud"
+    }
+  ],
+  "metadata": {
+    "some": "sit",
+    "hello": "cupidatat in"
+  }
+}

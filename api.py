@@ -9,6 +9,8 @@ from flask.helpers import flash
 from jsonschema import validate
 from jsonschema import Draft3Validator
 from jsonschema import Draft4Validator
+from jsonschema import ErrorTree
+from jsonschema.exceptions import best_match
 from bson import json_util
 import json
 
@@ -47,6 +49,156 @@ schema = {
     "type": "object"
 }
 
+argument_schema_backup = {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {},
+    "id": "http://example.com/example.json",
+    "properties": {
+        "analyst_email": {
+            "default": "siwells@gmail.com",
+            "description": "An explanation about the purpose of this instance.",
+            "id": "/properties/analyst_email",
+            "minLength": 5,
+            "title": "The analyst_email schema",
+            "type": "string"
+        },
+        "analyst_name": {
+            "default": "Simon Wells",
+            "description": "An explanation about the purpose of this instance.",
+            "id": "/properties/analyst_name",
+            "minLength": 5,
+            "title": "The analyst_name schema",
+            "type": "string"
+        },
+        "created": {
+            "default": "2017-07-11T16:32:36",
+            "description": "An explanation about the purpose of this instance.",
+            "id": "/properties/created",
+            "title": "The created schema",
+            "type": "string"
+        },
+        "edges": {
+            "id": "/properties/edges",
+            "items": {
+                "id": "/properties/edges/items",
+                "properties": {
+                    "id": {
+                        "default": "d7bcef81-0d74-4ae5-96f9-bfb07031f1fa",
+                        "description": "An explanation about the purpose of this instance.",
+                        "id": "/properties/edges/items/properties/id",
+                        "title": "The id schema",
+                        "type": "string"
+                    },
+                    "source_id": {
+                        "default": "49a786ce-9066-4230-8e18-42086882a160",
+                        "description": "An explanation about the purpose of this instance.",
+                        "id": "/properties/edges/items/properties/source_id",
+                        "title": "The source_id schema",
+                        "type": "string"
+                    },
+                    "target_id": {
+                        "default": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45",
+                        "description": "An explanation about the purpose of this instance.",
+                        "id": "/properties/edges/items/properties/target_id",
+                        "title": "The target_id schema",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "type": "array"
+        },
+        "edited": {
+            "default": "2017-07-11T16:32:36",
+            "description": "An explanation about the purpose of this instance.",
+            "id": "/properties/edited",
+            "title": "The edited schema",
+            "type": "string"
+        },
+        "id": {
+            "default": "94a975db-25ae-4d25-93cc-1c07c932e2f8",
+            "description": "An explanation about the purpose of this instance.",
+            "id": "/properties/id",
+            "title": "The id schema",
+            "type": "string"
+        },
+        "metadata": {
+            "id": "/properties/metadata",
+            "properties": {
+                "description": "This accepts anything, as long as it's valid JSON.",
+                "title": "Empty Object"
+            },
+            "type": "object"
+        },
+        "nodes": {
+            "id": "/properties/nodes",
+            "items": {
+                "id": "/properties/nodes/items",
+                "properties": {
+                    "id": {
+                        "default": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45",
+                        "description": "An explanation about the purpose of this instance.",
+                        "id": "/properties/nodes/items/properties/id",
+                        "title": "The id schema",
+                        "type": "string"
+                    },
+                    "metadata": {
+                        "id": "/properties/nodes/items/properties/metadata",
+                        "properties": {
+                            "description": "This accepts anything, as long as it's valid JSON.",
+                            "title": "Empty Object"
+                        },
+                        "type": "object"
+                    },
+                    "sources": {
+                        "id": "/properties/nodes/items/properties/sources",
+                        "items": {
+                            "description": "This accepts anything, as long as it's valid JSON.",
+                            "title": "Empty Object"
+                        },
+                        "type": "array"
+                    },
+                    "text": {
+                        "default": "The 'Hang Back' campaign video should not have been published, and should be withdrawn.",
+                        "description": "An explanation about the purpose of this instance.",
+                        "id": "/properties/nodes/items/properties/text",
+                        "title": "The text schema",
+                        "type": "string"
+                    },
+                    "type": {
+                        "default": "atom",
+                        "description": "An explanation about the purpose of this instance.",
+                        "id": "/properties/nodes/items/properties/type",
+                        "title": "The type schema",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "type": "array"
+        },
+        "resources": {
+            "id": "/properties/resources",
+            "items": {
+                "description": "This accepts anything, as long as it's valid JSON.",
+                "title": "Empty Object"
+            },
+            "type": "array"
+        }
+    },
+    "required": [
+        "resources",
+        "id",
+        "nodes",
+        "edges",
+        "created",
+        "analyst_email",
+        "analyst_name",
+        "edited"
+    ],
+    "type": "object"
+}
+
 argument_schema = {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "definitions": {},
@@ -56,11 +208,13 @@ argument_schema = {
             "id": "/properties/analyst_email",
             "type": "string",
             "format": "email",
+            "minLength": 5,
             "pattern": "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
         },
         "analyst_name": {
             "id": "/properties/analyst_name",
-            "type": "string"
+            "type": "string",
+            "minLength": 5,
         },
         "created": {
             "id": "/properties/created",
@@ -523,7 +677,7 @@ def allowed_file(filename):
 def upload_file():
     argument = mongo.db.argument
     # schema = open("uploads/schema.json").read()
-    # data = open("uploads/data.json").read()
+    # data = open("uploads/correct_format.json").read()
     # Header Data for debugging
     req_headers = request.headers
     if request.method == 'POST':
@@ -552,7 +706,7 @@ def upload_file():
                 if valid:
                     outcome = "Successful Upload"
                     # return render_template('homepage.html', doomed=parsed_to_json_type)
-                    return json.dumps({'argument IDs': ({
+                    return json.dumps({'properties': ({
                         "Analyst Email": parsed_to_json.get("analyst_email"),
                         "Analyst Name": parsed_to_json.get("analyst_name"),
                         "Created": parsed_to_json.get("created"),
@@ -566,19 +720,35 @@ def upload_file():
                     })}, sort_keys=False, indent=2), 200, {
                                'Content-Type': 'application/json'}
                 else:
-                    errors = []
-                    for error in sorted(v.iter_errors(parsed_to_json), key=str):
-                        errors.append(error.message)
+                    errors_list = []
+                    # asd = 123
+                    errors = sorted(v.iter_errors(parsed_to_json), key=lambda e: e.path)
+                    # errors = sorted(v.iter_errors(parsed_to_json), key=str)
+
+                    for error in errors:
+                        error_dict = {'key': list(error.path), 'error': error.message}
+                        errors_list.append(error_dict)
+
+                    # for error in errors:
+                    #     errors_list.append(error.message)
+                    # for error in errors:
+                    #     for suberror in sorted(error.context, key=lambda e: e.schema_path):
+                    #         errors_list.append(list(suberror.schema_path) + suberror.message)
                     outcome = "Unsuccessful Upload, invalid Json"
 
                     # if validate(parsed_to_json, schema):
                     #     post_id = argument.insert_one(parsed_to_json).inserted_id
                     # parsed_to_json_type = json.dumps(parsed_to_json)
-                    return render_template('upload_results.html', json_parsed=errors, outcome=outcome,
-                                           validator=v,
-                                           req_headers=req_headers,
-                                           string_parsed=parsed_to_string,
-                                           type=valid)  # 201 to show that the upload was successful
+
+                    return json.dumps({'Errors': errors_list}, sort_keys=False, indent=2), 200, {
+                        'Content-Type': 'application/json'}
+                    # return render_template('upload_results.html',
+                    #                      outcome=errors_list)  # 201 to show that the upload was successful
+                    # return render_template('upload_results.html', json_parsed=asd, outcome=outcome,
+                    #                      validator=v,
+                    #                     req_headers=req_headers,
+                    #                    string_parsed=parsed_to_string,
+                    #                   type=valid)  # 201 to show that the upload was successful
             else:
                 err = "Wrong file extension. Please upload a JSON document."
                 return render_template('upload.html', err=err, argument_schema=argument_schema)
@@ -622,37 +792,38 @@ def home():
     return render_template('homepage.html', err=err)
 
 
-@app.route('/argument', methods=['GET'])
-def get_all_arguments():
-    argument = mongo.db.argument
-
-    output = []
-
-    for q in argument.find():
-        output.append({"name": q["name"], "contents": q["contents"]})
-
-    # output = []
-    # for q in argument.find():
-    #     output.append({
-    #         # "MongoDB ID": q["_id"],
-    #         "Analyst Email": q["analyst_email"],
-    #         "Analyst Name": q["analyst_name"],
-    #         "Created": q["created"],
-    #         "Edges": q["edges"],
-    #         "Edited": q["edited"],
-    #         "id": q["id"],
-    #         "Metadata": q["metadata"],
-    #         "Nodes": q["nodes"],
-    #         "Resources": q["resources"],
-    #
-    #     })
-
-    output = json.dumps(output)
-    # jsont = ({'result': output})
-    # r = json.dumps(output)
-    # print(type(r))
-    # loaded_r = json.load(r)
-    return render_template('search_results.html', json=output)
+#
+# @app.route('/argument', methods=['GET'])
+# def get_all_arguments():
+#     argument = mongo.db.argument
+#
+#     output = []
+#
+#     for q in argument.find():
+#         output.append({"name": q["name"], "contents": q["contents"]})
+#
+#     # output = []
+#     # for q in argument.find():
+#     #     output.append({
+#     #         # "MongoDB ID": q["_id"],
+#     #         "Analyst Email": q["analyst_email"],
+#     #         "Analyst Name": q["analyst_name"],
+#     #         "Created": q["created"],
+#     #         "Edges": q["edges"],
+#     #         "Edited": q["edited"],
+#     #         "id": q["id"],
+#     #         "Metadata": q["metadata"],
+#     #         "Nodes": q["nodes"],
+#     #         "Resources": q["resources"],
+#     #
+#     #     })
+#
+#     output = json.dumps(output)
+#     # jsont = ({'result': output})
+#     # r = json.dumps(output)
+#     # print(type(r))
+#     # loaded_r = json.load(r)
+#     return render_template('search_results.html', json=output)
 
 
 @app.route('/api/argument/<argString>', methods=['GET'])

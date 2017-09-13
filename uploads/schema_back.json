@@ -1,0 +1,182 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {},
+  "id": "http://example.com/example.json",
+  "properties": {
+    "analyst_email": {
+      "id": "/properties/analyst_email",
+      "type": "string",
+      "format": "email",
+      "pattern": "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
+    },
+    "analyst_name": {
+      "id": "/properties/analyst_name",
+      "type": "string"
+    },
+    "created": {
+      "id": "/properties/created",
+      "type": "string"
+    },
+    "edges": {
+      "id": "/properties/edges",
+      "items": {
+        "id": "/properties/edges/items",
+        "properties": {
+          "id": {
+            "id": "/properties/edges/items/properties/id",
+            "type": "string"
+          },
+          "source": {
+            "id": "/properties/edges/items/properties/source",
+            "type": "string"
+          },
+          "target": {
+            "id": "/properties/edges/items/properties/target",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source",
+          "id",
+          "target"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "edited": {
+      "id": "/properties/edited",
+      "type": "string"
+    },
+    "id": {
+      "id": "/properties/id",
+      "type": "string"
+    },
+    "metadata": {
+      "id": "/properties/metadata",
+      "properties": {
+        "hello": {
+          "id": "/properties/metadata/properties/hello",
+          "type": "string"
+        },
+        "some": {
+          "id": "/properties/metadata/properties/some",
+          "type": "string"
+        }
+      },
+      "required": [
+        "some",
+        "hello"
+      ],
+      "type": "object"
+    },
+    "nodes": {
+      "id": "/properties/nodes",
+      "items": {
+        "id": "/properties/nodes/items",
+        "properties": {
+          "canonical_text": {
+            "id": "/properties/nodes/items/properties/canonical_text",
+            "type": "string"
+          },
+          "id": {
+            "id": "/properties/nodes/items/properties/id",
+            "type": "string"
+          },
+          "metadata": {
+            "id": "/properties/nodes/items/properties/metadata",
+            "properties": {},
+            "type": "object"
+          },
+          "sources": {
+            "id": "/properties/nodes/items/properties/sources",
+            "items": {
+              "id": "/properties/nodes/items/properties/sources/items",
+              "properties": {
+                "length": {
+                  "id": "/properties/nodes/items/properties/sources/items/properties/length",
+                  "type": "integer"
+                },
+                "offset": {
+                  "id": "/properties/nodes/items/properties/sources/items/properties/offset",
+                  "type": "integer"
+                },
+                "resource_id": {
+                  "id": "/properties/nodes/items/properties/sources/items/properties/resource_id",
+                  "type": "string"
+                },
+                "text": {
+                  "id": "/properties/nodes/items/properties/sources/items/properties/text",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "text",
+                "length",
+                "resource_id",
+                "offset"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "type": {
+            "id": "/properties/nodes/items/properties/type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "sources",
+          "type",
+          "id",
+          "canonical_text"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "resources": {
+      "id": "/properties/resources",
+      "items": {
+        "id": "/properties/resources/items",
+        "properties": {
+          "content": {
+            "id": "/properties/resources/items/properties/content",
+            "type": "string"
+          },
+          "id": {
+            "id": "/properties/resources/items/properties/id",
+            "type": "string"
+          },
+          "metadata": {
+            "id": "/properties/resources/items/properties/metadata",
+            "properties": {},
+            "type": "object"
+          },
+          "type": {
+            "id": "/properties/resources/items/properties/type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "content",
+          "type",
+          "id"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "edited",
+    "analyst_name",
+    "analyst_email",
+    "created",
+    "edges",
+    "nodes",
+    "id",
+    "resources"
+  ],
+  "type": "object"
+}

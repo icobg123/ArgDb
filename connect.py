@@ -523,7 +523,7 @@ def allowed_file(filename):
 def upload_file():
     argument = mongo.db.argument
     # schema = open("uploads/schema.json").read()
-    # data = open("uploads/data.json").read()
+    # data = open("uploads/correct_format.json").read()
     # Header Data for debugging
     req_headers = request.headers
     if request.method == 'POST':
