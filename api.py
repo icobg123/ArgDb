@@ -878,7 +878,7 @@ def get_arguments_with_txt(argString):
 
         })
 
-    return json.dumps({'argument': results}), 200, {'Content-Type': 'application/json'}
+    return json.dumps({'argument': results}, sort_keys=False, indent=2), 200, {'Content-Type': 'application/json'}
 
     # output = json.dumps(output, sort_keys=True, indent=4, separators=(',', ': '))
     # with_regex = jsonify(with_regex)
