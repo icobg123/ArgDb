@@ -12,6 +12,7 @@ from jsonschema import Draft4Validator
 from jsonschema import ErrorTree
 from jsonschema.exceptions import best_match
 from bson import json_util
+from bson.json_util import dumps
 import json
 
 from werkzeug.utils import secure_filename
@@ -699,26 +700,40 @@ def upload_file():
                 v = Draft4Validator(argument_schema)
 
                 # if Draft3Validator(schema).is_valid([2, 3, 4]):
-                if v.is_valid(parsed_to_json):
-                    post_id = argument.insert_one(parsed_to_json).inserted_id
+                # if v.is_valid(parsed_to_json):
+
                 valid = v.is_valid(parsed_to_json)
                 parsed_to_json_type = type(parsed_to_json)
                 if valid:
-                    outcome = "Successful Upload"
-                    # return render_template('homepage.html', doomed=parsed_to_json_type)
-                    return json.dumps({'properties': ({
-                        "Analyst Email": parsed_to_json.get("analyst_email"),
-                        "Analyst Name": parsed_to_json.get("analyst_name"),
-                        "Created": parsed_to_json.get("created"),
-                        "Edges": parsed_to_json.get("edges"),
-                        "Edited": parsed_to_json.get("edited"),
-                        "id": parsed_to_json.get("id"),
-                        "Metadata": parsed_to_json.get("metadata"),
-                        "Nodes": parsed_to_json.get("nodes"),
-                        "Resources": parsed_to_json.get("resources"),
+                    # search_result = argument.find(
+                    #     {"nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}})
+                    # TODO: make if statement that checks if there is a doc that exists with that id and if so dont upload the doc
+                    check_if_exists = argument.find({"id": parsed_to_json.get("id")}, {"id": 1}).limit(1)
+                    # check_if_exists = dumps(argument.find({"id": parsed_to_json.get("id")}, {"id": 1}).limit(1))
+                    check_if_exists_dumps = dumps(check_if_exists)
+                    check_if_exists_count = check_if_exists.count()
+                    if check_if_exists_count > 0:
+                        outcome = "The Document already Exists"
+                        # return render_te mplate('homepage.html', doomed=parsed_to_json_type)
+                        return json.dumps({'A document with this ID already exists': ({
+                            # "Analyst Email": parsed_to_json.get("analyst_email"),
+                            # "Analyst Name": parsed_to_json.get("analyst_name"),
+                            # "Created": parsed_to_json.get("created"),
+                            # "Edges": parsed_to_json.get("edges"),
+                            # "Edited": parsed_to_json.get("edited"),
+                            "id": parsed_to_json.get("id"),
+                            # "Metadata": parsed_to_json.get("metadata"),
+                            # "Nodes": parsed_to_json.get("nodes"),
+                            # "Resources": parsed_to_json.get("resources"),
+                            # "found": check_if_exists_dumps
 
-                    })}, sort_keys=False, indent=2), 200, {
-                               'Content-Type': 'application/json'}
+                        })}, sort_keys=False, indent=2), 200, {
+                                   'Content-Type': 'application/json'}
+                        # return outcome
+                    else:
+                        outcome = "Successful Upload"
+                        post_id = argument.insert_one(parsed_to_json).inserted_id
+                        return outcome
                 else:
                     errors_list = []
                     # asd = 123
@@ -751,7 +766,8 @@ def upload_file():
                     #                   type=valid)  # 201 to show that the upload was successful
             else:
                 err = "Wrong file extension. Please upload a JSON document."
-                return render_template('upload.html', err=err, argument_schema=argument_schema)
+                return err
+                # return render_template('upload.html', err=err, argument_schema=argument_schema)
 
     return render_template('upload.html', argument_schema=argument_schema)
 
