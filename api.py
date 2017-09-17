@@ -125,46 +125,26 @@ argument_schema = {
         "nodes": {
             "id": "/properties/nodes",
             "items": {
-                "id": "/properties/nodes/items",
                 "properties": {
                     "id": {
                         "default": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45",
                         "description": "The Id of the node",
-                        "id": "/properties/nodes/items/properties/id",
                         "maxLength": 19,
                         "pattern": "(((\\d|[a-zA-Z]){4})\\-){3}(\\d|[a-zA-Z]){4}",
-                        "title": "The id schema",
                         "type": "string"
                     },
                     "metadata": {
-                        "id": "/properties/nodes/items/properties/metadata",
-                        "properties": {
-                            "description": "This accepts anything, as long as it's valid JSON.",
-                            "title": "Empty Object"
-                        },
                         "type": "object"
                     },
                     "sources": {
-                        "id": "/properties/nodes/items/properties/sources",
-                        "items": {
-                            "description": "This accepts anything, as long as it's valid JSON.",
-                            "title": "Empty Object"
-                        },
                         "type": "array"
                     },
                     "text": {
-                        "default": "The 'Hang Back' campaign video should not have been published, and should be withdrawn.",
-                        "description": "The text in the node.",
-                        "id": "/properties/nodes/items/properties/text",
-                        "title": "The text schema",
                         "type": "string"
                     },
                     "type": {
                         "default": "atom",
-                        "description": "The Type of the node. Either an atom or a scheme.",
-                        "id": "/properties/nodes/items/properties/type",
                         "pattern": "\\b(atom|scheme)\\b",
-                        "title": "The type schema",
                         "type": "string"
                     }
                 },
@@ -177,17 +157,10 @@ argument_schema = {
             "type": "array"
         },
         "resources": {
-            "id": "/properties/resources",
-            "items": {
-                "description": "This accepts anything, as long as it's valid JSON.",
-                "title": "Empty Object"
-            },
             "type": "array"
         }
     },
     "required": [
-        "metadata",
-        "resources",
         "id",
         "nodes",
         "edges",
@@ -198,7 +171,7 @@ argument_schema = {
     ],
     "type": "object"
 }
-
+# argument_schema
 argument_schema_backup = {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "definitions": {},

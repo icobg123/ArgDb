@@ -1,61 +1,48 @@
 {
-  "metadata": {
-    "title": "Empty Object"
-  },
-  "resources": [
-    {
-      "description": "This accepts anything, as long as it's valid JSON.",
-      "title": "Empty Object"
-    },
-    {
-      "description": "This accepts anything, as long as it's valid JSON.",
-      "title": "Empty Object"
-    }
-  ],
-  "id": "T4Y6-0935-2tLB-mY5A",
+  "id": "778F-m3lP-0AXU-85Fs",
   "nodes": [
     {
-      "id": "65FP-j8yM-8305-42oP",
+      "id": "7nva-x75c-reEy-PuS3",
+      "type": "atom",
+      "text": "minim incididunt aute ea exercitation"
+    },
+    {
+      "id": "4JIW-0x98-4S4Y-2BaN",
       "type": "scheme"
     },
     {
-      "id": "C5y1-g2E1-6GDL-g4S7",
-      "type": "scheme",
-      "text": "quis nulla aliqua est"
+      "id": "Y78X-5T90-66N6-Y65g",
+      "type": "atom"
     },
     {
-      "id": "eCfb-b533-QwcH-67qK",
+      "id": "l785-959P-f4U8-L27Q",
       "type": "scheme"
-    },
-    {
-      "id": "8Q13-JiQ5-Aazb-dcxz",
-      "type": "scheme",
-      "text": "Excepteur",
-      "sources": [
-        {
-          "description": "This accepts anything, as long as it's valid JSON.",
-          "title": "Empty Object"
-        },
-        {
-          "description": "This accepts anything, as long as it's valid JSON.",
-          "title": "Empty Object"
-        },
-        {
-          "description": "This accepts anything, as long as it's valid JSON.",
-          "title": "Empty Object"
-        }
-      ]
     }
   ],
   "edges": [
     {
-      "id": "75U2-s810-541Q-pV55",
-      "target_id": "0Yd5-4VTM-4491-I902",
-      "source_id": "37a6-7VIB-67RL-4NV5"
+      "id": "Q31k-d428-Wx71-Y3b9",
+      "target_id": "8M8a-y6PE-2179-lS38",
+      "source_id": "x5if-75Q4-mOW7-39D0"
+    },
+    {
+      "id": "5f50-t50o-62Am-JL8O",
+      "target_id": "NVj9-bv1G-J593-38cL",
+      "source_id": "683T-9W0c-9iQv-31wL"
+    },
+    {
+      "id": "9cZM-72Nv-2683-H67h",
+      "target_id": "5A10-T205-n21C-NK9w",
+      "source_id": "6u58-9Hb6-8U71-9V95"
+    },
+    {
+      "id": "3ub2-eu8y-zB64-dEj6",
+      "target_id": "21xA-I2f8-03aX-972R",
+      "source_id": "A4O5-i1u9-Csc9-Zpi7"
     }
   ],
-  "created": "minim",
-  "analyst_email": "8cF33@x4kelsE7PX.NFz43",
-  "analyst_name": "adipisicing",
-  "edited": "in"
+  "created": "irure qui Duis",
+  "analyst_email": "ycj@cPbjoEo.w",
+  "analyst_name": "ut sunt do non esse",
+  "edited": "sunt anim i"
 }

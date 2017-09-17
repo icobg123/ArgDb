@@ -24,46 +24,31 @@ app.config[
 mongo = PyMongo(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-schema = {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "definitions": {},
-    "id": "http://example.com/example.json",
-    "properties": {
-        "name": {
-            "id": "/properties/name",
-            "type": "string"
-        },
-        "contents": {
-            "id": "/properties/price",
-            "type": "number"
-        }
-
-    },
-    "required": [
-        "name",
-        "contents"
-    ],
-    "additionalProperties": False,
-    "type": "object"
-}
-
 argument_schema = {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "definitions": {},
     "id": "http://example.com/example.json",
     "properties": {
         "analyst_email": {
+            "default": "siwells@gmail.com",
+            "description": "An explanation about the purpose of this instance.",
             "id": "/properties/analyst_email",
-            "type": "string",
-            "format": "email",
-            "pattern": "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
+            "pattern": "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$)",
+            "title": "The analyst_email schema",
+            "type": "string"
         },
         "analyst_name": {
+            "default": "Simon Wells",
+            "description": "An explanation about the purpose of this instance.",
             "id": "/properties/analyst_name",
+            "title": "The analyst_name schema",
             "type": "string"
         },
         "created": {
+            "default": "2017-07-11T16:32:36",
+            "description": "An explanation about the purpose of this instance.",
             "id": "/properties/created",
+            "title": "The created schema",
             "type": "string"
         },
         "edges": {
@@ -72,444 +57,116 @@ argument_schema = {
                 "id": "/properties/edges/items",
                 "properties": {
                     "id": {
+                        "default": "d7bcef81-0d74-4ae5-96f9-bfb07031f1fa",
+                        "description": "The id of the edge",
                         "id": "/properties/edges/items/properties/id",
+                        "maxLength": 19,
+                        "pattern": "(((\\d|[a-zA-Z]){4})\\-){3}(\\d|[a-zA-Z]){4}",
+                        "title": "The id schema",
                         "type": "string"
                     },
-                    "source": {
-                        "id": "/properties/edges/items/properties/source",
+                    "source_id": {
+                        "default": "49a786ce-9066-4230-8e18-42086882a160",
+                        "description": "The Id of the node from which the Edge begins",
+                        "id": "/properties/edges/items/properties/source_id",
+                        "maxLength": 19,
+                        "pattern": "(((\\d|[a-zA-Z]){4})\\-){3}(\\d|[a-zA-Z]){4}",
+                        "title": "The source_id schema",
                         "type": "string"
                     },
-                    "target": {
-                        "id": "/properties/edges/items/properties/target",
+                    "target_id": {
+                        "default": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45",
+                        "description": "The Id of the node from at which the Edge ends",
+                        "id": "/properties/edges/items/properties/target_id",
+                        "maxLength": 19,
+                        "pattern": "(((\\d|[a-zA-Z]){4})\\-){3}(\\d|[a-zA-Z]){4}",
+                        "title": "The target_id schema",
                         "type": "string"
                     }
                 },
                 "required": [
-                    "source",
                     "id",
-                    "target"
+                    "target_id",
+                    "source_id"
                 ],
                 "type": "object"
             },
             "type": "array"
         },
         "edited": {
+            "default": "2017-07-11T16:32:36",
+            "description": "An explanation about the purpose of this instance.",
             "id": "/properties/edited",
+            "title": "The edited schema",
             "type": "string"
         },
         "id": {
+            "default": "94a975db-25ae-4d25-93cc-1c07c932e2f8",
+            "description": "The Id of the document (argument scheme/a)",
             "id": "/properties/id",
+            "maxLength": 19,
+            "pattern": "(((\\d|[a-zA-Z]){4})\\-){3}(\\d|[a-zA-Z]){4}",
+            "title": "The id schema",
             "type": "string"
         },
         "metadata": {
             "id": "/properties/metadata",
             "properties": {
-                "hello": {
-                    "id": "/properties/metadata/properties/hello",
-                    "type": "string"
-                },
-                "some": {
-                    "id": "/properties/metadata/properties/some",
-                    "type": "string"
-                }
+                "description": "This accepts anything, as long as it's valid JSON.",
+                "title": "Empty Object"
             },
-            "required": [
-                "some",
-                "hello"
-            ],
             "type": "object"
         },
         "nodes": {
             "id": "/properties/nodes",
             "items": {
-                "id": "/properties/nodes/items",
                 "properties": {
-                    "canonical_text": {
-                        "id": "/properties/nodes/items/properties/canonical_text",
-                        "type": "string"
-                    },
                     "id": {
-                        "id": "/properties/nodes/items/properties/id",
+                        "default": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45",
+                        "description": "The Id of the node",
+                        "maxLength": 19,
+                        "pattern": "(((\\d|[a-zA-Z]){4})\\-){3}(\\d|[a-zA-Z]){4}",
                         "type": "string"
                     },
                     "metadata": {
-                        "id": "/properties/nodes/items/properties/metadata",
-                        "properties": {},
                         "type": "object"
                     },
                     "sources": {
-                        "id": "/properties/nodes/items/properties/sources",
-                        "items": {
-                            "id": "/properties/nodes/items/properties/sources/items",
-                            "properties": {
-                                "length": {
-                                    "id": "/properties/nodes/items/properties/sources/items/properties/length",
-                                    "type": "integer"
-                                },
-                                "offset": {
-                                    "id": "/properties/nodes/items/properties/sources/items/properties/offset",
-                                    "type": "integer"
-                                },
-                                "resource_id": {
-                                    "id": "/properties/nodes/items/properties/sources/items/properties/resource_id",
-                                    "type": "string"
-                                },
-                                "text": {
-                                    "id": "/properties/nodes/items/properties/sources/items/properties/text",
-                                    "type": "string"
-                                }
-                            },
-                            "required": [
-                                "text",
-                                "length",
-                                "resource_id",
-                                "offset"
-                            ],
-                            "type": "object"
-                        },
                         "type": "array"
                     },
+                    "text": {
+                        "type": "string"
+                    },
                     "type": {
-                        "id": "/properties/nodes/items/properties/type",
+                        "default": "atom",
+                        "pattern": "\\b(atom|scheme)\\b",
                         "type": "string"
                     }
                 },
                 "required": [
-                    "sources",
-                    "type",
                     "id",
-                    "canonical_text"
+                    "type"
                 ],
                 "type": "object"
             },
             "type": "array"
         },
         "resources": {
-            "id": "/properties/resources",
-            "items": {
-                "id": "/properties/resources/items",
-                "properties": {
-                    "content": {
-                        "id": "/properties/resources/items/properties/content",
-                        "type": "string"
-                    },
-                    "id": {
-                        "id": "/properties/resources/items/properties/id",
-                        "type": "string"
-                    },
-                    "metadata": {
-                        "id": "/properties/resources/items/properties/metadata",
-                        "properties": {},
-                        "type": "object"
-                    },
-                    "type": {
-                        "id": "/properties/resources/items/properties/type",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "content",
-                    "type",
-                    "id"
-                ],
-                "type": "object"
-            },
             "type": "array"
         }
     },
     "required": [
-        "edited",
-        "analyst_name",
-        "analyst_email",
-        "created",
-        "edges",
-        "nodes",
         "id",
-        "resources"
+        "nodes",
+        "edges",
+        "created",
+        "analyst_email",
+        "analyst_name",
+        "edited"
     ],
     "type": "object"
 }
 
-#
-# argument_schema = {
-#     "$schema": "http://json-schema.org/draft-04/schema#",
-#     "definitions": {},
-#     "id": "http://example.com/example.json",
-#     "properties": {
-#         "analyst_email": {
-#             "id": "/properties/analyst_email",
-#             "type": "string",
-#             "format": "email",
-#             "pattern": "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
-#         },
-#         "analyst_name": {
-#             "id": "/properties/analyst_name",
-#             "type": "string"
-#         },
-#         "created": {
-#             "id": "/properties/created",
-#             "type": "string"
-#         },
-#         "edges": {
-#             "id": "/properties/edges",
-#             "items": {
-#                 "id": "/properties/edges/items",
-#                 "properties": {
-#                     "id": {
-#                         "id": "/properties/edges/items/properties/id",
-#                         "type": "string"
-#                     },
-#                     "source_id": {
-#                         "id": "/properties/edges/items/properties/source_id",
-#                         "type": "string"
-#                     },
-#                     "target_id": {
-#                         "id": "/properties/edges/items/properties/target_id",
-#                         "type": "string"
-#                     }
-#                 },
-#                 "type": "object"
-#             },
-#             "type": "array"
-#         },
-#         "edited": {
-#             "id": "/properties/edited",
-#             "type": "string"
-#         },
-#         "id": {
-#             "id": "/properties/id",
-#             "type": "string"
-#         },
-#         "metadata": {
-#             "id": "/properties/metadata",
-#             "properties": {},
-#             "type": "object"
-#         },
-#         "nodes": {
-#             "id": "/properties/nodes",
-#             "items": {
-#                 "id": "/properties/nodes/items",
-#                 "properties": {
-#                     "id": {
-#                         "id": "/properties/nodes/items/properties/id",
-#                         "type": "string"
-#                     },
-#                     "metadata": {
-#                         "id": "/properties/nodes/items/properties/metadata",
-#                         "properties": {},
-#                         "type": "object"
-#                     },
-#                     "sources": {
-#                         "id": "/properties/nodes/items/properties/sources",
-#                         "items": {},
-#                         "type": "array"
-#                     },
-#                     "text": {
-#                         "id": "/properties/nodes/items/properties/text",
-#                         "type": "string"
-#                     },
-#                     "type": {
-#                         "id": "/properties/nodes/items/properties/type",
-#                         "type": "string"
-#                     }
-#                 },
-#                 "type": "object"
-#             },
-#             "type": "array"
-#         },
-#         "resources": {
-#             "id": "/properties/resources",
-#             "items": {},
-#             "type": "array"
-#         }
-#     },
-#     "type": "object"
-# }
-int2 = {
-    "edited": "officia tempor",
-    "analyst_name": "amet adipisicing esse eiusmod elit",
-    "analyst_email": "ut velit",
-    "created": "non",
-    "edges": [
-        {
-            "source": "id ",
-            "id": "dolor ullamco deserunt esse",
-            "target": "in dolore"
-        },
-        {
-            "source": "adip",
-            "id": "ullamco ipsum fugiat consequat ad",
-            "target": "enim occaecat in"
-        },
-        {
-            "source": "enim",
-            "id": "in eiusmod anim tempor dolore",
-            "target": "labore"
-        },
-        {
-            "source": "eiusmod",
-            "id": "magna pariatur Excepteur dolore",
-            "target": "deserunt"
-        },
-        {
-            "source": "nisi anim aliqua elit",
-            "id": "irure non labore do nostrud",
-            "target": "do Ut laboris laborum"
-        }
-    ],
-    "nodes": [
-        {
-            "sources": [
-                {
-                    "text": "veniam",
-                    "length": -11186411,
-                    "resource_id": "veniam adipisicing",
-                    "offset": -16971626
-                },
-                {
-                    "text": "ad elit non nisi est",
-                    "length": 90469907,
-                    "resource_id": "Duis",
-                    "offset": 44587942
-                }
-            ],
-            "type": "laboris sed magna ut",
-            "id": "cupidatat aliquip ullamco nostrud et",
-            "canonical_text": "anim"
-        },
-        {
-            "sources": [
-                {
-                    "text": "proident in adi",
-                    "length": 41176633,
-                    "resource_id": "labore in id laboris quis",
-                    "offset": 1844798
-                },
-                {
-                    "text": "Ut consequat in qui",
-                    "length": -55595821,
-                    "resource_id": "quis sunt veniam consequat exercitation",
-                    "offset": -89907679
-                },
-                {
-                    "text": "velit proident dolore officia voluptate",
-                    "length": -84120181,
-                    "resource_id": "aute Duis Lorem ut te",
-                    "offset": -8923056
-                },
-                {
-                    "text": "reprehenderit fugiat ad officia",
-                    "length": -99402801,
-                    "resource_id": "Duis",
-                    "offset": -25331611
-                },
-                {
-                    "text": "id",
-                    "length": -5747616,
-                    "resource_id": "laborum elit eu dolore ut",
-                    "offset": -48696902
-                }
-            ],
-            "type": "consectetur",
-            "id": "ea in",
-            "canonical_text": "adipisicing irure id laborum nostrud"
-        },
-        {
-            "sources": [
-                {
-                    "text": "Ut ullamco",
-                    "length": -17848891,
-                    "resource_id": "esse sunt officia",
-                    "offset": 87998584
-                },
-                {
-                    "text": "laboris fugiat reprehenderit aliquip cupidatat",
-                    "length": 69018308,
-                    "resource_id": "commodo ad",
-                    "offset": 36963153
-                }
-            ],
-            "type": "sit sint in veniam ut",
-            "id": "tempor ipsum",
-            "canonical_text": "dolor esse enim"
-        },
-        {
-            "sources": [
-                {
-                    "text": "dolor amet et deserunt",
-                    "length": -20113476,
-                    "resource_id": "anim exercitation magna ",
-                    "offset": 95817057
-                },
-                {
-                    "text": "sit ex Duis",
-                    "length": 63381715,
-                    "resource_id": "reprehenderit",
-                    "offset": -60151700
-                },
-                {
-                    "text": "ex con",
-                    "length": -6207930,
-                    "resource_id": "sint reprehenderit consectet",
-                    "offset": 12660727
-                },
-                {
-                    "text": "dolor",
-                    "length": 30025073,
-                    "resource_id": "aute incididunt aliq",
-                    "offset": 27053591
-                }
-            ],
-            "type": "incididu",
-            "id": "laborum ad exercitation",
-            "canonical_text": "aliquip"
-        }
-    ],
-    "id": "officia",
-    "resources": [
-        {
-            "content": "elit nulla dolor",
-            "type": "ipsum mollit veniam labore in",
-            "id": "dolore nostrud"
-        },
-        {
-            "content": "sunt",
-            "type": "in cillum Excepteur aliqua",
-            "id": "sunt"
-        },
-        {
-            "content": "in",
-            "type": "qui ",
-            "id": "consequat cillum in"
-        },
-        {
-            "content": "ut Duis nulla do",
-            "type": "cillum",
-            "id": "laborum laboris"
-        }
-    ],
-    "metadata": {
-        "some": "veniam aliqua laborum ea do",
-        "hello": "quis eiusmod tempor minim do"
-    }
-}
-
-# schema = {
-#     "type": "object",
-#     "properties": {
-#         "price": {"type": "number"},
-#         "name": {"type": "string"},
-#     },
-# }
-
-
-# schema = {
-#     "type": "object",
-#     "properties": {
-#         "price": {"type": "number"},
-#         "name": {"type": "string"},
-#     },
-# }
 app.config['ALLOWED_EXTENSIONS'] = set(['json'])
 
 
