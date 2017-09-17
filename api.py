@@ -2,25 +2,36 @@ import os
 
 import jsonschema
 from bson import regex
-from flask import Flask, jsonify, request, render_template, redirect, url_for, \
-    send_from_directory
+from flask import Flask, jsonify, request, abort, render_template, redirect, url_for, \
+    send_from_directory, session, make_response
 from flask_pymongo import PyMongo
 from flask.helpers import flash
 from jsonschema import validate
 from jsonschema import Draft3Validator
 from jsonschema import Draft4Validator
 from jsonschema import ErrorTree
+from flask import g
+from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
+from flask_httpauth import HTTPBasicAuth
 from jsonschema.exceptions import best_match
 from bson import json_util
+from werkzeug.security import generate_password_hash, check_password_hash
+from bson.objectid import ObjectId
+from passlib.apps import custom_app_context as pwd_context
 from bson.json_util import dumps
 import json
-
+import uuid
+import bcrypt
+import jwt
+import datetime
+from functools import wraps
 from werkzeug.utils import secure_filename
 from werkzeug.wsgi import SharedDataMiddleware
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
 
+# auth = HTTPBasicAuth()
 app.config['MONGO_DBNAME'] = 'argdbconnect'
 app.config[
     'MONGO_URI'] = 'mongodb://argdb:argdbnapier@ds137191.mlab.com:37191/argdbconnect'
@@ -333,6 +344,31 @@ argument_schema_backup = {
 }
 
 app.config['ALLOWED_EXTENSIONS'] = set(['json'])
+app.config['SECRET_KEY'] = '1234'
+
+
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        users = mongo.db.users
+        token = None
+
+        if 'x-access-token' in request.headers:
+            token = request.headers['x-access-token']
+
+        if not token:
+            return jsonify({'message': 'Token is missing!'}), 401
+
+        try:
+            data = jwt.decode(token, app.config['SECRET_KEY'])
+            current_user = users.find_one({'public_id': data['public_id']})
+            # current_user = User.query.filter_by(public_id=data['public_id']).first()
+        except:
+            return jsonify({'message': 'Token is invalid!'}), 401
+
+        return f(current_user, *args, **kwargs)
+
+    return decorated
 
 
 # For a given file, return whether it's an allowed type or not
@@ -591,7 +627,10 @@ def get_list_argument_id(argString):
 
 
 @app.route('/api/argument/by/<ArgId>', methods=['GET'])
-def get_argument_by_id(ArgId):
+@token_required
+def get_argument_by_id(current_user, ArgId):
+    if not current_user.get('admin'):
+        return jsonify({'message': 'Cannot perform that function!'})
     argument = mongo.db.argument
     # ArgId = ArgId.replace(" ", "|")
     search_results = argument.find_one({"id": {'$regex': ".*" + ArgId + ".*", "$options": "i"}})
@@ -645,5 +684,108 @@ def to_pretty_json(value):
 # Add a custom filter to Jinja2
 app.jinja_env.filters['tojson_pretty'] = to_pretty_json
 
+
+@app.route('/login')
+def login():
+    authorization = request.authorization
+    if not authorization or not authorization.username or not authorization.password:
+        return make_response('Could not verify', 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
+
+    users = mongo.db.users
+    user = users.find_one({'name': authorization.username})
+
+    if not user:
+        return make_response('Could not verify', 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
+
+    if check_password_hash(user.get('password'), authorization.password):
+        payload = {'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=600),
+                   'iat': datetime.datetime.utcnow(),
+                   'public_id': user.get('public_id')}
+
+        token = jwt.encode(
+            {'public_id': user.get('public_id'), 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
+            app.config['SECRET_KEY'])
+        # token = jwt.encode(payload=payload, key=app.config.get('SECRET_KEY'), alg='HS256')
+        return jsonify({'token': token.decode('UTF-8')})
+        # return jsonify({'token': token})
+
+    return make_response('Could not verify', 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
+
+
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    if request.method == 'POST':
+        if request.files['file'].filename == '':
+            err = "Please select a File."
+            return err
+        else:
+            file = request.files['file']
+            filename = secure_filename(file.filename)
+
+            if filename and allowed_file(file.filename):
+                parsed_to_string = file.read().decode("utf-8")
+                # To Dict
+
+                parsed_to_json = json.loads(parsed_to_string)
+                username = parsed_to_json.get('username')
+                password = parsed_to_json.get('password')
+                admin = parsed_to_json.get('admin')
+                # return password
+                if username is None or password is None:
+                    abort(400)  # missing arguments
+                # return password
+                users = mongo.db.users
+                existing_user = users.find_one({'name': username})
+                # typeofuser = type(existing_user)
+                # existing_user = users.find({'name': username}, {"id": 1}).limit(1)
+                typeofuser = type(existing_user)
+
+                if existing_user is None:
+                    hased_pass = generate_password_hash(password, method='sha256')
+
+                    # hashpass = bcrypt.hashpw(request.form['pass'].encode('utf-8'), bcrypt.gensalt())
+                    users.insert(
+                        {'public_id': uuid.uuid4().hex, 'name': username, 'password': hased_pass, 'admin': admin})
+                    session['username'] = username
+                    added_user = users.find_one({'name': username})
+
+                    # return json.dumps({'username':added_user.get('name')})
+                    return jsonify({'username': added_user.get('name'), 'admin': admin}), 201, {
+                        'Location': url_for('get_user', user_id=added_user.get('public_id'), _external=True)}
+                    # return (jsonify({'username': added_user.get('name')}), 201,
+                    #         {'Location': 'home'})
+
+                return "User already exists"
+                # abort(400)
+
+    return "OK"
+
+
+@app.route('/api/users/<user_id>', methods=['GET'])
+@token_required
+def get_user(current_user, user_id):
+    if not current_user.get('admin'):
+        return jsonify({'message': 'Cannot perform that function!'})
+
+    users = mongo.db.users
+    user = users.find_one({'public_id': user_id})
+    # user = users.find_one({'public_id': uuid.UUID(user_id)}) #last one working
+    # user = users.find_one({'_id': ObjectId(user_id)})
+    # user = users.find({'_id': user_id}, {"id": 1}).limit(1)
+    if not user:
+        abort(400)
+    return jsonify({'username': user.get('name'), 'admin': user.get('admin'),
+                    'public_id': user.get('public_id')})
+
+
+@app.route('/index')
+def index():
+    if 'username' in session:
+        return 'You are logged in as ' + session['username']
+
+    return render_template('index.html')
+
+
 if __name__ == '__main__':
+    app.secret_key = 'mysecret'
     app.run(debug=True)

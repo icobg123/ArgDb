@@ -2,7 +2,7 @@ import os
 
 import jsonschema
 from bson import regex
-from flask import Flask, jsonify, request, render_template, redirect, url_for, \
+from flask import Flask, jsonify, session, abort, request, render_template, redirect, url_for, \
     send_from_directory
 from flask_pymongo import PyMongo
 from flask.helpers import flash
@@ -10,6 +10,7 @@ from jsonschema import validate
 from jsonschema import Draft3Validator
 from jsonschema import Draft4Validator
 from bson import json_util
+from passlib.apps import custom_app_context as pwd_context
 import json
 
 from werkzeug.utils import secure_filename
@@ -371,5 +372,48 @@ def to_pretty_json(value):
 # Add a custom filter to Jinja2
 app.jinja_env.filters['tojson_pretty'] = to_pretty_json
 
+
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    if request.method == 'POST':
+        users = mongo.db.users
+        existing_user = users.find({'name': request.form['username']}, {"id": 1}).limit(1)
+        # asd = users.find({"id": parsed_to_json.get("id")}, {"id": 1}).limit(1)
+        # existing_user = users.find_one({'name': request.form['username']})
+
+        if existing_user is None:
+            hased_pass = pwd_context.encrypt(request.form['pass'])
+            # hashpass = bcrypt.hashpw(request.form['pass'].encode('utf-8'), bcrypt.gensalt())
+            users.insert({'name': request.form['username'], 'password': hased_pass})
+            session['username'] = request.form['username']
+            return redirect(url_for('index'))
+
+        return 'That username already exists!'
+
+    return render_template('register.html')
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    users = mongo.db.users
+    login_user = users.find_one({'name': request.form['username']})
+
+    if login_user:
+        if pwd_context.verify(request.form['pass'], login_user['password']):
+            session['username'] = request.form['username']
+            return redirect(url_for('index'))
+
+    return 'Invalid username/password combination'
+
+
+@app.route('/index')
+def index():
+    if 'username' in session:
+        return 'You are logged in as ' + session['username']
+
+    return render_template('index.html')
+
+
 if __name__ == '__main__':
+    app.secret_key = 'mysecret'
     app.run(debug=True)
