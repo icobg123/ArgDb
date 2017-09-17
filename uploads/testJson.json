@@ -1,0 +1,61 @@
+{
+  "metadata": {
+    "title": "Empty Object"
+  },
+  "resources": [
+    {
+      "description": "This accepts anything, as long as it's valid JSON.",
+      "title": "Empty Object"
+    },
+    {
+      "description": "This accepts anything, as long as it's valid JSON.",
+      "title": "Empty Object"
+    }
+  ],
+  "id": "T4Y6-0935-2tLB-mY5A",
+  "nodes": [
+    {
+      "id": "65FP-j8yM-8305-42oP",
+      "type": "scheme"
+    },
+    {
+      "id": "C5y1-g2E1-6GDL-g4S7",
+      "type": "scheme",
+      "text": "quis nulla aliqua est"
+    },
+    {
+      "id": "eCfb-b533-QwcH-67qK",
+      "type": "scheme"
+    },
+    {
+      "id": "8Q13-JiQ5-Aazb-dcxz",
+      "type": "scheme",
+      "text": "Excepteur",
+      "sources": [
+        {
+          "description": "This accepts anything, as long as it's valid JSON.",
+          "title": "Empty Object"
+        },
+        {
+          "description": "This accepts anything, as long as it's valid JSON.",
+          "title": "Empty Object"
+        },
+        {
+          "description": "This accepts anything, as long as it's valid JSON.",
+          "title": "Empty Object"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "75U2-s810-541Q-pV55",
+      "target_id": "0Yd5-4VTM-4491-I902",
+      "source_id": "37a6-7VIB-67RL-4NV5"
+    }
+  ],
+  "created": "minim",
+  "analyst_email": "8cF33@x4kelsE7PX.NFz43",
+  "analyst_name": "adipisicing",
+  "edited": "in"
+}
