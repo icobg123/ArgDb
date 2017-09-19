@@ -1,5 +1,6 @@
 import os
 
+import datetime
 import jsonschema
 from bson import regex
 from flask import Flask, jsonify, session, abort, request, render_template, redirect, url_for, \
@@ -12,7 +13,9 @@ from jsonschema import Draft4Validator
 from bson import json_util
 from passlib.apps import custom_app_context as pwd_context
 import json
-
+import jwt
+from werkzeug.security import generate_password_hash, check_password_hash
+from functools import wraps
 from werkzeug.utils import secure_filename
 from werkzeug.wsgi import SharedDataMiddleware
 
@@ -169,6 +172,30 @@ argument_schema = {
 }
 
 app.config['ALLOWED_EXTENSIONS'] = set(['json'])
+
+
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        users = mongo.db.users
+        token = None
+
+        if 'x-access-token' in request.headers:
+            token = request.headers['x-access-token']
+
+        if not token:
+            return jsonify({'message': 'Token is missing!'}), 401
+
+        try:
+            token_data = jwt.decode(token, app.config['SECRET_KEY'])
+            current_user = users.find_one({'public_id': token_data['public_id']})
+            # current_user = User.query.filter_by(public_id=data['public_id']).first()
+        except:
+            return jsonify({'message': 'Token is invalid!'}), 401
+
+        return f(current_user, *args, **kwargs)
+
+    return decorated
 
 
 # For a given file, return whether it's an allowed type or not
@@ -377,39 +404,65 @@ app.jinja_env.filters['tojson_pretty'] = to_pretty_json
 def register():
     if request.method == 'POST':
         users = mongo.db.users
-        existing_user = users.find({'name': request.form['username']}, {"id": 1}).limit(1)
+        existing_user = users.find_one({'name': request.form['username']})
+        # existing_user = users.find({'name': request.form['username']}, {"id": 1}).limit(1)
         # asd = users.find({"id": parsed_to_json.get("id")}, {"id": 1}).limit(1)
         # existing_user = users.find_one({'name': request.form['username']})
 
         if existing_user is None:
-            hased_pass = pwd_context.encrypt(request.form['pass'])
+            hased_pass = generate_password_hash(request.form['pass'], method='sha256')
             # hashpass = bcrypt.hashpw(request.form['pass'].encode('utf-8'), bcrypt.gensalt())
-            users.insert({'name': request.form['username'], 'password': hased_pass})
+            users.insert({'name': request.form['username'], 'password': hased_pass, 'token': '123'})
             session['username'] = request.form['username']
-            return redirect(url_for('index'))
+            return redirect(url_for('login'))
 
         return 'That username already exists!'
 
     return render_template('register.html')
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST', 'GET'])
 def login():
-    users = mongo.db.users
-    login_user = users.find_one({'name': request.form['username']})
+    if request.method == 'POST':
+        users = mongo.db.users
+        login_user = users.find_one({'name': request.form['username']})
 
-    if login_user:
-        if pwd_context.verify(request.form['pass'], login_user['password']):
-            session['username'] = request.form['username']
-            return redirect(url_for('index'))
+        if login_user:
+            if check_password_hash(login_user.get('password'), request.form['pass']):
+                # if pwd_context.verify(request.form['pass'], login_user['password']):
+                session['username'] = request.form['username']
+                # Cretion of the Token
+                token = jwt.encode(
+                    {'public_id': login_user.get('public_id'),
+                     'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)},
+                    app.config['SECRET_KEY'])
+                users.update_one(
+                    {"_id": login_user.get('_id')},
+                    {
+                        "$set": {
+                            "token": token
 
-    return 'Invalid username/password combination'
+                        }
+                    }
+                )
+                session['token'] = token.decode('UTF-8')
+                # session['user_id'] = login_user.get('_id')
+                # return session['username']
+                return redirect(url_for('index'))
+
+        return 'Invalid username/password combination'
+
+    return render_template('index.html')
 
 
-@app.route('/index')
+@app.route('/user_page')
 def index():
+    users = mongo.db.users
     if 'username' in session:
-        return 'You are logged in as ' + session['username']
+        login_user = users.find_one({'name': session['username']})
+        token = login_user.get('token')
+
+        return 'You are logged in as ' + session['username'] + " " + token.decode('UTF-8')
 
     return render_template('index.html')
 

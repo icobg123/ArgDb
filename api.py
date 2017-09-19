@@ -21,7 +21,6 @@ from passlib.apps import custom_app_context as pwd_context
 from bson.json_util import dumps
 import json
 import uuid
-import bcrypt
 import jwt
 import datetime
 from functools import wraps
@@ -703,11 +702,11 @@ def login():
         payload = {'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=1),
                    'iat': datetime.datetime.utcnow(),
                    'public_id': user.get('public_id')}
-
+        token = user.get('token')
         # Cretion of the Token
-        token = jwt.encode(
-            {'public_id': user.get('public_id'), 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)},
-            app.config['SECRET_KEY'])
+        # token = jwt.encode(
+        #     {'public_id': user.get('public_id'), 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)},
+        #     app.config['SECRET_KEY'])
         # token = jwt.encode(payload=payload, key=app.config.get('SECRET_KEY'), alg='HS256')
         return jsonify({'token': token.decode('UTF-8')})
         # return jsonify({'token': token})
