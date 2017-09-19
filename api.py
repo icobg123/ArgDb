@@ -360,8 +360,8 @@ def token_required(f):
             return jsonify({'message': 'Token is missing!'}), 401
 
         try:
-            data = jwt.decode(token, app.config['SECRET_KEY'])
-            current_user = users.find_one({'public_id': data['public_id']})
+            token_data = jwt.decode(token, app.config['SECRET_KEY'])
+            current_user = users.find_one({'public_id': token_data['public_id']})
             # current_user = User.query.filter_by(public_id=data['public_id']).first()
         except:
             return jsonify({'message': 'Token is invalid!'}), 401
@@ -377,7 +377,7 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 
-@app.route('/upload', methods=['GET', 'POST'])
+@app.route('/api/upload', methods=['GET', 'POST'])
 def upload_file():
     argument = mongo.db.argument
     # schema = open("uploads/schema.json").read()
@@ -472,7 +472,9 @@ def upload_file():
                 return err
                 # return render_template('upload.html', err=err, argument_schema=argument_schema)
 
-    return render_template('upload.html', argument_schema=argument_schema)
+    return jsonify({'message': 'Please POST a JSON document in the following structure!'},
+                   {'schema': argument_schema})
+    # return render_template('upload.html', argument_schema=argument_schema)
 
 
 @app.route('/handle_data', methods=['POST'])
@@ -698,12 +700,13 @@ def login():
         return make_response('Could not verify', 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
 
     if check_password_hash(user.get('password'), authorization.password):
-        payload = {'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=600),
+        payload = {'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=1),
                    'iat': datetime.datetime.utcnow(),
                    'public_id': user.get('public_id')}
 
+        # Cretion of the Token
         token = jwt.encode(
-            {'public_id': user.get('public_id'), 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
+            {'public_id': user.get('public_id'), 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)},
             app.config['SECRET_KEY'])
         # token = jwt.encode(payload=payload, key=app.config.get('SECRET_KEY'), alg='HS256')
         return jsonify({'token': token.decode('UTF-8')})
