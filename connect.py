@@ -1,6 +1,8 @@
 import os
 
 import datetime
+import uuid
+
 import jsonschema
 from bson import regex
 from flask import Flask, jsonify, session, abort, request, render_template, redirect, url_for, \
@@ -180,14 +182,21 @@ def token_required(f):
         users = mongo.db.users
         token = None
 
-        if 'x-access-token' in request.headers:
-            token = request.headers['x-access-token']
+        if 'username' in session:
+            login_user = users.find_one({'name': session['username']})
+            token = login_user.get('token')
+            # if 'x-access-token' in request.headers:
+
+            # token =
+            # TODO: Figure out how to pull the token data for the correct user
+            # token = request.headers['x-access-token']
 
         if not token:
             return jsonify({'message': 'Token is missing!'}), 401
 
         try:
             token_data = jwt.decode(token, app.config['SECRET_KEY'])
+            # current_user = users.find_one({'name': session['username']})
             current_user = users.find_one({'public_id': token_data['public_id']})
             # current_user = User.query.filter_by(public_id=data['public_id']).first()
         except:
@@ -412,7 +421,8 @@ def register():
         if existing_user is None:
             hased_pass = generate_password_hash(request.form['pass'], method='sha256')
             # hashpass = bcrypt.hashpw(request.form['pass'].encode('utf-8'), bcrypt.gensalt())
-            users.insert({'name': request.form['username'], 'password': hased_pass, 'token': '123'})
+            users.insert({'public_id': uuid.uuid4().hex, 'name': request.form['username'], 'password': hased_pass,
+                          'token': '123'})
             session['username'] = request.form['username']
             return redirect(url_for('login'))
 
@@ -456,13 +466,24 @@ def login():
 
 
 @app.route('/user_page')
-def index():
+@token_required
+def index(current_user):
     users = mongo.db.users
     if 'username' in session:
         login_user = users.find_one({'name': session['username']})
         token = login_user.get('token')
 
-        return 'You are logged in as ' + session['username'] + " " + token.decode('UTF-8')
+        user_id = current_user.get('public_id')
+        # admin = str(current_user.get('admin'))
+        if not current_user.get('admin'):
+            admin = "no admin"
+        else:
+            admin = "yes admin"
+
+        # return 'You are logged in as ' + jsonify(current_user) + " " + token.decode(
+        #     'UTF-8') + " Current User "
+        return 'You are logged in as ' + user_id + " " + token.decode(
+            'UTF-8') + " Current User " + admin
 
     return render_template('index.html')
 

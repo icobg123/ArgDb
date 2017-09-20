@@ -704,9 +704,9 @@ def login():
                    'public_id': user.get('public_id')}
         token = user.get('token')
         # Cretion of the Token
-        # token = jwt.encode(
-        #     {'public_id': user.get('public_id'), 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)},
-        #     app.config['SECRET_KEY'])
+        token = jwt.encode(
+            {'public_id': user.get('public_id'), 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)},
+            app.config['SECRET_KEY'])
         # token = jwt.encode(payload=payload, key=app.config.get('SECRET_KEY'), alg='HS256')
         return jsonify({'token': token.decode('UTF-8')})
         # return jsonify({'token': token})
