@@ -219,6 +219,11 @@ def upload_file():
     # schema = open("uploads/schema.json").read()
     # data = open("uploads/correct_format.json").read()
     # Header Data for debugging
+    users = mongo.db.users
+    username = ""
+    if 'username' in session:
+        login_user = users.find_one({'name': session['username']})
+        username = "Hi there: " + login_user.get('name')
     req_headers = request.headers
     if request.method == 'POST':
         # check if the post request has the file part
@@ -251,12 +256,13 @@ def upload_file():
                 return render_template('upload_results.html', json_parsed=parsed_to_json, outcome=outcome, validator=v,
                                        req_headers=req_headers,
                                        string_parsed=parsed_to_string,
+                                       current_user=username,
                                        type=valid)  # 201 to show that the upload was successful
             else:
                 err = "Wrong file extension. Please upload a JSON document."
-                return render_template('upload.html', err=err, argument_schema=argument_schema)
+                return render_template('upload.html', err=err, argument_schema=argument_schema, current_user=username)
 
-    return render_template('upload.html', argument_schema=argument_schema)
+    return render_template('upload.html', argument_schema=argument_schema, current_user=username)
 
 
 @app.route('/handle_data', methods=['POST'])
@@ -281,7 +287,11 @@ app.wsgi_app = SharedDataMiddleware(app.wsgi_app, {
 @app.route('/', methods=['GET', 'POST'])
 def home():
     err = None
-
+    users = mongo.db.users
+    username = ""
+    if 'username' in session:
+        login_user = users.find_one({'name': session['username']})
+        username = "Hi there: " + login_user.get('name')
     if request.method == 'POST':
         if not request.form['argumentString']:
             err = 'Please provide a search term'
@@ -292,7 +302,7 @@ def home():
 
             return redirect(url_for('get_one_argument', argString=argumentString))
 
-    return render_template('homepage.html', err=err)
+    return render_template('homepage.html', err=err, current_user=username)
 
 
 @app.route('/argument', methods=['GET'])
@@ -314,6 +324,11 @@ def get_all_arguments():
 
 @app.route('/argument/<argString>', methods=['GET'])
 def get_one_argument(argString):
+    users = mongo.db.users
+    username = ""
+    if 'username' in session:
+        login_user = users.find_one({'name': session['username']})
+        username = "Hi there: " + login_user.get('name')
     argument = mongo.db.argument
     argString = argString.replace(" ", "|")
     typeOF = type(argString)
@@ -370,6 +385,7 @@ def get_one_argument(argString):
     return render_template('search_results.html', json=output, typeof=typeOF,
                            argString=argString,
                            with_regex=with_regex,
+                           current_user=username,
                            cursor=count_me)
 
 
@@ -456,6 +472,7 @@ def login():
                     }
                 )
                 session['token'] = token.decode('UTF-8')
+                session['logged_in'] = True
                 # session['user_id'] = login_user.get('_id')
                 # return session['username']
                 return redirect(url_for('index'))
@@ -466,26 +483,48 @@ def login():
 
 
 @app.route('/user_page')
-@token_required
-def index(current_user):
+# @token_required
+def index():
     users = mongo.db.users
     if 'username' in session:
         login_user = users.find_one({'name': session['username']})
         token = login_user.get('token')
 
-        user_id = current_user.get('public_id')
+        # user_id = current_user.get('public_id')
         # admin = str(current_user.get('admin'))
-        if not current_user.get('admin'):
+        # if not current_user.get('admin'):
+        #     admin = "no admin"
+        # else:
+        #     admin = "Admin"
+
+        if not login_user.get('admin'):
             admin = "no admin"
         else:
-            admin = "yes admin"
+            admin = "Admin"
 
         # return 'You are logged in as ' + jsonify(current_user) + " " + token.decode(
         #     'UTF-8') + " Current User "
-        return 'You are logged in as ' + user_id + " " + token.decode(
-            'UTF-8') + " Current User " + admin
+        # return 'You are logged in as ' + user_id + " " + token.decode(
+        #     'UTF-8') + " Current User " + admin
+        return render_template('user_page.html',
+                               current_user=login_user.get('name'),
+                               privileges=admin,
+                               token=token.decode('UTF-8'))
 
     return render_template('index.html')
+
+
+@app.route('/logout')
+# @login_required
+def logout():
+    # session.pop('logged_in', None)
+    # flash('You were logged out.')
+    session.clear()
+    # if 'logged_in' not in session:
+    #     return redirect(url_for('signin'))
+    #
+    # session.pop('logged_in', None)
+    return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
