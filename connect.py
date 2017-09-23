@@ -2,6 +2,7 @@ import os
 
 import datetime
 import uuid
+from datetime import timedelta
 
 import jsonschema
 from bson import regex
@@ -176,6 +177,12 @@ argument_schema = {
 app.config['ALLOWED_EXTENSIONS'] = set(['json'])
 
 
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=10)
+
+
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -215,6 +222,9 @@ def allowed_file(filename):
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
+    # if request.method == 'POST':
+    #     if request.form['argumentString']:
+    #         return search_for_arg()
     argument = mongo.db.argument
     # schema = open("uploads/schema.json").read()
     # data = open("uploads/correct_format.json").read()
@@ -223,44 +233,52 @@ def upload_file():
     username = ""
     if 'username' in session:
         login_user = users.find_one({'name': session['username']})
-        username = "Hi there: " + login_user.get('name')
+        username = login_user.get('name')
     req_headers = request.headers
     if request.method == 'POST':
-        # check if the post request has the file part
-        if request.files['file'].filename == '':
-            err = "Please select a File."
-            return render_template('upload.html', err=err, argument_schema=argument_schema)
-        else:
-            file = request.files['file']
-            filename = secure_filename(file.filename)
-
-            if filename and allowed_file(file.filename):
-                parsed_to_string = file.read().decode("utf-8")
-                parsed_to_json = json.loads(parsed_to_string)
-                # parsed_to_json = request.get_json()
-                # TODO: the validator checks against the schema and inserts the provided json only if it contains the
-                # TODO: required fields and it will upload it to the
-                v = Draft4Validator(argument_schema)
-                # if Draft3Validator(schema).is_valid([2, 3, 4]):
-                if v.is_valid(parsed_to_json):
-                    post_id = argument.insert_one(parsed_to_json).inserted_id
-                valid = v.is_valid(parsed_to_json)
-                if valid:
-                    outcome = "Successful Upload"
-                else:
-                    outcome = "Unsuccessful Upload"
-
-                # if validate(parsed_to_json, schema):
-                #     post_id = argument.insert_one(parsed_to_json).inserted_id
-                # parsed_to_json_type = json.dumps(parsed_to_json)
-                return render_template('upload_results.html', json_parsed=parsed_to_json, outcome=outcome, validator=v,
-                                       req_headers=req_headers,
-                                       string_parsed=parsed_to_string,
-                                       current_user=username,
-                                       type=valid)  # 201 to show that the upload was successful
+        # if request.form['btn'] == 'Upload':
+        if 'btn' in request.form:
+            # if request.form['argumentString']:
+            #     return search_for_arg()
+            # check if the post request has the file part
+            if request.files['file'].filename == '':
+                err = "Please select a File."
+                return render_template('upload.html', err=err, argument_schema=argument_schema)
             else:
-                err = "Wrong file extension. Please upload a JSON document."
-                return render_template('upload.html', err=err, argument_schema=argument_schema, current_user=username)
+                file = request.files['file']
+                filename = secure_filename(file.filename)
+
+                if filename and allowed_file(file.filename):
+                    parsed_to_string = file.read().decode("utf-8")
+                    parsed_to_json = json.loads(parsed_to_string)
+                    # parsed_to_json = request.get_json()
+                    # TODO: the validator checks against the schema and inserts the provided json only if it contains the
+                    # TODO: required fields and it will upload it to the
+                    v = Draft4Validator(argument_schema)
+                    # if Draft3Validator(schema).is_valid([2, 3, 4]):
+                    if v.is_valid(parsed_to_json):
+                        post_id = argument.insert_one(parsed_to_json).inserted_id
+                    valid = v.is_valid(parsed_to_json)
+                    if valid:
+                        outcome = "Successful Upload"
+                    else:
+                        outcome = "Unsuccessful Upload"
+
+                    # if validate(parsed_to_json, schema):
+                    #     post_id = argument.insert_one(parsed_to_json).inserted_id
+                    # parsed_to_json_type = json.dumps(parsed_to_json)
+                    return render_template('upload_results.html', json_parsed=parsed_to_json, outcome=outcome,
+                                           validator=v,
+                                           req_headers=req_headers,
+                                           string_parsed=parsed_to_string,
+                                           current_user=username,
+                                           type=valid)  # 201 to show that the upload was successful
+                else:
+                    err = "Wrong file extension. Please upload a JSON document."
+                    return render_template('upload.html', err=err, argument_schema=argument_schema,
+                                           current_user=username)
+        elif 'argumentString' in request.form:
+            return search_for_arg()
 
     return render_template('upload.html', argument_schema=argument_schema, current_user=username)
 
@@ -284,6 +302,18 @@ app.wsgi_app = SharedDataMiddleware(app.wsgi_app, {
 })
 
 
+def search_for_arg():
+    if not request.form['argumentString']:
+        err = 'Please provide a search term'
+        # return err
+        # elif not request.form['region']:
+    # err = 'Please set your region'
+    else:
+        argumentString = request.form['argumentString']
+
+        return redirect(url_for('get_one_argument', argString=argumentString))
+
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     err = None
@@ -292,15 +322,18 @@ def home():
     if 'username' in session:
         login_user = users.find_one({'name': session['username']})
         username = "Hi there: " + login_user.get('name')
-    if request.method == 'POST':
-        if not request.form['argumentString']:
-            err = 'Please provide a search term'
-        # elif not request.form['region']:
-        #     err = 'Please set your region'
-        else:
-            argumentString = request.form['argumentString']
 
-            return redirect(url_for('get_one_argument', argString=argumentString))
+    if request.method == 'POST':
+        return search_for_arg()
+    # if request.method == 'POST':
+    #     if not request.form['argumentString']:
+    #         err = 'Please provide a search term'
+    #     # elif not request.form['region']:
+    #     #     err = 'Please set your region'
+    #     else:
+    #         argumentString = request.form['argumentString']
+    #
+    #         return redirect(url_for('get_one_argument', argString=argumentString))
 
     return render_template('homepage.html', err=err, current_user=username)
 
@@ -322,8 +355,45 @@ def get_all_arguments():
     return render_template('search_results.html', json=output)
 
 
-@app.route('/argument/<argString>', methods=['GET'])
+@app.route('/argument/by/<ArgId>', methods=['GET', 'POST'])
+# @token_required
+def get_argument_by_id(ArgId):
+    if 'argumentString' in request.form:
+        if request.form['argumentString']:
+            return search_for_arg()
+
+    # if not current_user.get('admin'):
+    #     return jsonify({'message': 'Cannot perform that function!'})
+    users = mongo.db.users
+    username = ""
+    if 'username' in session:
+        login_user = users.find_one({'name': session['username']})
+        username = "Hi there: " + login_user.get('name')
+    argument = mongo.db.argument
+    # ArgId = ArgId.replace(" ", "|")
+    search_results = argument.find_one({"id": {'$regex': ".*" + ArgId + ".*", "$options": "i"}})
+
+    result = search_results.get('id')
+    arg_found = json.dumps({'argument IDs': ({
+        "Analyst Email": search_results.get("analyst_email"),
+        "Analyst Name": search_results.get("analyst_name"),
+        "Created": search_results.get("created"),
+        "Edges": search_results.get("edges"),
+        "Edited": search_results.get("edited"),
+        "id": search_results.get("id"),
+        "Metadata": search_results.get("metadata"),
+        "Nodes": search_results.get("nodes"),
+        "Resources": search_results.get("resources")})}, sort_keys=False, indent=2)
+
+    # return render_template('homepage.html', doomed=result)
+    return render_template('single_arg.html', argument=arg_found, arg_id=result, current_user=username)
+
+
+@app.route('/argument/<argString>', methods=['GET', 'POST'])
 def get_one_argument(argString):
+    if request.method == 'POST':
+        return search_for_arg()
+
     users = mongo.db.users
     username = ""
     if 'username' in session:
@@ -373,9 +443,9 @@ def get_one_argument(argString):
             "Edges": q["edges"],
             "Edited": q["edited"],
             "id": q["id"],
-            "Metadata": q["metadata"],
+            # "Metadata": q["metadata"],
             "Nodes": q["nodes"],
-            "Resources": q["resources"],
+            # "Resources": q["resources"],
 
         })
 
@@ -427,64 +497,82 @@ app.jinja_env.filters['tojson_pretty'] = to_pretty_json
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
+    err = None
     if request.method == 'POST':
-        users = mongo.db.users
-        existing_user = users.find_one({'name': request.form['username']})
-        # existing_user = users.find({'name': request.form['username']}, {"id": 1}).limit(1)
-        # asd = users.find({"id": parsed_to_json.get("id")}, {"id": 1}).limit(1)
-        # existing_user = users.find_one({'name': request.form['username']})
+        if 'argumentString' in request.form:
+            if request.form['argumentString']:
+                return search_for_arg()
+        elif 'username' and 'pass' in request.form:
+            users = mongo.db.users
+            existing_user = users.find_one({'name': request.form['username']})
+            # existing_user = users.find({'name': request.form['username']}, {"id": 1}).limit(1)
+            # asd = users.find({"id": parsed_to_json.get("id")}, {"id": 1}).limit(1)
+            # existing_user = users.find_one({'name': request.form['username']})
 
-        if existing_user is None:
-            hased_pass = generate_password_hash(request.form['pass'], method='sha256')
-            # hashpass = bcrypt.hashpw(request.form['pass'].encode('utf-8'), bcrypt.gensalt())
-            users.insert({'public_id': uuid.uuid4().hex, 'name': request.form['username'], 'password': hased_pass,
-                          'token': '123'})
-            session['username'] = request.form['username']
-            return redirect(url_for('login'))
+            if existing_user is None:
+                hased_pass = generate_password_hash(request.form['pass'], method='sha256')
+                # hashpass = bcrypt.hashpw(request.form['pass'].encode('utf-8'), bcrypt.gensalt())
+                users.insert({'public_id': uuid.uuid4().hex, 'name': request.form['username'], 'password': hased_pass,
+                              'token': '123'})
+                # session['username'] = request.form['username']
+                return redirect(url_for('login'))
 
-        return 'That username already exists!'
+            err = "Username already exists"
+            return render_template('register.html', err=err)
 
     return render_template('register.html')
 
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+    if 'username' in session:
+        return redirect(url_for('user_page'))
     if request.method == 'POST':
-        users = mongo.db.users
-        login_user = users.find_one({'name': request.form['username']})
+        if 'argumentString' in request.form:
+            if request.form['argumentString']:
+                return search_for_arg()
+        # if request.form['argumentString']:
+        #     return search_for_arg()
+        elif 'username' and 'pass' in request.form:
+            users = mongo.db.users
+            login_user = users.find_one({'name': request.form['username']})
 
-        if login_user:
-            if check_password_hash(login_user.get('password'), request.form['pass']):
-                # if pwd_context.verify(request.form['pass'], login_user['password']):
-                session['username'] = request.form['username']
-                # Cretion of the Token
-                token = jwt.encode(
-                    {'public_id': login_user.get('public_id'),
-                     'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)},
-                    app.config['SECRET_KEY'])
-                users.update_one(
-                    {"_id": login_user.get('_id')},
-                    {
-                        "$set": {
-                            "token": token
+            if login_user:
+                if check_password_hash(login_user.get('password'), request.form['pass']):
+                    # if pwd_context.verify(request.form['pass'], login_user['password']):
+                    session['username'] = request.form['username']
+                    # Cretion of the Token
+                    token = jwt.encode(
+                        {'public_id': login_user.get('public_id'),
+                         'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)},
+                        app.config['SECRET_KEY'])
+                    users.update_one(
+                        {"_id": login_user.get('_id')},
+                        {
+                            "$set": {
+                                "token": token
 
+                            }
                         }
-                    }
-                )
-                session['token'] = token.decode('UTF-8')
-                session['logged_in'] = True
-                # session['user_id'] = login_user.get('_id')
-                # return session['username']
-                return redirect(url_for('index'))
+                    )
+                    session['token'] = token.decode('UTF-8')
+                    session['logged_in'] = True
+                    make_session_permanent()
+                    # session['user_id'] = login_user.get('_id')
+                    # return session['username']
+                    return redirect(url_for('user_page'))
 
-        return 'Invalid username/password combination'
+            return 'Invalid username/password combination'
 
-    return render_template('index.html')
+    return render_template('log_ing.html')
 
 
-@app.route('/user_page')
+@app.route('/user_page', methods=['POST', 'GET'])
 # @token_required
-def index():
+def user_page():
+    if request.method == 'POST':
+        if request.form['argumentString']:
+            return search_for_arg()
     users = mongo.db.users
     if 'username' in session:
         login_user = users.find_one({'name': session['username']})
@@ -509,9 +597,11 @@ def index():
         return render_template('user_page.html',
                                current_user=login_user.get('name'),
                                privileges=admin,
-                               token=token.decode('UTF-8'))
+                               # token=token
+                               token=token.decode('UTF-8')
+                               )
 
-    return render_template('index.html')
+    return render_template('log_ing.html')
 
 
 @app.route('/logout')

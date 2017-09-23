@@ -780,12 +780,12 @@ def get_user(current_user, user_id):
                     'public_id': user.get('public_id')})
 
 
-@app.route('/index')
+@app.route('/user_page')
 def index():
     if 'username' in session:
         return 'You are logged in as ' + session['username']
 
-    return render_template('index.html')
+    return render_template('user_page.html')
 
 
 if __name__ == '__main__':
