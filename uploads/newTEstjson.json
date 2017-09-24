@@ -1,0 +1,56 @@
+{
+  "id": "c846ED6F-b1eA-c7E5-",
+  "nodes": [
+    {
+      "id": "1a6C9F26-8dC8-45cd-",
+      "type": "atom",
+      "text": "Krisi e mnogo lud"
+    },
+    {
+      "id": "1c6CCb60-2Ec2-fAAe-",
+      "type": "scheme",
+      "text": "Krisi e mnogo lud"
+    },
+    {
+      "id": "fce2F6d7-F00e-1545-",
+      "type": "atom",
+      "text": "Krisi e mnogo lud "
+    },
+    {
+      "id": "9Bb04fDD-C131-564E-",
+      "type": "scheme",
+      "text": "Krisi e mnogo lud"
+    }
+  ],
+  "edges": [
+    {
+      "id": "A0E44DBC-1a07-2fE5-",
+      "target_id": "bFA3Acd2-E7BD-84C5-",
+      "source_id": "F5baEc4d-46EE-d035-"
+    },
+    {
+      "id": "FBD2B3d4-eA90-A9dE-",
+      "target_id": "ce3cE6d2-cFF8-574f-",
+      "source_id": "9397783a-8bC6-2f4C-"
+    },
+    {
+      "id": "E46bec64-9a8E-89a6-",
+      "target_id": "a1daeCAE-adF8-e2a2-",
+      "source_id": "3dA52fB0-0FBE-a64F-"
+    },
+    {
+      "id": "f0fc6DB6-FE93-9aC0-",
+      "target_id": "e626005e-0B98-EEC2-",
+      "source_id": "BB08B6c9-076c-5F45-"
+    },
+    {
+      "id": "C2667b1d-49d8-5bFe-",
+      "target_id": "1f1ea76B-1226-D5DB-",
+      "source_id": "B631D3D1-3A49-9dbF-"
+    }
+  ],
+  "created": "in voluptate laborum",
+  "analyst_email": "E2q_s@2Mvr7j.z.",
+  "analyst_name": "velit sed non cillum est",
+  "edited": "sunt"
+}

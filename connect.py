@@ -3,6 +3,7 @@ import os
 import datetime
 import uuid
 from datetime import timedelta
+from typing import re
 
 import jsonschema
 from bson import regex
@@ -17,6 +18,7 @@ from bson import json_util
 from passlib.apps import custom_app_context as pwd_context
 import json
 import jwt
+import re
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 from werkzeug.utils import secure_filename
@@ -30,7 +32,8 @@ app.config[
     'MONGO_URI'] = 'mongodb://argdb:argdbnapier@ds137191.mlab.com:37191/argdbconnect'
 mongo = PyMongo(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
+# Regex for IDs - [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}
+# Regex for Email - (^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)
 argument_schema = {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "definitions": {},
@@ -68,7 +71,7 @@ argument_schema = {
                         "description": "The id of the edge",
                         "id": "/properties/edges/items/properties/id",
                         "maxLength": 19,
-                        "pattern": "(((\\d|[a-zA-Z]){4})\\-){3}(\\d|[a-zA-Z]){4}",
+
                         "title": "The id schema",
                         "type": "string"
                     },
@@ -77,7 +80,7 @@ argument_schema = {
                         "description": "The Id of the node from which the Edge begins",
                         "id": "/properties/edges/items/properties/source_id",
                         "maxLength": 19,
-                        "pattern": "(((\\d|[a-zA-Z]){4})\\-){3}(\\d|[a-zA-Z]){4}",
+
                         "title": "The source_id schema",
                         "type": "string"
                     },
@@ -86,7 +89,7 @@ argument_schema = {
                         "description": "The Id of the node from at which the Edge ends",
                         "id": "/properties/edges/items/properties/target_id",
                         "maxLength": 19,
-                        "pattern": "(((\\d|[a-zA-Z]){4})\\-){3}(\\d|[a-zA-Z]){4}",
+
                         "title": "The target_id schema",
                         "type": "string"
                     }
@@ -112,7 +115,7 @@ argument_schema = {
             "description": "The Id of the document (argument scheme/a)",
             "id": "/properties/id",
             "maxLength": 19,
-            "pattern": "(((\\d|[a-zA-Z]){4})\\-){3}(\\d|[a-zA-Z]){4}",
+
             "title": "The id schema",
             "type": "string"
         },
@@ -132,7 +135,7 @@ argument_schema = {
                         "default": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45",
                         "description": "The Id of the node",
                         "maxLength": 19,
-                        "pattern": "(((\\d|[a-zA-Z]){4})\\-){3}(\\d|[a-zA-Z]){4}",
+
                         "type": "string"
                     },
                     "metadata": {
@@ -321,7 +324,7 @@ def home():
     username = ""
     if 'username' in session:
         login_user = users.find_one({'name': session['username']})
-        username = "Hi there: " + login_user.get('name')
+        username = login_user.get('name')
 
     if request.method == 'POST':
         return search_for_arg()
@@ -368,7 +371,7 @@ def get_argument_by_id(ArgId):
     username = ""
     if 'username' in session:
         login_user = users.find_one({'name': session['username']})
-        username = "Hi there: " + login_user.get('name')
+        username = login_user.get('name')
     argument = mongo.db.argument
     # ArgId = ArgId.replace(" ", "|")
     search_results = argument.find_one({"id": {'$regex': ".*" + ArgId + ".*", "$options": "i"}})
@@ -398,7 +401,7 @@ def get_one_argument(argString):
     username = ""
     if 'username' in session:
         login_user = users.find_one({'name': session['username']})
-        username = "Hi there: " + login_user.get('name')
+        username = login_user.get('name')
     argument = mongo.db.argument
     argString = argString.replace(" ", "|")
     typeOF = type(argString)
@@ -432,7 +435,7 @@ def get_one_argument(argString):
     #     output = {'name': q['name'], 'contents': q['contents']}
     # else:
     #     output = 'No results Found'
-
+    nodes_text = []
     output = []
     for q in with_regex:
         output.append({
@@ -449,13 +452,27 @@ def get_one_argument(argString):
 
         })
 
-        # output = json.dumps(output, sort_keys=True, indent=4, separators=(',', ': '))
+    # For each doc that matches the search result go through all nodes and return the text which contains the search
+    for document in output:
+        for node in document['Nodes']:
+            if 'text' in node:
+                if re.search(r".*" + argString + r".*", node['text'], re.IGNORECASE):
+                    wordLimit = 10
+                    text = node['text'].split(' ')
+                    firstNwords = ' '.join(text[:wordLimit])
+                    if len(text) > wordLimit:
+                        firstNwords += "..."
+                    nodes_text.append(firstNwords)
+                    break
+
+    # output = json.dumps(output, sort_keys=True, indent=4, separators=(',', ': '))
     # with_regex = jsonify(with_regex)
     typeOF = type(output)
     return render_template('search_results.html', json=output, typeof=typeOF,
                            argString=argString,
                            with_regex=with_regex,
                            current_user=username,
+                           search_nodes=nodes_text,
                            cursor=count_me)
 
 
