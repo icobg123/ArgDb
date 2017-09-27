@@ -35,6 +35,149 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Regex for IDs - [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}
 # Regex for Email - (^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)
 argument_schema = {
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {},
+  "id": "http://example.com/example.json",
+  "properties": {
+    "sadface": {
+      "id": "/properties/sadface",
+      "properties": {
+        "analyst_email": {
+          "default": "siwells@gmail.com",
+          "description": "An explanation about the purpose of this instance.",
+          "id": "/properties/sadface/properties/analyst_email",
+          "title": "The analyst_email schema",
+          "type": "string"
+        },
+        "analyst_name": {
+          "default": "Simon Wells",
+          "description": "An explanation about the purpose of this instance.",
+          "id": "/properties/sadface/properties/analyst_name",
+          "title": "The analyst_name schema",
+          "type": "string"
+        },
+        "created": {
+          "default": "2017-07-11T16:32:36",
+          "description": "An explanation about the purpose of this instance.",
+          "id": "/properties/sadface/properties/created",
+          "title": "The created schema",
+          "type": "string"
+        },
+        "edges": {
+          "id": "/properties/sadface/properties/edges",
+          "items": {
+            "id": "/properties/sadface/properties/edges/items",
+            "properties": {
+              "id": {
+                "default": "d7bcef81-0d74-4ae5-96f9-bfb07031f1fa",
+                "description": "An explanation about the purpose of this instance.",
+                "id": "/properties/sadface/properties/edges/items/properties/id",
+                "title": "The id schema",
+                "type": "string"
+              },
+              "source_id": {
+                "default": "49a786ce-9066-4230-8e18-42086882a160",
+                "description": "An explanation about the purpose of this instance.",
+                "id": "/properties/sadface/properties/edges/items/properties/source_id",
+                "title": "The source_id schema",
+                "type": "string"
+              },
+              "target_id": {
+                "default": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45",
+                "description": "An explanation about the purpose of this instance.",
+                "id": "/properties/sadface/properties/edges/items/properties/target_id",
+                "title": "The target_id schema",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "edited": {
+          "default": "2017-07-11T16:32:36",
+          "description": "An explanation about the purpose of this instance.",
+          "id": "/properties/sadface/properties/edited",
+          "title": "The edited schema",
+          "type": "string"
+        },
+        "id": {
+          "default": "94a975db-25ae-4d25-93cc-1c07c932e2f8",
+          "description": "An explanation about the purpose of this instance.",
+          "id": "/properties/sadface/properties/id",
+          "title": "The id schema",
+          "type": "string"
+        },
+        "metadata": {
+          "id": "/properties/sadface/properties/metadata",
+          "properties": {
+            "description": "This accepts anything, as long as it's valid JSON.",
+            "title": "Empty Object"
+          },
+          "type": "object"
+        },
+        "nodes": {
+          "id": "/properties/sadface/properties/nodes",
+          "items": {
+            "id": "/properties/sadface/properties/nodes/items",
+            "properties": {
+              "id": {
+                "default": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45",
+                "description": "An explanation about the purpose of this instance.",
+                "id": "/properties/sadface/properties/nodes/items/properties/id",
+                "title": "The id schema",
+                "type": "string"
+              },
+              "metadata": {
+                "id": "/properties/sadface/properties/nodes/items/properties/metadata",
+                "properties": {
+                  "description": "This accepts anything, as long as it's valid JSON.",
+                  "title": "Empty Object"
+                },
+                "type": "object"
+              },
+              "sources": {
+                "id": "/properties/sadface/properties/nodes/items/properties/sources",
+                "items": {
+                  "description": "This accepts anything, as long as it's valid JSON.",
+                  "title": "Empty Object"
+                },
+                "type": "array"
+              },
+              "text": {
+                "default": "The 'Hang Back' campaign video should not have been published, and should be withdrawn.",
+                "description": "An explanation about the purpose of this instance.",
+                "id": "/properties/sadface/properties/nodes/items/properties/text",
+                "title": "The text schema",
+                "type": "string"
+              },
+              "type": {
+                "default": "atom",
+                "description": "An explanation about the purpose of this instance.",
+                "id": "/properties/sadface/properties/nodes/items/properties/type",
+                "title": "The type schema",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "resources": {
+          "id": "/properties/sadface/properties/resources",
+          "items": {
+            "description": "This accepts anything, as long as it's valid JSON.",
+            "title": "Empty Object"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object"
+}
+argument_schema_bck = {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "definitions": {},
     "id": "http://example.com/example.json",
@@ -237,6 +380,7 @@ def upload_file():
     if 'username' in session:
         login_user = users.find_one({'name': session['username']})
         username = login_user.get('name')
+        public_id = login_user.get('public_id')
     req_headers = request.headers
     if request.method == 'POST':
         # if request.form['btn'] == 'Upload':
@@ -260,6 +404,7 @@ def upload_file():
                     v = Draft4Validator(argument_schema)
                     # if Draft3Validator(schema).is_valid([2, 3, 4]):
                     if v.is_valid(parsed_to_json):
+                        parsed_to_json['uploader'] = public_id
                         post_id = argument.insert_one(parsed_to_json).inserted_id
                     valid = v.is_valid(parsed_to_json)
                     if valid:

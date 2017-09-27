@@ -19,6 +19,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from bson.objectid import ObjectId
 from passlib.apps import custom_app_context as pwd_context
 from bson.json_util import dumps
+# import sadface
 import json
 import uuid
 import jwt
@@ -39,7 +40,151 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # TODO: Regex for the JSON schema
 # Regex for IDs - (((\d|[a-zA-Z]){4})\-){3}(\d|[a-zA-Z]){4}
 # Regex for Email - (^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)
+
 argument_schema = {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {},
+    "id": "http://example.com/example.json",
+    "properties": {
+        "sadface": {
+            "id": "/properties/sadface",
+            "properties": {
+                "analyst_email": {
+                    "default": "siwells@gmail.com",
+                    "description": "An explanation about the purpose of this instance.",
+                    "id": "/properties/sadface/properties/analyst_email",
+                    "title": "The analyst_email schema",
+                    "type": "string"
+                },
+                "analyst_name": {
+                    "default": "Simon Wells",
+                    "description": "An explanation about the purpose of this instance.",
+                    "id": "/properties/sadface/properties/analyst_name",
+                    "title": "The analyst_name schema",
+                    "type": "string"
+                },
+                "created": {
+                    "default": "2017-07-11T16:32:36",
+                    "description": "An explanation about the purpose of this instance.",
+                    "id": "/properties/sadface/properties/created",
+                    "title": "The created schema",
+                    "type": "string"
+                },
+                "edges": {
+                    "id": "/properties/sadface/properties/edges",
+                    "items": {
+                        "id": "/properties/sadface/properties/edges/items",
+                        "properties": {
+                            "id": {
+                                "default": "d7bcef81-0d74-4ae5-96f9-bfb07031f1fa",
+                                "description": "An explanation about the purpose of this instance.",
+                                "id": "/properties/sadface/properties/edges/items/properties/id",
+                                "title": "The id schema",
+                                "type": "string"
+                            },
+                            "source_id": {
+                                "default": "49a786ce-9066-4230-8e18-42086882a160",
+                                "description": "An explanation about the purpose of this instance.",
+                                "id": "/properties/sadface/properties/edges/items/properties/source_id",
+                                "title": "The source_id schema",
+                                "type": "string"
+                            },
+                            "target_id": {
+                                "default": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45",
+                                "description": "An explanation about the purpose of this instance.",
+                                "id": "/properties/sadface/properties/edges/items/properties/target_id",
+                                "title": "The target_id schema",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "edited": {
+                    "default": "2017-07-11T16:32:36",
+                    "description": "An explanation about the purpose of this instance.",
+                    "id": "/properties/sadface/properties/edited",
+                    "title": "The edited schema",
+                    "type": "string"
+                },
+                "id": {
+                    "default": "94a975db-25ae-4d25-93cc-1c07c932e2f8",
+                    "description": "An explanation about the purpose of this instance.",
+                    "id": "/properties/sadface/properties/id",
+                    "title": "The id schema",
+                    "type": "string"
+                },
+                "metadata": {
+                    "id": "/properties/sadface/properties/metadata",
+                    "properties": {
+                        "description": "This accepts anything, as long as it's valid JSON.",
+                        "title": "Empty Object"
+                    },
+                    "type": "object"
+                },
+                "nodes": {
+                    "id": "/properties/sadface/properties/nodes",
+                    "items": {
+                        "id": "/properties/sadface/properties/nodes/items",
+                        "properties": {
+                            "id": {
+                                "default": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45",
+                                "description": "An explanation about the purpose of this instance.",
+                                "id": "/properties/sadface/properties/nodes/items/properties/id",
+                                "title": "The id schema",
+                                "type": "string"
+                            },
+                            "metadata": {
+                                "id": "/properties/sadface/properties/nodes/items/properties/metadata",
+                                "properties": {
+                                    "description": "This accepts anything, as long as it's valid JSON.",
+                                    "title": "Empty Object"
+                                },
+                                "type": "object"
+                            },
+                            "sources": {
+                                "id": "/properties/sadface/properties/nodes/items/properties/sources",
+                                "items": {
+                                    "description": "This accepts anything, as long as it's valid JSON.",
+                                    "title": "Empty Object"
+                                },
+                                "type": "array"
+                            },
+                            "text": {
+                                "default": "The 'Hang Back' campaign video should not have been published, and should be withdrawn.",
+                                "description": "An explanation about the purpose of this instance.",
+                                "id": "/properties/sadface/properties/nodes/items/properties/text",
+                                "title": "The text schema",
+                                "type": "string"
+                            },
+                            "type": {
+                                "default": "atom",
+                                "description": "An explanation about the purpose of this instance.",
+                                "id": "/properties/sadface/properties/nodes/items/properties/type",
+                                "title": "The type schema",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "resources": {
+                    "id": "/properties/sadface/properties/resources",
+                    "items": {
+                        "description": "This accepts anything, as long as it's valid JSON.",
+                        "title": "Empty Object"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "type": "object"
+}
+argument_schema_bck = {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "definitions": {},
     "id": "http://example.com/example.json",
@@ -377,7 +522,10 @@ def allowed_file(filename):
 
 
 @app.route('/api/upload', methods=['GET', 'POST'])
-def upload_file():
+@token_required
+def upload_file(current_user):
+    if not current_user.get('admin'):
+        return jsonify({'message': 'Cannot perform that function!'})
     argument = mongo.db.argument
     # schema = open("uploads/schema.json").read()
     # data = open("uploads/correct_format.json").read()
@@ -387,7 +535,8 @@ def upload_file():
         # check if the post request has the file part
         if request.files['file'].filename == '':
             err = "Please select a File."
-            return render_template('upload.html', err=err, argument_schema=argument_schema)
+            return jsonify({'message': err},
+                           {'schema': argument_schema})
         else:
             file = request.files['file']
             filename = secure_filename(file.filename)
@@ -410,8 +559,10 @@ def upload_file():
                     # search_result = argument.find(
                     #     {"nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}})
                     # TODO: make if statement that checks if there is a doc that exists with that id and if so dont upload the doc
-                    check_if_exists = argument.find({"id": parsed_to_json.get("id")}, {"id": 1}).limit(1)
+                    check_if_exists = argument.find({"id": parsed_to_json.get("sadface", {}).get('id')},
+                                                    {"id": 1}).limit(1)
                     # check_if_exists = dumps(argument.find({"id": parsed_to_json.get("id")}, {"id": 1}).limit(1))
+
                     check_if_exists_dumps = dumps(check_if_exists)
                     check_if_exists_count = check_if_exists.count()
                     if check_if_exists_count > 0:
@@ -423,7 +574,8 @@ def upload_file():
                             # "Created": parsed_to_json.get("created"),
                             # "Edges": parsed_to_json.get("edges"),
                             # "Edited": parsed_to_json.get("edited"),
-                            "id": parsed_to_json.get("id"),
+                            "id": parsed_to_json.get("sadface", {}).get('id'),
+                            # "id": parsed_to_json.get("id"),
                             # "Metadata": parsed_to_json.get("metadata"),
                             # "Nodes": parsed_to_json.get("nodes"),
                             # "Resources": parsed_to_json.get("resources"),
@@ -434,6 +586,8 @@ def upload_file():
                         # return outcome
                     else:
                         outcome = "Successful Upload"
+                        parsed_to_json['uploader'] = current_user.get('public_id')
+                        parsed_to_json['time_of_upload'] = datetime.datetime.now()
                         post_id = argument.insert_one(parsed_to_json).inserted_id
                         return outcome
                 else:
@@ -474,6 +628,90 @@ def upload_file():
     return jsonify({'message': 'Please POST a JSON document in the following structure!'},
                    {'schema': argument_schema})
     # return render_template('upload.html', argument_schema=argument_schema)
+
+
+@app.route('/api/edit', methods=['GET', 'POST'])
+@token_required
+def edit_document(current_user):
+    if not current_user.get('admin'):
+        return jsonify({'message': 'Cannot perform that function!'})
+    argument = mongo.db.argument
+    # schema = open("uploads/schema.json").read()
+    # data = open("uploads/correct_format.json").read()
+    # Header Data for debugging
+    req_headers = request.headers
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if request.files['file'].filename == '':
+            err = "Please select a File."
+            return jsonify({'message': err},
+                           {'schema': argument_schema})
+        else:
+            file = request.files['file']
+            filename = secure_filename(file.filename)
+
+            if filename and allowed_file(file.filename):
+                parsed_to_string = file.read().decode("utf-8")
+                # To Dict
+                parsed_to_json = json.loads(parsed_to_string)
+
+                # TODO: the validator checks against the schema and inserts the provided json only if it contains the
+                # TODO: required fields and it will upload it to the
+                v = Draft4Validator(argument_schema)
+
+                valid = v.is_valid(parsed_to_json)
+                parsed_to_json_type = type(parsed_to_json)
+                if valid:
+                    # TODO: make if statement that checks if there is a doc that exists with that id and if so dont upload the doc
+                    check_if_exists = argument.find({"sadface.id": parsed_to_json.get("sadface", {}).get('id')},
+                                                    {"id": 1}).limit(1)
+                    check_if_exists_uploader = argument.find_one(
+                        {'sadface.id': parsed_to_json.get("sadface", {}).get('id')})
+                    uploader = check_if_exists_uploader['uploader']
+                    check_if_exists_dumps = dumps(check_if_exists)
+                    check_if_exists_count = check_if_exists.count()
+                    if check_if_exists_count > 0 and current_user.get('public_id') == uploader:
+                        # TODO:FIND AND UPDATE THE DOCUMENT
+
+                        outcome = "The following document has been replaced"
+                        parsed_to_json['uploader'] = current_user.get('public_id')
+                        parsed_to_json['time_of_edit_upload'] = datetime.datetime.now()
+                        replaced_doc = argument.replace_one({"sadface.id": parsed_to_json.get("sadface", {}).get('id')},
+                                                            parsed_to_json)
+
+                        return json.dumps(
+                            {outcome: ({"id": parsed_to_json.get("sadface", {}).get('id'), "uploader": uploader
+                                        })}, sort_keys=False, indent=2), 200, {
+                                   'Content-Type': 'application/json'}
+
+                    else:
+                        outcome = "A document with that ID does not exist or you don't" \
+                                  " have permissions to edit this document"
+
+                        return jsonify({'Documents found': check_if_exists_count}, {'message': outcome},
+                                       {'id': parsed_to_json.get("sadface", {}).get('id')})
+                else:
+                    errors_list = []
+
+                    errors = sorted(v.iter_errors(parsed_to_json), key=lambda e: e.path)
+
+                    for error in errors:
+                        error_dict = {'key': list(error.path), 'error': error.message}
+                        errors_list.append(error_dict)
+
+                    outcome = "Unsuccessful Upload, invalid Json"
+
+                    return json.dumps({'Errors': errors_list}, sort_keys=False, indent=2), 200, {
+                        'Content-Type': 'application/json'}
+
+            else:
+                err = "Wrong file extension. Please upload a JSON document."
+                return err
+
+    return jsonify({
+        'message': 'In order to edit a document please POST a JSON document in the following structure!'
+                   ' With all keys including the ones you wish to override'},
+        {'schema': argument_schema})
 
 
 @app.route('/handle_data', methods=['POST'])
