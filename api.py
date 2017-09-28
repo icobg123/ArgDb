@@ -1,5 +1,6 @@
 import os
 
+import graphviz
 import jsonschema
 from bson import regex
 from flask import Flask, jsonify, request, abort, render_template, redirect, url_for, \
@@ -10,7 +11,11 @@ from jsonschema import validate
 from jsonschema import Draft3Validator
 from jsonschema import Draft4Validator
 from jsonschema import ErrorTree
+import pygraphviz as pgv
+from pygraphviz import *
 from flask import g
+from pygraphviz import *
+# import pygraphviz
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 from flask_httpauth import HTTPBasicAuth
 from jsonschema.exceptions import best_match
@@ -19,7 +24,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from bson.objectid import ObjectId
 from passlib.apps import custom_app_context as pwd_context
 from bson.json_util import dumps
-# import sadface
+import sadface
 import json
 import uuid
 import jwt
@@ -40,7 +45,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # TODO: Regex for the JSON schema
 # Regex for IDs - (((\d|[a-zA-Z]){4})\-){3}(\d|[a-zA-Z]){4}
 # Regex for Email - (^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)
-
+sd = {}
 argument_schema = {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "definitions": {},
@@ -559,7 +564,7 @@ def upload_file(current_user):
                     # search_result = argument.find(
                     #     {"nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}})
                     # TODO: make if statement that checks if there is a doc that exists with that id and if so dont upload the doc
-                    check_if_exists = argument.find({"id": parsed_to_json.get("sadface", {}).get('id')},
+                    check_if_exists = argument.find({"sadface.id": parsed_to_json.get("sadface", {}).get('id')},
                                                     {"id": 1}).limit(1)
                     # check_if_exists = dumps(argument.find({"id": parsed_to_json.get("id")}, {"id": 1}).limit(1))
 
@@ -586,10 +591,17 @@ def upload_file(current_user):
                         # return outcome
                     else:
                         outcome = "Successful Upload"
+                        sadface.sd = parsed_to_json['sadface']
+                        dot_string = sadface.export_dot()
+                        graph = graphviz.Source(dot_string, format='svg')
+                        # graph = pgv.AGraph(dot_string)
+                        # graph.layout(prog='dot')
+                        # graph.draw(parsed_to_json['sadface']['id'] + '.png')
+                        # sadface.save(parsed_to_json['sadface']['id'], "dot")
                         parsed_to_json['uploader'] = current_user.get('public_id')
                         parsed_to_json['time_of_upload'] = datetime.datetime.now()
                         post_id = argument.insert_one(parsed_to_json).inserted_id
-                        return outcome
+                        return jsonify({'message': outcome})
                 else:
                     errors_list = []
                     # asd = 123
@@ -706,7 +718,7 @@ def edit_document(current_user):
 
             else:
                 err = "Wrong file extension. Please upload a JSON document."
-                return err
+                jsonify({'message': err})
 
     return jsonify({
         'message': 'In order to edit a document please POST a JSON document in the following structure!'
@@ -853,12 +865,12 @@ def get_list_argument_id(argString):
     argument = mongo.db.argument
     argString = argString.replace(" ", "|")
     search_results = argument.find(
-        {"nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}})
+        {"sadface.nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}})
 
     argument_ids_list = []
     for argument in search_results:
         argument_ids_list.append({
-            "id": argument["id"]
+            "id": argument['sadface']["id"]
         })
 
     return json.dumps({'argument IDs': argument_ids_list}, sort_keys=False, indent=2), 200, {
@@ -872,21 +884,21 @@ def get_argument_by_id(current_user, ArgId):
         return jsonify({'message': 'Cannot perform that function!'})
     argument = mongo.db.argument
     # ArgId = ArgId.replace(" ", "|")
-    search_results = argument.find_one({"id": {'$regex': ".*" + ArgId + ".*", "$options": "i"}})
+    search_results = argument.find_one({"sadface.id": {'$regex': ".*" + ArgId + ".*", "$options": "i"}})
 
-    result = search_results.get('id')
+    result = search_results.get("sadface", {})
 
     # return render_template('homepage.html', doomed=result)
     return json.dumps({'argument IDs': ({
-        "Analyst Email": search_results.get("analyst_email"),
-        "Analyst Name": search_results.get("analyst_name"),
-        "Created": search_results.get("created"),
-        "Edges": search_results.get("edges"),
-        "Edited": search_results.get("edited"),
-        "id": search_results.get("id"),
-        "Metadata": search_results.get("metadata"),
-        "Nodes": search_results.get("nodes"),
-        "Resources": search_results.get("resources"),
+        "Analyst Email": result.get("analyst_email"),
+        "Analyst Name": result.get("analyst_name"),
+        "Created": result.get("created"),
+        "Edges": result.get("edges"),
+        "Edited": result.get("edited"),
+        "id": result.get("id"),
+        "Metadata": result.get("metadata"),
+        "Nodes": result.get("nodes"),
+        "Resources": result.get("resources"),
 
     })}, sort_keys=False, indent=2), 200, {'Content-Type': 'application/json'}
 

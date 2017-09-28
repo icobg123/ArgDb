@@ -4,10 +4,14 @@ import datetime
 import uuid
 from datetime import timedelta
 from typing import re
-
+import sadface
+import pygraphviz as pgv
+import plotly
+import graphviz
+from graphviz import Source
 import jsonschema
 from bson import regex
-from flask import Flask, jsonify, session, abort, request, render_template, redirect, url_for, \
+from flask import Flask, jsonify, session, abort, request, render_template, redirect, Markup, url_for, \
     send_from_directory
 from flask_pymongo import PyMongo
 from flask.helpers import flash
@@ -35,147 +39,147 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Regex for IDs - [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}
 # Regex for Email - (^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)
 argument_schema = {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "definitions": {},
-  "id": "http://example.com/example.json",
-  "properties": {
-    "sadface": {
-      "id": "/properties/sadface",
-      "properties": {
-        "analyst_email": {
-          "default": "siwells@gmail.com",
-          "description": "An explanation about the purpose of this instance.",
-          "id": "/properties/sadface/properties/analyst_email",
-          "title": "The analyst_email schema",
-          "type": "string"
-        },
-        "analyst_name": {
-          "default": "Simon Wells",
-          "description": "An explanation about the purpose of this instance.",
-          "id": "/properties/sadface/properties/analyst_name",
-          "title": "The analyst_name schema",
-          "type": "string"
-        },
-        "created": {
-          "default": "2017-07-11T16:32:36",
-          "description": "An explanation about the purpose of this instance.",
-          "id": "/properties/sadface/properties/created",
-          "title": "The created schema",
-          "type": "string"
-        },
-        "edges": {
-          "id": "/properties/sadface/properties/edges",
-          "items": {
-            "id": "/properties/sadface/properties/edges/items",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {},
+    "id": "http://example.com/example.json",
+    "properties": {
+        "sadface": {
+            "id": "/properties/sadface",
             "properties": {
-              "id": {
-                "default": "d7bcef81-0d74-4ae5-96f9-bfb07031f1fa",
-                "description": "An explanation about the purpose of this instance.",
-                "id": "/properties/sadface/properties/edges/items/properties/id",
-                "title": "The id schema",
-                "type": "string"
-              },
-              "source_id": {
-                "default": "49a786ce-9066-4230-8e18-42086882a160",
-                "description": "An explanation about the purpose of this instance.",
-                "id": "/properties/sadface/properties/edges/items/properties/source_id",
-                "title": "The source_id schema",
-                "type": "string"
-              },
-              "target_id": {
-                "default": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45",
-                "description": "An explanation about the purpose of this instance.",
-                "id": "/properties/sadface/properties/edges/items/properties/target_id",
-                "title": "The target_id schema",
-                "type": "string"
-              }
+                "analyst_email": {
+                    "default": "siwells@gmail.com",
+                    "description": "An explanation about the purpose of this instance.",
+                    "id": "/properties/sadface/properties/analyst_email",
+                    "title": "The analyst_email schema",
+                    "type": "string"
+                },
+                "analyst_name": {
+                    "default": "Simon Wells",
+                    "description": "An explanation about the purpose of this instance.",
+                    "id": "/properties/sadface/properties/analyst_name",
+                    "title": "The analyst_name schema",
+                    "type": "string"
+                },
+                "created": {
+                    "default": "2017-07-11T16:32:36",
+                    "description": "An explanation about the purpose of this instance.",
+                    "id": "/properties/sadface/properties/created",
+                    "title": "The created schema",
+                    "type": "string"
+                },
+                "edges": {
+                    "id": "/properties/sadface/properties/edges",
+                    "items": {
+                        "id": "/properties/sadface/properties/edges/items",
+                        "properties": {
+                            "id": {
+                                "default": "d7bcef81-0d74-4ae5-96f9-bfb07031f1fa",
+                                "description": "An explanation about the purpose of this instance.",
+                                "id": "/properties/sadface/properties/edges/items/properties/id",
+                                "title": "The id schema",
+                                "type": "string"
+                            },
+                            "source_id": {
+                                "default": "49a786ce-9066-4230-8e18-42086882a160",
+                                "description": "An explanation about the purpose of this instance.",
+                                "id": "/properties/sadface/properties/edges/items/properties/source_id",
+                                "title": "The source_id schema",
+                                "type": "string"
+                            },
+                            "target_id": {
+                                "default": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45",
+                                "description": "An explanation about the purpose of this instance.",
+                                "id": "/properties/sadface/properties/edges/items/properties/target_id",
+                                "title": "The target_id schema",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "edited": {
+                    "default": "2017-07-11T16:32:36",
+                    "description": "An explanation about the purpose of this instance.",
+                    "id": "/properties/sadface/properties/edited",
+                    "title": "The edited schema",
+                    "type": "string"
+                },
+                "id": {
+                    "default": "94a975db-25ae-4d25-93cc-1c07c932e2f8",
+                    "description": "An explanation about the purpose of this instance.",
+                    "id": "/properties/sadface/properties/id",
+                    "title": "The id schema",
+                    "type": "string"
+                },
+                "metadata": {
+                    "id": "/properties/sadface/properties/metadata",
+                    "properties": {
+                        "description": "This accepts anything, as long as it's valid JSON.",
+                        "title": "Empty Object"
+                    },
+                    "type": "object"
+                },
+                "nodes": {
+                    "id": "/properties/sadface/properties/nodes",
+                    "items": {
+                        "id": "/properties/sadface/properties/nodes/items",
+                        "properties": {
+                            "id": {
+                                "default": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45",
+                                "description": "An explanation about the purpose of this instance.",
+                                "id": "/properties/sadface/properties/nodes/items/properties/id",
+                                "title": "The id schema",
+                                "type": "string"
+                            },
+                            "metadata": {
+                                "id": "/properties/sadface/properties/nodes/items/properties/metadata",
+                                "properties": {
+                                    "description": "This accepts anything, as long as it's valid JSON.",
+                                    "title": "Empty Object"
+                                },
+                                "type": "object"
+                            },
+                            "sources": {
+                                "id": "/properties/sadface/properties/nodes/items/properties/sources",
+                                "items": {
+                                    "description": "This accepts anything, as long as it's valid JSON.",
+                                    "title": "Empty Object"
+                                },
+                                "type": "array"
+                            },
+                            "text": {
+                                "default": "The 'Hang Back' campaign video should not have been published, and should be withdrawn.",
+                                "description": "An explanation about the purpose of this instance.",
+                                "id": "/properties/sadface/properties/nodes/items/properties/text",
+                                "title": "The text schema",
+                                "type": "string"
+                            },
+                            "type": {
+                                "default": "atom",
+                                "description": "An explanation about the purpose of this instance.",
+                                "id": "/properties/sadface/properties/nodes/items/properties/type",
+                                "title": "The type schema",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "resources": {
+                    "id": "/properties/sadface/properties/resources",
+                    "items": {
+                        "description": "This accepts anything, as long as it's valid JSON.",
+                        "title": "Empty Object"
+                    },
+                    "type": "array"
+                }
             },
             "type": "object"
-          },
-          "type": "array"
-        },
-        "edited": {
-          "default": "2017-07-11T16:32:36",
-          "description": "An explanation about the purpose of this instance.",
-          "id": "/properties/sadface/properties/edited",
-          "title": "The edited schema",
-          "type": "string"
-        },
-        "id": {
-          "default": "94a975db-25ae-4d25-93cc-1c07c932e2f8",
-          "description": "An explanation about the purpose of this instance.",
-          "id": "/properties/sadface/properties/id",
-          "title": "The id schema",
-          "type": "string"
-        },
-        "metadata": {
-          "id": "/properties/sadface/properties/metadata",
-          "properties": {
-            "description": "This accepts anything, as long as it's valid JSON.",
-            "title": "Empty Object"
-          },
-          "type": "object"
-        },
-        "nodes": {
-          "id": "/properties/sadface/properties/nodes",
-          "items": {
-            "id": "/properties/sadface/properties/nodes/items",
-            "properties": {
-              "id": {
-                "default": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45",
-                "description": "An explanation about the purpose of this instance.",
-                "id": "/properties/sadface/properties/nodes/items/properties/id",
-                "title": "The id schema",
-                "type": "string"
-              },
-              "metadata": {
-                "id": "/properties/sadface/properties/nodes/items/properties/metadata",
-                "properties": {
-                  "description": "This accepts anything, as long as it's valid JSON.",
-                  "title": "Empty Object"
-                },
-                "type": "object"
-              },
-              "sources": {
-                "id": "/properties/sadface/properties/nodes/items/properties/sources",
-                "items": {
-                  "description": "This accepts anything, as long as it's valid JSON.",
-                  "title": "Empty Object"
-                },
-                "type": "array"
-              },
-              "text": {
-                "default": "The 'Hang Back' campaign video should not have been published, and should be withdrawn.",
-                "description": "An explanation about the purpose of this instance.",
-                "id": "/properties/sadface/properties/nodes/items/properties/text",
-                "title": "The text schema",
-                "type": "string"
-              },
-              "type": {
-                "default": "atom",
-                "description": "An explanation about the purpose of this instance.",
-                "id": "/properties/sadface/properties/nodes/items/properties/type",
-                "title": "The type schema",
-                "type": "string"
-              }
-            },
-            "type": "object"
-          },
-          "type": "array"
-        },
-        "resources": {
-          "id": "/properties/sadface/properties/resources",
-          "items": {
-            "description": "This accepts anything, as long as it's valid JSON.",
-            "title": "Empty Object"
-          },
-          "type": "array"
         }
-      },
-      "type": "object"
-    }
-  },
-  "type": "object"
+    },
+    "type": "object"
 }
 argument_schema_bck = {
     "$schema": "http://json-schema.org/draft-04/schema#",
@@ -519,22 +523,26 @@ def get_argument_by_id(ArgId):
         username = login_user.get('name')
     argument = mongo.db.argument
     # ArgId = ArgId.replace(" ", "|")
-    search_results = argument.find_one({"id": {'$regex': ".*" + ArgId + ".*", "$options": "i"}})
-
-    result = search_results.get('id')
+    search_results = argument.find_one({"sadface.id": {'$regex': ".*" + ArgId + ".*", "$options": "i"}})
+    sadface_results = search_results.get("sadface", {})
+    result = sadface_results.get('id')
     arg_found = json.dumps({'argument IDs': ({
-        "Analyst Email": search_results.get("analyst_email"),
-        "Analyst Name": search_results.get("analyst_name"),
-        "Created": search_results.get("created"),
-        "Edges": search_results.get("edges"),
-        "Edited": search_results.get("edited"),
-        "id": search_results.get("id"),
-        "Metadata": search_results.get("metadata"),
-        "Nodes": search_results.get("nodes"),
-        "Resources": search_results.get("resources")})}, sort_keys=False, indent=2)
+        "Analyst Email": sadface_results.get("analyst_email"),
+        "Analyst Name": sadface_results.get("analyst_name"),
+        "Created": sadface_results.get("created"),
+        "Edges": sadface_results.get("edges"),
+        "Edited": sadface_results.get("edited"),
+        "id": sadface_results.get("id"),
+        "Metadata": sadface_results.get("metadata"),
+        "Nodes": sadface_results.get("nodes"),
+        "Resources": sadface_results.get("resources")})}, sort_keys=False, indent=2)
 
-    # return render_template('homepage.html', doomed=result)
-    return render_template('single_arg.html', argument=arg_found, arg_id=result, current_user=username)
+    sadface.sd = sadface_results
+    dot_string = sadface.export_dot()
+    graph = graphviz.Source(dot_string, format='svg')
+
+    return render_template('single_arg.html', argument=arg_found, arg_id=result, current_user=username,
+                           graph=Markup(graph.pipe().decode('utf-8')))
 
 
 @app.route('/argument/<argString>', methods=['GET', 'POST'])
@@ -567,13 +575,13 @@ def get_one_argument(argString):
     qss = argument.find({"$text": {"$search": argString}}).count()
     # qss = argument.find({"$text": {"$search": argString}}).count()
 
-    with_regex = argument.find(
-        {"nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}})
+    search_results = argument.find(
+        {"sadface.nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}})
     # with_regex_1 = argument.find(
     #     {"name": {'$regex': ".*" + argString + ".*", '$options': 'i'}})
     # TODO: counts how many results were found
 
-    count_me = with_regex.count()
+    count_me = search_results.count()
     # q = list(argument.find({'$text:': {'$search': argString}}))
 
     # if q:
@@ -582,18 +590,18 @@ def get_one_argument(argString):
     #     output = 'No results Found'
     nodes_text = []
     output = []
-    for q in with_regex:
+    for q in search_results:
         output.append({
             # "MongoDB ID": q["_id"],
-            "Analyst Email": q["analyst_email"],
-            "Analyst Name": q["analyst_name"],
-            "Created": q["created"],
-            "Edges": q["edges"],
-            "Edited": q["edited"],
-            "id": q["id"],
-            # "Metadata": q["metadata"],
-            "Nodes": q["nodes"],
-            # "Resources": q["resources"],
+            "Analyst Email": q['sadface']["analyst_email"],
+            "Analyst Name": q['sadface']["analyst_name"],
+            "Created": q['sadface']["created"],
+            "Edges": q['sadface']["edges"],
+            "Edited": q['sadface']["edited"],
+            "id": q['sadface']["id"],
+            # "Metadata": q['sadface']["metadata"],
+            "Nodes": q['sadface']["nodes"],
+            # "Resources": q['sadface']["resources"],
 
         })
 
@@ -615,7 +623,7 @@ def get_one_argument(argString):
     typeOF = type(output)
     return render_template('search_results.html', json=output, typeof=typeOF,
                            argString=argString,
-                           with_regex=with_regex,
+                           search_results=search_results,
                            current_user=username,
                            search_nodes=nodes_text,
                            cursor=count_me)
