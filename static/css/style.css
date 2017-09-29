@@ -11,6 +11,14 @@ html, body {
     background-color: #ffffff;
 }
 
+svg {
+    /*width: 100%;*/
+    /*height: auto;*/
+}
+pre {
+    overflow: auto;
+    /*width: 100%;*/
+}
 p {
     font-size: 1.6em;
     color: #333;

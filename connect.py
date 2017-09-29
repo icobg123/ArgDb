@@ -5,20 +5,20 @@ import uuid
 from datetime import timedelta
 from typing import re
 import sadface
-import pygraphviz as pgv
-import plotly
 import graphviz
+from flask.ext.paginate import get_page_parameter
 from graphviz import Source
 import jsonschema
 from bson import regex
 from flask import Flask, jsonify, session, abort, request, render_template, redirect, Markup, url_for, \
     send_from_directory
-from flask_pymongo import PyMongo
+from flask_pymongo import PyMongo, pymongo
 from flask.helpers import flash
 from jsonschema import validate
 from jsonschema import Draft3Validator
 from jsonschema import Draft4Validator
 from bson import json_util
+from flask_paginate import Pagination, get_page_args
 from passlib.apps import custom_app_context as pwd_context
 import json
 import jwt
@@ -27,6 +27,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 from werkzeug.utils import secure_filename
 from werkzeug.wsgi import SharedDataMiddleware
+
+os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
@@ -557,37 +559,29 @@ def get_one_argument(argString):
         username = login_user.get('name')
     argument = mongo.db.argument
     argString = argString.replace(" ", "|")
+    # search = False
+    # q = request.args.get('q')
+    # if q:
+    #     search = True
+    page, per_page, offset = get_page_args()
+    # per_page = 5
+    # page = request.args.get(get_page_parameter(), type=int, default=1)
+    # offset = int(request.args['offset'])
+    # limit = int(request.args['limit'])
     typeOF = type(argString)
     # TODO: Separate into /api/ and /web/
-    # search_wordss = []
-    #
-    # for search_words in argString:
-    #     search_wordss.append('/' + search_words + '/')
-    # q = argument.find_one({'name': name})
-
-    # mongo.db.argument.ensure_index([('name': 'text')], 'name' = 'search_index')
-
-    # argument.create_index([("name", "text")])
-
-    # qs = argument.find({"name": {'$regex': argString, '$options': 'i'}})
-    # qs = argument.find({"name": {'$in': argString}})
-
-    qss = argument.find({"$text": {"$search": argString}}).count()
-    # qss = argument.find({"$text": {"$search": argString}}).count()
-
     search_results = argument.find(
         {"sadface.nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}})
-    # with_regex_1 = argument.find(
-    #     {"name": {'$regex': ".*" + argString + ".*", '$options': 'i'}})
-    # TODO: counts how many results were found
 
+    # last_id = search_results[offset]['_id']
+    pagination = Pagination(per_page=per_page, page=page, total=users.count(), search=True, record_name='users',
+                            css_framework='foundation')
+    # documents = argument.find({'_id': {'$lte': last_id}}).sort('_id', pymongo.DESCENDING).limit(limit)
+    # # TODO: counts how many results were found
+    # next_url = '/argument/' + argString.replace("|", "+") + "?limit=" + str(limit) + '&offset=' + str(offset + limit)
+    # prev_url = '/argument/' + argString.replace("|", "+") + "?limit=" + str(limit) + '&offset=' + str(offset - limit)
     count_me = search_results.count()
-    # q = list(argument.find({'$text:': {'$search': argString}}))
 
-    # if q:
-    #     output = {'name': q['name'], 'contents': q['contents']}
-    # else:
-    #     output = 'No results Found'
     nodes_text = []
     output = []
     for q in search_results:
@@ -620,12 +614,16 @@ def get_one_argument(argString):
 
     # output = json.dumps(output, sort_keys=True, indent=4, separators=(',', ': '))
     # with_regex = jsonify(with_regex)
+    # pagination = Pagination(page=page, per_page=per_page, offset=offset,
+    #                         total=count_me, record_name='List')
     typeOF = type(output)
     return render_template('search_results.html', json=output, typeof=typeOF,
                            argString=argString,
                            search_results=search_results,
                            current_user=username,
                            search_nodes=nodes_text,
+                           # pagination=pagination,
+                           # prev_url=prev_url,
                            cursor=count_me)
 
 

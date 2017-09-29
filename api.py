@@ -11,10 +11,10 @@ from jsonschema import validate
 from jsonschema import Draft3Validator
 from jsonschema import Draft4Validator
 from jsonschema import ErrorTree
-import pygraphviz as pgv
-from pygraphviz import *
+# import pygraphviz as pgv
+# from pygraphviz import *
 from flask import g
-from pygraphviz import *
+# from pygraphviz import *
 # import pygraphviz
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
 from flask_httpauth import HTTPBasicAuth

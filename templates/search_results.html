@@ -4,6 +4,9 @@
         <div class="row">
             <div class="col-sm-12">
                 <h1>Results for: "{{ argString }}" in Nodes->Text</h1>
+{#                {{ pagination.info }}#}
+{#                {{ pagination.links }}#}
+{#                {{ pagination }}#}
                 <h2>Found: {{ cursor }}</h2>
                 <h2>NODES LIST: {{ search_nodes }}</h2>
                 <h2>with_regex :{{ with_regex }}</h2>
@@ -34,61 +37,16 @@
                         <a class="list-group-item list-group-item-action"
                            href="{{ url_for('.get_argument_by_id',ArgId=item['id']) }}">
                             {{ loop.index }}: {{ search_nodes[loop.index - 1] }}
+{#                            {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
                         </a>
 
                     {% endfor %}
                 </div>
 
-                {% for item in json %}
-
-                {% endfor %}
-
-{#                {% for item in json %}#}
-{#                    <div class="row">#}
-{#                        <div class="col-sm-12">#}
-{#                            <div class="panel-group" id="accordion">#}
-{#                                <div class="panel panel-default" id="panel{{ loop.index }}">#}
-{#                                    <div class="panel-heading">#}
-{#                                        <a data-toggle="collapse" data-target="#{{ loop.index }}" class="collapsed"#}
-{#                                           href="{{ url_for('.get_argument_by_id',ArgId=item['id']) }}">#}
-{#                                            <h4 class="panel-title">{{ search_nodes[loop.index - 1]["text"] }}</h4>#}
-{#                                        </a>#}
-{#                                    </div>#}
-{#                                    <div id="{{ loop.index }}" class="panel-collapse collapse">#}
-{#                                        <div class="panel-body">#}
-{#                                            <pre>{{ item|tojson_pretty|safe }}</pre>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{##}
-{##}
-                                {# <div class="panel-collapse panel-primary">
-{#                            <div class="panel-heading">#}
-{#                                <h3 class="panel-title"></h3>#}
-{#                                <span class="pull-right clickable"><i#}
-{#                                        class="glyphicon glyphicon-chevron-up"></i></span>#}
-{#                                <div class="panel-body">#}
-{#                                    <pre>{{ item|tojson_pretty|safe }}</pre>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                            </div>#}
-                            {#                        <div class="col-sm-12">#}
-                            {#                            <button data-toggle="collapse" data-target="#{{ loop.user_page }}">#}
-                            {#                                Result{{ loop.user_page }}</button>#}
-                            {#                            <div id="{{ loop.user_page }}" class="collapse">#}
-                            {#                                <pre>{{ item|tojson_pretty|safe }}</pre>#}
-                            {#                            </div>#}
-                            {##}
-                            {#                        </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                {% endfor %}#}
-
                 cursor{{ cursor }}
                 output{{ argString }}<br>
                 TYPE oF JSON{{ typeof }}<br>
-
+{#                {{ pagination.links }}#}
                 {#        {% for item in json %}#}
                 {#            <span>{{ item }}</span>#}
                 {##}
