@@ -16,7 +16,9 @@ from jsonschema import ErrorTree
 from flask import g
 # from pygraphviz import *
 # import pygraphviz
-from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired)
+from flask_mail import Mail, Message
+# from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired,URLSafeTimedSerializer)
 from flask_httpauth import HTTPBasicAuth
 from jsonschema.exceptions import best_match
 from bson import json_util
@@ -35,7 +37,7 @@ from werkzeug.wsgi import SharedDataMiddleware
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
-
+app.config.from_pyfile('config.cfg')
 # auth = HTTPBasicAuth()
 app.config['MONGO_DBNAME'] = 'argdbconnect'
 app.config[

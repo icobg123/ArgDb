@@ -1,5 +1,8 @@
 import os
-
+from flask_mail import Mail, Message
+# from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired,
+                          URLSafeTimedSerializer)
 import datetime
 import uuid
 from datetime import timedelta
@@ -32,7 +35,8 @@ os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
-
+app.config.from_pyfile('config.cfg')
+s = URLSafeTimedSerializer('Thisisasecret!')
 app.config['MONGO_DBNAME'] = 'argdbconnect'
 app.config[
     'MONGO_URI'] = 'mongodb://argdb:argdbnapier@ds137191.mlab.com:37191/argdbconnect'
@@ -327,6 +331,8 @@ argument_schema_bck = {
 }
 
 app.config['ALLOWED_EXTENSIONS'] = set(['json'])
+
+mail = Mail(app)
 
 
 @app.before_request
@@ -670,7 +676,16 @@ def register():
         if 'argumentString' in request.form:
             if request.form['argumentString']:
                 return search_for_arg()
-        elif 'username' and 'pass' in request.form:
+        elif 'username' and 'pass' and 'email' in request.form:
+            if not (request.form['username'] and request.form['email'] and request.form['pass']):
+                err = 'Please fill in all fields'
+                return render_template('register.html', err=err)
+            # if not request.form['email']:
+            #     err = 'mail'
+            #     return render_template('register.html', err=err)
+            # if not request.form['pass']:
+            #     err = 'pass'
+            #     return render_template('register.html', err=err)
             users = mongo.db.users
             existing_user = users.find_one({'name': request.form['username']})
             # existing_user = users.find({'name': request.form['username']}, {"id": 1}).limit(1)
@@ -681,7 +696,21 @@ def register():
                 hased_pass = generate_password_hash(request.form['pass'], method='sha256')
                 # hashpass = bcrypt.hashpw(request.form['pass'].encode('utf-8'), bcrypt.gensalt())
                 users.insert({'public_id': uuid.uuid4().hex, 'name': request.form['username'], 'password': hased_pass,
-                              'token': '123'})
+                              'token': '123',
+                              'email': request.form['email'],
+                              'admin': False,
+                              })
+
+                email = request.form['email']
+                token = s.dumps(email, salt='email-confirm')
+
+                msg = Message('Confirm Email', sender='icobg123@gmail.com', recipients=[email])
+
+                link = url_for('confirm_email', token=token, _external=True)
+
+                msg.body = 'Your link is {}'.format(link)
+
+                mail.send(msg)
                 # session['username'] = request.form['username']
                 return redirect(url_for('login'))
 
@@ -783,6 +812,22 @@ def logout():
     #
     # session.pop('logged_in', None)
     return redirect(url_for('home'))
+
+
+@app.route('/confirm_email/<token>')
+def confirm_email(token):
+    users = mongo.db.users
+    try:
+        email = s.loads(token, salt='email-confirm', max_age=3600)
+        search_for_user = users.find_one({'email': email})
+        if search_for_user:
+            search_for_user['admin'] = True
+            users.save(search_for_user)
+
+    except SignatureExpired:
+        return '<h1>The token is expired!</h1>'
+    return email
+    # return '<h1>The token works!</h1>'
 
 
 if __name__ == '__main__':
