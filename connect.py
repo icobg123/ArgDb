@@ -9,7 +9,7 @@ from datetime import timedelta
 from typing import re
 import sadface
 import graphviz
-from flask.ext.paginate import get_page_parameter
+from flask_paginate import get_page_parameter
 from graphviz import Source
 import jsonschema
 from bson import regex
@@ -668,7 +668,7 @@ def to_pretty_json(value):
 # Add a custom filter to Jinja2
 app.jinja_env.filters['tojson_pretty'] = to_pretty_json
 
-
+# TODO: Check if email is unique figure out how to reset passwords etc
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     err = None
