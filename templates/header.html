@@ -76,7 +76,7 @@
             {% if current_user %}
                 {#                    <h3 class="pull-right"> {{ current_user }}</h3>#}
                 <ul class="nav pull-right navbar-nav margin-left">
-                    <li><a href="{{ url_for('user_page') }}">Hi there, {{ current_user }} !</a></li>
+                    <li><a href="{{ url_for('account') }}">Hi there, {{ current_user }} !</a></li>
                     <li><a href="{{ url_for('logout') }}">Logout</a></li>
                 </ul>
             {% else %}

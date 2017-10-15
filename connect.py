@@ -724,7 +724,7 @@ def register():
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if 'username' in session:
-        return redirect(url_for('user_page'))
+        return redirect(url_for('account'))
     if request.method == 'POST':
         if 'argumentString' in request.form:
             if request.form['argumentString']:
@@ -758,16 +758,16 @@ def login():
                     make_session_permanent()
                     # session['user_id'] = login_user.get('_id')
                     # return session['username']
-                    return redirect(url_for('user_page'))
+                    return redirect(url_for('account'))
 
             return 'Invalid username/password combination'
 
     return render_template('log_ing.html')
 
 
-@app.route('/user_page', methods=['POST', 'GET'])
+@app.route('/account', methods=['POST', 'GET'])
 # @token_required
-def user_page():
+def account():
     if request.method == 'POST':
         if request.form['argumentString']:
             return search_for_arg()
@@ -792,7 +792,7 @@ def user_page():
         #     'UTF-8') + " Current User "
         # return 'You are logged in as ' + user_id + " " + token.decode(
         #     'UTF-8') + " Current User " + admin
-        return render_template('user_page.html',
+        return render_template('account.html',
                                current_user=login_user.get('name'),
                                privileges=admin,
                                # token=token
