@@ -668,6 +668,7 @@ def to_pretty_json(value):
 # Add a custom filter to Jinja2
 app.jinja_env.filters['tojson_pretty'] = to_pretty_json
 
+
 # TODO: Check if email is unique figure out how to reset passwords etc
 @app.route('/register', methods=['POST', 'GET'])
 def register():
