@@ -1,4 +1,6 @@
 import os
+
+from flask.globals import current_app
 from flask_mail import Mail, Message
 # from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired,
@@ -9,7 +11,7 @@ from datetime import timedelta
 from typing import re
 import sadface
 import graphviz
-from flask_paginate import get_page_parameter
+from flask_paginate import Pagination, get_page_parameter, get_page_args
 from graphviz import Source
 import jsonschema
 from bson import regex
@@ -21,7 +23,7 @@ from jsonschema import validate
 from jsonschema import Draft3Validator
 from jsonschema import Draft4Validator
 from bson import json_util
-from flask_paginate import Pagination, get_page_args
+# from flask_paginate import Pagination, get_page_args
 from passlib.apps import custom_app_context as pwd_context
 import json
 import jwt
@@ -566,28 +568,43 @@ def get_one_argument(argString):
     argument = mongo.db.argument
     argString = argString.replace(" ", "|")
     # search = False
-    # q = request.args.get('q')
+    # q = argString
     # if q:
     #     search = True
+    # page = request.args.get(get_page_parameter(), type=int, default=1)
     page, per_page, offset = get_page_args()
+    try:
+        page = int(request.args.get('page', 1))
+    except ValueError:
+        page = 1
+    # page, per_page, offset = get_page_args()
     # per_page = 5
     # page = request.args.get(get_page_parameter(), type=int, default=1)
     # offset = int(request.args['offset'])
     # limit = int(request.args['limit'])
     typeOF = type(argString)
     # TODO: Separate into /api/ and /web/
+    per_page = 10
+    offset = (page - 1) * per_page
     search_results = argument.find(
-        {"sadface.nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}})
+        {"sadface.nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}}).skip(offset).limit(per_page)
 
+    count_me = search_results.count()
     # last_id = search_results[offset]['_id']
-    pagination = Pagination(per_page=per_page, page=page, total=users.count(), search=True, record_name='users',
-                            css_framework='foundation')
+    # pagination = Pagination(page=page, total=search_results.count(), search=search, record_name='users')
+    pagination = get_pagination(page=page,
+                                per_page=per_page,
+                                total=count_me,
+                                offset=offset,
+                                record_name='users',
+                                format_total=True,
+                                format_number=True,
+                                )
     # documents = argument.find({'_id': {'$lte': last_id}}).sort('_id', pymongo.DESCENDING).limit(limit)
     # # TODO: counts how many results were found
     # next_url = '/argument/' + argString.replace("|", "+") + "?limit=" + str(limit) + '&offset=' + str(offset + limit)
     # prev_url = '/argument/' + argString.replace("|", "+") + "?limit=" + str(limit) + '&offset=' + str(offset - limit)
-    count_me = search_results.count()
-
+    # (total, processed_text1) = argument.ProcessQuery(search_results, offset, per_page)  # MongoDB query
     nodes_text = []
     output = []
     for q in search_results:
@@ -628,8 +645,9 @@ def get_one_argument(argString):
                            search_results=search_results,
                            current_user=username,
                            search_nodes=nodes_text,
-                           # pagination=pagination,
-                           # prev_url=prev_url,
+                           pagination=pagination,
+                           page=page,
+                           per_page=per_page,
                            cursor=count_me)
 
 
@@ -829,6 +847,32 @@ def confirm_email(token):
         return '<h1>The token is expired!</h1>'
     return email
     # return '<h1>The token works!</h1>'
+
+
+def get_css_framework():
+    return current_app.config.get('CSS_FRAMEWORK', 'bootstrap4')
+
+
+def get_link_size():
+    return current_app.config.get('LINK_SIZE', 'sm')
+
+
+def get_alignment():
+    return current_app.config.get('LINK_ALIGNMENT', '')
+
+
+def show_single_page_or_not():
+    return current_app.config.get('SHOW_SINGLE_PAGE', False)
+
+
+def get_pagination(**kwargs):
+    kwargs.setdefault('record_name', 'records')
+    return Pagination(css_framework=get_css_framework(),
+                      link_size=get_link_size(),
+                      alignment=get_alignment(),
+                      show_single_page=show_single_page_or_not(),
+                      **kwargs
+                      )
 
 
 if __name__ == '__main__':
