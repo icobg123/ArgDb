@@ -610,7 +610,7 @@ def get_argument_by_id(ArgId):
 #
 
 # TODO: Advamced Searcj
-@app.route('/advanced_search', methods=['GET','POST'])
+@app.route('/advanced_search', methods=['GET', 'POST'])
 # @app.route('/advanced_search?page=1', methods=['GET', 'POST'])
 # @token_required
 def advanced_search():
@@ -670,12 +670,52 @@ def advanced_search_find():
     #     analyst_name = request.form['analyst_name']
     #     session['analyst_name'] = request.form['analyst_name']
 
-    analyst_email = request.form.get('analyst_email')
-    analyst_name = request.form.get('analyst_name')
+    # if (not request.form.get('analyst_email')) or (not request.form.get('analyst_name')):
+
+    # search_fields = {"analyst_email": analyst_email, "analyst_name": analyst_name}
+
+    # for field, value in search_fields.items():
+    #     if str(field) in session and not request.form.get(str(field)):
+    #         # search_fields[str(field)] = session[str(field)]
+    #         value = session[str(field)]
+    #     else:
+    #         value = request.form[str(field)]
+    #         # search_fields[str(field)] = request.form[str(field)]
+    #         session[str(field)] = request.form[str(field)]
+
+    if 'analyst_name' in session and not request.form.get('analyst_name'):
+        analyst_name = session['analyst_name']
+    else:
+        analyst_name = request.form['analyst_name']
+        session['analyst_name'] = request.form['analyst_name']
+
+    if 'analyst_email' in session and not request.form.get('analyst_email'):
+        analyst_email = session['analyst_email']
+    else:
+        analyst_email = request.form['analyst_email']
+        session['analyst_email'] = request.form['analyst_email']
+
+    # analyst_email = request.form.get('analyst_email')
+    # analyst_name = request.form.get('analyst_name')
     ArgId = "icara".replace(" ", "|")
 
     # search_results = argument.find(
     #     {"sadface.nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}}).skip(offset).limit(per_page)
+
+    search_fields = []
+    # populated_search_fields = []
+    #
+    # for field in search_fields:
+    #     if field:
+    #         populated_search_fields.append(field)
+
+    f = request.data
+    # for key in f.keys():
+    #     for value in f.getlist(key):
+    #         search_fields.append(key + ":" + value)
+            # print(key, ":", value)
+    # search_results = argument.find(
+    #     {"sadface.analyst_email": analyst_email, "sadface.analyst_name": {'$regex': ".*", "$options": "i"}}).skip(offset).limit(per_page)
     search_results = argument.find(
         {"sadface.analyst_email": analyst_email, "sadface.analyst_name": analyst_name}).skip(offset).limit(per_page)
     count_me = search_results.count()
@@ -685,6 +725,7 @@ def advanced_search_find():
                                 per_page=per_page,
                                 total=count_me,
                                 offset=offset,
+                                formreq=f,
                                 record_name='users',
                                 format_total=True,
                                 format_number=True,

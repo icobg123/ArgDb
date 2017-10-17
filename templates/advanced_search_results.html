@@ -6,7 +6,10 @@
                 <h1>Results for: "{{ argString }}" in Nodes->Text</h1>
 
                 <h2>Found: {{ cursor }}</h2>
-
+                <h2>Form: {{ formreq }}</h2>
+                {% for item in formreq %}
+                    <p>{{ item }}</p>
+                {% endfor %}
                 {{ pagination.info }}
                 {{ pagination.links }}
 
@@ -16,7 +19,7 @@
                         <a class="list-group-item list-group-item-action"
                            href="{{ url_for('.get_argument_by_id',ArgId=item['id']) }}">
                             {{ loop.index + (page - 1) * per_page }}: {{ item['id'] }}
-{#                            {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
+                            {#                            {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
 
                         </a>
 
