@@ -781,7 +781,7 @@ def advanced_search_find():
                            cursor=count_me)
 
 
-@app.route('/argument/<argString>', methods=['GET', 'POST'])
+@app.route('/argument/<argString>+', methods=['GET', 'POST'])
 def get_one_argument(argString):
     if request.method == 'POST':
         return search_for_arg()

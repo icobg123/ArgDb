@@ -797,7 +797,7 @@ def home():
 #     # loaded_r = json.load(r)
 #     return render_template('search_results.html', json=output)
 
-
+@token_required
 @app.route('/api/argument/<argString>', methods=['GET'])
 def get_arguments_with_txt(argString):
     argument = mongo.db.argument
