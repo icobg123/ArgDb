@@ -623,6 +623,10 @@ def advanced_search():
         login_user = users.find_one({'name': session['username']})
         username = login_user.get('name')
 
+    if 'analyst_name' in session and 'analyst_email' in session:
+        session.pop('analyst_name', None)
+        session.pop('analyst_email', None)
+
     return render_template('advanced_search.html', current_user=username)
 
 
@@ -702,22 +706,28 @@ def advanced_search_find():
     # search_results = argument.find(
     #     {"sadface.nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}}).skip(offset).limit(per_page)
 
-    search_fields = []
-    # populated_search_fields = []
-    #
-    # for field in search_fields:
-    #     if field:
-    #         populated_search_fields.append(field)
+    search_fields = {"analyst_email": analyst_email, "analyst_name": analyst_name}
+    populated_search_fields = []
+    query_dict = {}
+    # for each item in the form check if it has information inside and adds it to a list with all query parameters
+    for key, value in search_fields.items():
+        if value:
+            populated_search_fields.append(key)
+
+    # for each query parameter add its contents to a dict in order to
+    # create the query which to pass to the mongoGB search function
+    for field in populated_search_fields:
+        query_dict['sadface.' + field] = search_fields[field]
 
     f = request.data
     # for key in f.keys():
     #     for value in f.getlist(key):
     #         search_fields.append(key + ":" + value)
-            # print(key, ":", value)
+    # print(key, ":", value)
     # search_results = argument.find(
-    #     {"sadface.analyst_email": analyst_email, "sadface.analyst_name": {'$regex': ".*", "$options": "i"}}).skip(offset).limit(per_page)
-    search_results = argument.find(
-        {"sadface.analyst_email": analyst_email, "sadface.analyst_name": analyst_name}).skip(offset).limit(per_page)
+    #     {"sadface.analyst_email": analyst_email, "sadface.analyst_name": analyst_name}).skip(offset).limit(per_page)
+
+    search_results = argument.find(query_dict).skip(offset).limit(per_page)
     count_me = search_results.count()
     # last_id = search_results[offset]['_id']
     # pagination = Pagination(page=page, total=search_results.count(), search=search, record_name='users')
