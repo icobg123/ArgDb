@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e0db6b7f-cf94-4adc-91ec-65b0af295886" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ArgDb.iml" afterPath="$PROJECT_DIR$/.idea/ArgDb.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+    <list default="true" id="e0db6b7f-cf94-4adc-91ec-65b0af295886" name="Default" comment="added the search terms on advanced search result page">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/connect.py" afterPath="$PROJECT_DIR$/connect.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/advanced_search.html" afterPath="$PROJECT_DIR$/templates/advanced_search.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/advanced_search_results.html" afterPath="$PROJECT_DIR$/templates/advanced_search_results.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/search_results.html" afterPath="$PROJECT_DIR$/templates/search_results.html" />
     </list>
     <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,7 +18,7 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/ArgDb$api.coverage" NAME="api Coverage Results" MODIFIED="1508347563325" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ArgDb$connect.coverage" NAME="connect Coverage Results" MODIFIED="1508678999844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ArgDb$connect.coverage" NAME="connect Coverage Results" MODIFIED="1508683020674" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -29,28 +28,69 @@
     <favorites_list name="ArgDb" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="connect.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/connect.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
-              <caret line="708" column="51" selection-start-line="708" selection-start-column="38" selection-end-line="708" selection-end-column="51" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="advanced_search_results.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/advanced_search_results.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="20" column="62" selection-start-line="20" selection-start-column="62" selection-end-line="20" selection-end-column="62" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.6489899">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
+          <file leaf-file-name="connect.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/connect.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="320">
+                  <caret line="639" column="66" selection-start-line="639" selection-start-column="66" selection-end-line="639" selection-end-column="66" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="advanced_search_results.html" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/templates/advanced_search_results.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="238">
+                  <caret line="14" column="42" selection-start-line="14" selection-start-column="42" selection-end-line="14" selection-end-column="42" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="advanced_search.html" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/templates/advanced_search.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="391">
+                  <caret line="24" column="35" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
+                  <folding>
+                    <marker date="1508682042860" expanded="true" signature="367:1702" ph="..." />
+                    <marker date="1508682042860" expanded="true" signature="965:1165" ph="..." />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="search_results.html" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/templates/search_results.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="197">
+                  <caret line="82" column="30" selection-start-line="82" selection-start-column="30" selection-end-line="82" selection-end-column="30" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="advanced_search.html" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/templates/advanced_search.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="85">
+                  <caret line="5" column="25" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="25" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -135,14 +175,14 @@
         <option value="C:/Program Files/Logitech Gaming Software/Resources/Profile/GameDatabase.xml" />
         <option value="$USER_HOME$/AppData/Local/Temp/scp18309/index.html" />
         <option value="$PROJECT_DIR$/config.cfg" />
-        <option value="$PROJECT_DIR$/templates/search_results.html" />
         <option value="$PROJECT_DIR$/templates/header.html" />
         <option value="$PROJECT_DIR$/api.py" />
         <option value="$PROJECT_DIR$/uploads/testJson.json" />
         <option value="$PROJECT_DIR$/static/css/style.css" />
+        <option value="$PROJECT_DIR$/templates/advanced_search_results.html" />
+        <option value="$PROJECT_DIR$/templates/search_results.html" />
         <option value="$PROJECT_DIR$/templates/advanced_search.html" />
         <option value="$PROJECT_DIR$/connect.py" />
-        <option value="$PROJECT_DIR$/templates/advanced_search_results.html" />
       </list>
     </option>
   </component>
@@ -718,7 +758,14 @@
       <option name="project" value="LOCAL" />
       <updated>1508616271411</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="added the search terms on advanced search result page">
+      <created>1508679277581</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1508679277581</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TodoView">
@@ -740,7 +787,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.49418023" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32792208" sideWeight="0.49883604" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22943723" sideWeight="0.48773986" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1590909" sideWeight="0.48773986" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33997345" sideWeight="0.4975058" order="10" side_tool="false" content_ui="tabs" />
@@ -786,7 +833,8 @@
     <MESSAGE value="Added pagination to the search result page of the WebUi" />
     <MESSAGE value="Started work on the advanced search.&#10;Working pagination for advanced search.&#10;need to figure out how to do AND OR in advanced search&#10;" />
     <MESSAGE value="delete some old files" />
-    <option name="LAST_COMMIT_MESSAGE" value="delete some old files" />
+    <MESSAGE value="added the search terms on advanced search result page" />
+    <option name="LAST_COMMIT_MESSAGE" value="added the search terms on advanced search result page" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1214,14 +1262,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/search_results.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="42" column="42" selection-start-line="42" selection-start-column="42" selection-end-line="42" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/images/logo.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -1243,6 +1283,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="30" column="34" selection-start-line="30" selection-start-column="34" selection-end-line="30" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1441,26 +1482,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/advanced_search_results.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="42" selection-start-line="14" selection-start-column="42" selection-end-line="14" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/search_results.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="82" column="30" selection-start-line="82" selection-start-column="30" selection-end-line="82" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/advanced_search.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="28" selection-start-line="17" selection-start-column="22" selection-end-line="20" selection-end-column="28" />
-          <folding />
+        <state relative-caret-position="391">
+          <caret line="24" column="35" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
+          <folding>
+            <marker date="1508682042860" expanded="true" signature="367:1702" ph="..." />
+            <marker date="1508682042860" expanded="true" signature="965:1165" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/connect.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="708" column="51" selection-start-line="708" selection-start-column="38" selection-end-line="708" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/advanced_search_results.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="62" selection-start-line="20" selection-start-column="62" selection-end-line="20" selection-end-column="62" />
+        <state relative-caret-position="320">
+          <caret line="639" column="66" selection-start-line="639" selection-start-column="66" selection-end-line="639" selection-end-column="66" />
           <folding />
         </state>
       </provider>

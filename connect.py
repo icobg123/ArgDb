@@ -616,31 +616,49 @@ def get_argument_by_id(ArgId):
 def advanced_search():
     if request.method == 'POST' and 'argumentString' in request.form:
         return search_for_arg()
-
+    err = None
     users = mongo.db.users
     username = ""
     if 'username' in session:
         login_user = users.find_one({'name': session['username']})
         username = login_user.get('name')
 
-    if 'analyst_name' in session and 'analyst_email' in session:
+    if 'analyst_name' in session and 'analyst_email' in session and 'id' in session:
         session.pop('analyst_name', None)
         session.pop('analyst_email', None)
+        session.pop('id', None)
 
-    return render_template('advanced_search.html', current_user=username)
+    return render_template('advanced_search.html', current_user=username, err=err)
 
 
 @app.route('/advanced_search_results', methods=['GET', 'POST'])
 # @token_required
 def advanced_search_find():
-    if request.method == 'POST' and 'argumentString' in request.form:
-        return search_for_arg()
-
     users = mongo.db.users
     username = ""
     if 'username' in session:
         login_user = users.find_one({'name': session['username']})
         username = login_user.get('name')
+
+    if request.method == 'GET' and 'analyst_name' not in session and 'analyst_email' not in session and 'id' not in session:
+        return redirect(url_for('advanced_search'))
+
+        # if (request.form['analyst_name'] == "" and request.form['analyst_email'] == "" and request.form[
+        #     'document_id'] == "") and (request.method == 'GET'
+        #                                and 'analyst_name' not in session
+        #                                and 'analyst_email' not in session
+        #                                and 'id' not in session):
+        #     err = "Please fill in at least one field"
+        #     return render_template('advanced_search.html', err=err, current_user=username)
+        # return redirect(url_for('advanced_search', err=err))
+
+    if 'analyst_name' and 'analyst_email' and 'document_id' in request.form:
+        if not (request.form['analyst_name'] or request.form['analyst_email'] or request.form['document_id']):
+            err = 'Please fill in at least one field'
+            return render_template('advanced_search.html', err=err)
+
+    if request.method == 'POST' and 'argumentString' in request.form:
+        return search_for_arg()
 
     argument = mongo.db.argument
     err = None
@@ -698,6 +716,11 @@ def advanced_search_find():
     else:
         analyst_email = request.form['analyst_email']
         session['analyst_email'] = request.form['analyst_email']
+    if 'id' in session and not request.form.get('document_id'):
+        id = session['id']
+    else:
+        id = request.form['document_id']
+        session['id'] = request.form['document_id']
 
     # analyst_email = request.form.get('analyst_email')
     # analyst_name = request.form.get('analyst_name')
@@ -706,7 +729,7 @@ def advanced_search_find():
     # search_results = argument.find(
     #     {"sadface.nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}}).skip(offset).limit(per_page)
 
-    search_fields = {"analyst_email": analyst_email, "analyst_name": analyst_name}
+    search_fields = {"analyst_email": analyst_email, "analyst_name": analyst_name, "id": id}
     populated_search_fields = []
     query_dict = {}
     # for each item in the form check if it has information inside and adds it to a list with all query parameters

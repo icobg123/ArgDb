@@ -7,18 +7,25 @@
                     <div class="err"><strong>Error:</strong> {{ err }}</div>
                 {% endif %}
                 <form method=POST action="{{ url_for('advanced_search_find') }}">
-                    <div class="form-group">
-                        <label for="analyst_email">analyst_email</label>
-                        <input type="email" class="form-control" name="analyst_email" placeholder="analyst_email">
+                    <div class="form-group form-inline">
+                        <label for="analyst_email">Analyst Email: </label>
+                        <input type="email" class="form-control" name="analyst_email" placeholder="abc@mail.com">
                     </div>
-                    <div class="form-group">
-                        <label for="analyst_name">analyst_name</label>
-                        <input type="text" class="form-control" name="analyst_name" placeholder="analyst_name">
+                    <div class="form-group form-inline">
+                        <label for="analyst_name">Analyst Name: </label>
+                        <input type="text" class="form-control" name="analyst_name" placeholder="Simon Wells">
                     </div>
-{#                    <div class="form-group">#}
-{#                        <label for="exampleInputPassword1">Email</label>#}
-{#                        <input type="email" class="form-control" name="email" placeholder="Email">#}
-{#                    </div>#}
+                    <div class="form-group form-inline">
+                        <label for="document_id">Document ID: </label>
+                        <input type="text" class="form-control" name="document_id"
+                               placeholder="94b975db-25ae-4d25-93cc-gabi">
+                    </div>
+                    {#                    <div class="form-group">#}
+                    {#                        <label for="exampleInputPassword1">Email</label>#}
+                    {#                        <input type="email" class="form-control" name="email" placeholder="Email">#}
+                    {#                    </div>#}
+
+
                     <button type="submit" name="advanced_search" class="btn btn-primary btn-block">Search</button>
                 </form>
                 <br>

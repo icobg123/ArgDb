@@ -3,49 +3,25 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-
-                {#                <h3> HELP ME#}
-                {#                    {% for key,value in search_fields.items() and  string in populated_search_fields %}#}
-                {#                        <p>{{ value }} :{{ string |lower|replace("_"," ") }}</p>#}
-                {#                    {% endfor %}#}
-                {#                    in:#}
-                {#                    {% for string in populated_search_fields %}#}
-                {#                        <span>{{ string |lower|replace("_"," ") }}</span>#}
-                {#                    {% endfor %}#}
-                {#                </h3>#}
-
-
                 <h1>Results for:</h1>
                     {% for key,value in search_fields.items() %}
                         {% if value %}
                             <p>{{ key|capitalize|replace("_"," ") }}: {{ value }}</p>
                         {% endif %}
                     {% endfor %}
-
-
-{#                <h2>Found: {{ cursor }}</h2>#}
-{#                <h2>Form: {{ formreq }}</h2>#}
-                {% for item in formreq %}
-                    <p>{{ item }}</p>
-                {% endfor %}
                 {{ pagination.info }}
                 {{ pagination.links }}
-
                 <div class="list-group">
                     {% for item in json %}
-
                         <a class="list-group-item list-group-item-action"
                            href="{{ url_for('.get_argument_by_id',ArgId=item['id']) }}">
                             {{ loop.index + (page - 1) * per_page }}: {{ item['id'] }}
                             {#                            {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
 
                         </a>
-
                     {% endfor %}
                 </div>
                 {{ pagination.links }}
-
-
             </div>
         </div>
     </div>

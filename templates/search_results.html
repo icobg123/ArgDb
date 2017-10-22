@@ -3,11 +3,11 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <h1>Results for: "{{ argString }}" in Nodes->Text</h1>
+                <h1>Results for: "{{ argString }}" in Argument text</h1>
                 {#                {{ pagination.info }}#}
                 {#                {{ pagination.links }}#}
                 {#                {{ pagination }}#}
-                <h2>Found: {{ cursor }}</h2>
+                {#                <h2>Found: {{ cursor }}</h2>#}
                 {#                <h2>NODES LIST: {{ search_nodes }}</h2>#}
                 {#                <h2>with_regex :{{ with_regex }}</h2>#}
                 {#        {% for item in json %}#}
@@ -49,40 +49,40 @@
                 </div>
                 {{ pagination.links }}
 
-{#                <div class="list-group">#}
-{#                    {% for item in json %}#}
-{##}
-{#                        <a class="list-group-item list-group-item-action"#}
-{#                           href="{{ url_for('.get_argument_by_id',ArgId=item['id']) }}">#}
-{#                            {{ loop.index }}: {{ search_nodes[loop.index - 1] }}#}
-                            {#                            {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
-{#                        </a>#}
-{##}
-{#                    {% endfor %}#}
-{#                </div>#}
-{#                ICARA#}
-{##}
-{#                <table>#}
-{#                    {{ search_results }}#}
-{#                    {% set _stub = search_results.rewind() %}#}
-{#                    {% for q in search_results %}#}
-{#                        <tr>#}
-                            {#                        <td>{{ q['_id'] }} </td>#}
-{#                            <td>{{ q['sadface']["analyst_email"] }} </td>#}
-{#                            <td>{{ q['sadface']["analyst_email"] }} </td>#}
-{#                            <td>{{ q['sadface']["analyst_name"] }} </td>#}
-{#                            <td>{{ q['sadface']["created" ] }} </td>#}
-{#                            <td>{{ q['sadface']["edges"] }} </td>#}
-{#                            <td>{{ q['sadface']["edited"] }} </td>#}
-{#                            <td>{{ q['sadface']["id"] }} </td>#}
-{#                            <td>{{ q['sadface']["nodes"] }} </td>#}
-                            {#                        <td>{{ q['volume'] }} </td>#}
-{#                        </tr>#}
-{#                    {% endfor %}#}
-{#                </table>#}
-                cursor{{ cursor }}
-                output{{ argString }}<br>
-                TYPE oF JSON{{ typeof }}<br>
+                {#                <div class="list-group">#}
+                {#                    {% for item in json %}#}
+                {##}
+                {#                        <a class="list-group-item list-group-item-action"#}
+                {#                           href="{{ url_for('.get_argument_by_id',ArgId=item['id']) }}">#}
+                {#                            {{ loop.index }}: {{ search_nodes[loop.index - 1] }}#}
+                {#                            {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
+                {#                        </a>#}
+                {##}
+                {#                    {% endfor %}#}
+                {#                </div>#}
+                {#                ICARA#}
+                {##}
+                {#                <table>#}
+                {#                    {{ search_results }}#}
+                {#                    {% set _stub = search_results.rewind() %}#}
+                {#                    {% for q in search_results %}#}
+                {#                        <tr>#}
+                {#                        <td>{{ q['_id'] }} </td>#}
+                {#                            <td>{{ q['sadface']["analyst_email"] }} </td>#}
+                {#                            <td>{{ q['sadface']["analyst_email"] }} </td>#}
+                {#                            <td>{{ q['sadface']["analyst_name"] }} </td>#}
+                {#                            <td>{{ q['sadface']["created" ] }} </td>#}
+                {#                            <td>{{ q['sadface']["edges"] }} </td>#}
+                {#                            <td>{{ q['sadface']["edited"] }} </td>#}
+                {#                            <td>{{ q['sadface']["id"] }} </td>#}
+                {#                            <td>{{ q['sadface']["nodes"] }} </td>#}
+                {#                        <td>{{ q['volume'] }} </td>#}
+                {#                        </tr>#}
+                {#                    {% endfor %}#}
+                {#                </table>#}
+                {#                cursor{{ cursor }}#}
+                {#                output{{ argString }}<br>#}
+                {#                TYPE oF JSON{{ typeof }}<br>#}
                 {#                {{ pagination.links }}#}
                 {#        {% for item in json %}#}
                 {#            <span>{{ item }}</span>#}
