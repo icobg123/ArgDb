@@ -15,16 +15,65 @@ svg {
     /*width: 100%;*/
     /*height: auto;*/
 }
+
 pre {
     overflow: auto;
     /*width: 100%;*/
 }
+
 p {
     font-size: 1.6em;
     color: #333;
     margin: 0 0 1em;
     padding: 0;
     text-align: justify;
+}
+
+.Absolute-Center {
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.container {
+    position: relative;
+    height: 92vh;
+    /*border: 1px solid;*/
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    /*margin: 10px;*/
+}
+
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.divCentered {
+    position: absolute;
+    top: 50%;
+    /*width: 50%;*/
+    left: 50%;
+    margin-top: -70px;
+    transform: translate(-50%, -50%);
+    /* border: 1px dashed deeppink; */
+}
+
+.Center-Container {
+    position: relative;
 }
 
 #logo {

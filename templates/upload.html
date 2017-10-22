@@ -15,9 +15,22 @@
                 {% if err %}
                     <div class="err"><strong>Error:</strong> {{ err }}</div>
                 {% endif %}
-                <form method=post enctype=multipart/form-data>
-                        <input type=file name="file" accept=".json">
-                    <input type=submit name="btn" value=Upload>
+                <form class="form-horizontal" method=post enctype=multipart/form-data>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <input id="uploadFile" placeholder="Choose File" disabled="disabled" />
+                            <div class="fileUpload btn btn-default">
+                                <span>Choose File</span>
+                                    <input id="uploadBtn" class="upload" type=file name="file" accept=".json">
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <input class="btn btn-primary" type=submit name="btn" value=Upload>
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                    </div>
                 </form>
             </div>
             <div class="col-sm-6">
