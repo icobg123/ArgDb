@@ -3,10 +3,28 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <h1>Results for: "{{ argString }}" in Nodes->Text</h1>
 
-                <h2>Found: {{ cursor }}</h2>
-                <h2>Form: {{ formreq }}</h2>
+                {#                <h3> HELP ME#}
+                {#                    {% for key,value in search_fields.items() and  string in populated_search_fields %}#}
+                {#                        <p>{{ value }} :{{ string |lower|replace("_"," ") }}</p>#}
+                {#                    {% endfor %}#}
+                {#                    in:#}
+                {#                    {% for string in populated_search_fields %}#}
+                {#                        <span>{{ string |lower|replace("_"," ") }}</span>#}
+                {#                    {% endfor %}#}
+                {#                </h3>#}
+
+
+                <h1>Results for:</h1>
+                    {% for key,value in search_fields.items() %}
+                        {% if value %}
+                            <p>{{ key|capitalize|replace("_"," ") }}: {{ value }}</p>
+                        {% endif %}
+                    {% endfor %}
+
+
+{#                <h2>Found: {{ cursor }}</h2>#}
+{#                <h2>Form: {{ formreq }}</h2>#}
                 {% for item in formreq %}
                     <p>{{ item }}</p>
                 {% endfor %}

@@ -781,7 +781,8 @@ def advanced_search_find():
     #                         total=count_me, record_name='List')
     typeOF = type(output)
     return render_template('advanced_search_results.html', json=output, typeof=typeOF,
-                           # argString=argString,
+                           populated_search_fields=populated_search_fields,
+                           search_fields=search_fields,
                            search_results=search_results,
                            current_user=username,
                            # search_nodes=nodes_text,
