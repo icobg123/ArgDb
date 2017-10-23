@@ -33,6 +33,7 @@ from functools import wraps
 from werkzeug.utils import secure_filename
 from werkzeug.wsgi import SharedDataMiddleware
 
+# dependancy for graphviz need to add this to the linux env
 os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
 
 app = Flask(__name__)
@@ -336,13 +337,6 @@ argument_schema_bck = {
 app.config['ALLOWED_EXTENSIONS'] = set(['json'])
 
 mail = Mail(app)
-
-
-def clever_function():
-    return u'HELLO'
-
-
-app.jinja_env.globals.update(clever_function=clever_function)
 
 
 @app.before_request
@@ -1080,9 +1074,10 @@ def account():
 
         if not login_user.get('admin'):
             privileges = user_email + " Email not verified"
+            session['privileges'] = privileges
         else:
             privileges = "Email verified " + user_email + " , you can use the API token in the API"
-
+            session['privileges'] = privileges
         # return 'You are logged in as ' + jsonify(current_user) + " " + token.decode(
         #     'UTF-8') + " Current User "
         # return 'You are logged in as ' + user_id + " " + token.decode(
@@ -1126,8 +1121,37 @@ def confirm_email(token):
     # return '<h1>The token works!</h1>'
 
 
+@app.route('/generate_new_api_key', methods=['GET', 'POST'])
+def generate_new_api_key():
+    users = mongo.db.users
+    if 'username' in session:
+        login_user = users.find_one({'name': session['username']})
+        token = jwt.encode(
+            {'public_id': login_user.get('public_id'),
+             # 'exp': datetime.datetime.utcnow()},
+             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)},
+            app.config['SECRET_KEY'])
+        users.update_one({"_id": login_user.get('_id')}, {"$set": {"token": token}})
+        if 'privileges' in session:
+            privileges = session['privileges']
+        else:
+            privileges = 'None'
+
+        return redirect(url_for('account'))
+        # return render_template('account.html',
+        #                        current_user=login_user.get('name'),
+        #                        privileges=privileges,
+        #                        # token=token
+        #                        token=token.decode('UTF-8')
+        #                        )
+    return u'HELLO'
+
+
+app.jinja_env.globals.update(clever_function=generate_new_api_key)
+
+
 def get_css_framework():
-    return current_app.config.get('CSS_FRAMEWORK', 'bootstrap4')
+    return current_app.config.get('CSS_FRAMEWORK', 'bootstrap3')
 
 
 def get_link_size():

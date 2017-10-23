@@ -35,8 +35,39 @@ import datetime
 from functools import wraps
 from werkzeug.utils import secure_filename
 from werkzeug.wsgi import SharedDataMiddleware
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+import limits.storage
 
 app = Flask(__name__)
+
+
+def find_token_for_limiting(current_user):
+    users = mongo.db.users
+    token = None
+    if 'x-access-token' in request.headers:
+        token = request.headers['x-access-token']
+
+    if not token:
+        return jsonify({'message': 'Token is missing!'}), 401
+
+    try:
+        token_data = jwt.decode(token, app.config['SECRET_KEY'])
+        current_user = users.find_one({'public_id': token_data['public_id']})
+        # current_user = User.query.filter_by(public_id=data['public_id']).first()
+    except:
+        return jsonify({'message': 'Token is invalid!'}), 401
+
+    return token
+
+
+def get_request_country():
+    return request.headers['x-access-token']
+
+
+limiter = Limiter(app, key_func=get_request_country,
+                  # storage_uri="redis://redistogo:c56eaca0869ccfa71db3d2a519281070@koi.redistogo.com:11156/")
+                  storage_uri="redis://:argdbnapier@redis-14649.c15.us-east-1-4.ec2.cloud.redislabs.com:14649")
 UPLOAD_FOLDER = 'uploads'
 app.config.from_pyfile('config.cfg')
 # auth = HTTPBasicAuth()
@@ -44,6 +75,7 @@ app.config['MONGO_DBNAME'] = 'argdbconnect'
 app.config[
     'MONGO_URI'] = 'mongodb://argdb:argdbnapier@ds137191.mlab.com:37191/argdbconnect'
 mongo = PyMongo(app)
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # TODO: Regex for the JSON schema
 # Regex for IDs - (((\d|[a-zA-Z]){4})\-){3}(\d|[a-zA-Z]){4}
@@ -801,6 +833,7 @@ def home():
 
 @app.route('/api/argument/<argString>', methods=['GET'])
 @token_required
+@limiter.limit('3 per day')
 def get_arguments_with_txt(current_user, argString):
     if not current_user.get('admin'):
         return jsonify({'message': 'Cannot perform that function!'})
@@ -884,8 +917,6 @@ def get_list_argument_id(current_user, argString):
 
     return json.dumps({'argument IDs': argument_ids_list}, sort_keys=False, indent=2), 200, {
         'Content-Type': 'application/json'}
-
-
 
 
 @app.route('/api/argument/by/<ArgId>', methods=['GET'])
