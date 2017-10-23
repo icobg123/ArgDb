@@ -18,7 +18,8 @@ from flask import g
 # import pygraphviz
 from flask_mail import Mail, Message
 # from itsdangerous import URLSafeTimedSerializer, SignatureExpired
-from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired,URLSafeTimedSerializer)
+from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired,
+                          URLSafeTimedSerializer)
 from flask_httpauth import HTTPBasicAuth
 from jsonschema.exceptions import best_match
 from bson import json_util
@@ -797,9 +798,12 @@ def home():
 #     # loaded_r = json.load(r)
 #     return render_template('search_results.html', json=output)
 
-@token_required
+
 @app.route('/api/argument/<argString>', methods=['GET'])
-def get_arguments_with_txt(argString):
+@token_required
+def get_arguments_with_txt(current_user, argString):
+    if not current_user.get('admin'):
+        return jsonify({'message': 'Cannot perform that function!'})
     argument = mongo.db.argument
     argString = argString.replace(" ", "|")
     typeOF = type(argString)
@@ -862,7 +866,10 @@ def get_arguments_with_txt(argString):
 
 
 @app.route('/api/argumentIDs/<argString>', methods=['GET'])
-def get_list_argument_id(argString):
+@token_required
+def get_list_argument_id(current_user, argString):
+    if not current_user.get('admin'):
+        return jsonify({'message': 'Cannot perform that function!'})
     # TODO: returned ids should be categorized depending on which search phrase they contain?
     argument = mongo.db.argument
     argString = argString.replace(" ", "|")
@@ -877,6 +884,8 @@ def get_list_argument_id(argString):
 
     return json.dumps({'argument IDs': argument_ids_list}, sort_keys=False, indent=2), 200, {
         'Content-Type': 'application/json'}
+
+
 
 
 @app.route('/api/argument/by/<ArgId>', methods=['GET'])
@@ -954,11 +963,15 @@ def login():
         payload = {'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=1),
                    'iat': datetime.datetime.utcnow(),
                    'public_id': user.get('public_id')}
-        token = user.get('token')
-        # Cretion of the Token
-        token = jwt.encode(
-            {'public_id': user.get('public_id'), 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)},
-            app.config['SECRET_KEY'])
+        if user.get('token'):
+            token = user.get('token')
+        else:
+            # Cretion of the Token
+            token = jwt.encode(
+                {'public_id': user.get('public_id'),
+                 # 'exp': datetime.datetime.utcnow()},
+                 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)},
+                app.config['SECRET_KEY'])
         # token = jwt.encode(payload=payload, key=app.config.get('SECRET_KEY'), alg='HS256')
         return jsonify({'token': token.decode('UTF-8')})
         # return jsonify({'token': token})
@@ -1041,5 +1054,5 @@ def index():
 
 
 if __name__ == '__main__':
-    app.secret_key = 'mysecret'
+    app.secret_key = '1234'
     app.run(debug=True)

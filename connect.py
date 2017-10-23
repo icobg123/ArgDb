@@ -338,6 +338,13 @@ app.config['ALLOWED_EXTENSIONS'] = set(['json'])
 mail = Mail(app)
 
 
+def clever_function():
+    return u'HELLO'
+
+
+app.jinja_env.globals.update(clever_function=clever_function)
+
+
 @app.before_request
 def make_session_permanent():
     session.permanent = True
@@ -980,9 +987,15 @@ def register():
                 return render_template('register.html', err=err)
             else:
                 hased_pass = generate_password_hash(request.form['pass'], method='sha256')
+                public_id = uuid.uuid4().hex
+                token = jwt.encode(
+                    {'public_id': public_id,
+                     # 'exp': datetime.datetime.utcnow()},
+                     'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)},
+                    app.config['SECRET_KEY'])
                 # hashpass = bcrypt.hashpw(request.form['pass'].encode('utf-8'), bcrypt.gensalt())
-                users.insert({'public_id': uuid.uuid4().hex, 'name': request.form['username'], 'password': hased_pass,
-                              'token': '123',
+                users.insert({'public_id': public_id, 'name': request.form['username'], 'password': hased_pass,
+                              'token': token,
                               'email': request.form['email'],
                               'admin': False,
                               })
@@ -1025,19 +1038,16 @@ def login():
                     # if pwd_context.verify(request.form['pass'], login_user['password']):
                     session['username'] = request.form['username']
                     # Cretion of the Token
-                    token = jwt.encode(
-                        {'public_id': login_user.get('public_id'),
-                         'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)},
-                        app.config['SECRET_KEY'])
-                    users.update_one(
-                        {"_id": login_user.get('_id')},
-                        {
-                            "$set": {
-                                "token": token
+                    if login_user.get('token'):
+                        token = login_user.get('token')
+                    else:
+                        token = jwt.encode(
+                            {'public_id': login_user.get('public_id'),
+                             # 'exp': datetime.datetime.utcnow()},
+                             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)},
+                            app.config['SECRET_KEY'])
 
-                            }
-                        }
-                    )
+                        users.update_one({"_id": login_user.get('_id')}, {"$set": {"token": token}})
                     session['token'] = token.decode('UTF-8')
                     session['logged_in'] = True
                     make_session_permanent()
@@ -1060,7 +1070,7 @@ def account():
     if 'username' in session:
         login_user = users.find_one({'name': session['username']})
         token = login_user.get('token')
-
+        user_email = login_user.get('email')
         # user_id = current_user.get('public_id')
         # admin = str(current_user.get('admin'))
         # if not current_user.get('admin'):
@@ -1069,9 +1079,9 @@ def account():
         #     admin = "Admin"
 
         if not login_user.get('admin'):
-            admin = "no admin"
+            privileges = user_email + " Email not verified"
         else:
-            admin = "Admin"
+            privileges = "Email verified " + user_email + " , you can use the API token in the API"
 
         # return 'You are logged in as ' + jsonify(current_user) + " " + token.decode(
         #     'UTF-8') + " Current User "
@@ -1079,7 +1089,7 @@ def account():
         #     'UTF-8') + " Current User " + admin
         return render_template('account.html',
                                current_user=login_user.get('name'),
-                               privileges=admin,
+                               privileges=privileges,
                                # token=token
                                token=token.decode('UTF-8')
                                )
@@ -1112,7 +1122,7 @@ def confirm_email(token):
 
     except SignatureExpired:
         return '<h1>The token is expired!</h1>'
-    return email
+    return redirect(url_for('login'))
     # return '<h1>The token works!</h1>'
 
 
@@ -1143,5 +1153,5 @@ def get_pagination(**kwargs):
 
 
 if __name__ == '__main__':
-    app.secret_key = 'mysecret'
+    app.secret_key = '1234'
     app.run(debug=True)

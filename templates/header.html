@@ -13,6 +13,8 @@
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/custom.js"></script>
+    <script src="/static/js/custom_1.js"></script>
+    <script src="/static/js/clipboard.min.js"></script>
 </head>
 <body>
 <nav class="navbar-static-top">
@@ -28,7 +30,7 @@
             </button>
             <a href="{{ url_for('.home') }}" class="navbar-brand margin-left">
                 <img style="max-width:100px; margin-top: -7px;"
-                     src=../static/images/logo.png>
+                     src="/static/images/logo.png">
             </a>
         </div>
         <div id="navbar" class="collapse navbar-collapse margin-left ">
@@ -88,7 +90,8 @@
                 {#                    <h3 class="pull-right"> {{ current_user }}</h3>#}
                 <ul class="nav pull-right navbar-nav margin-left">
                     <li><a href="{{ url_for('account') }}">Hi there, {{ current_user }} !</a></li>
-                    <li><a href="{{ url_for('logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Sign out</a></li>
+                    <li><a href="{{ url_for('logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Sign out</a>
+                    </li>
                 </ul>
             {% else %}
                 <ul class="nav pull-right navbar-nav margin-left">

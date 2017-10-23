@@ -8,9 +8,17 @@
                         <h1>Hi there {{ current_user }}</h1>
                         <h2>Status {{ privileges }}</h2>
                     </div>
+
                     <div class="col-sm-6">
                         <h3>API Token:</h3>
-                        <pre>{{ token }}</pre>
+                        <pre id="token_api">{{ token }}</pre>
+                        <div class="form-group">
+                            <div class="col-xs-offset-1 col-xs-10">
+                                <button id="copy_api" data-clipboard-target="#token_api" type="submit"
+                                        name="register_btn" class="btn btn-primary">Copy
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
