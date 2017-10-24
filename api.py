@@ -938,8 +938,8 @@ def get_list_argument_id(current_user, argString):
 @app.route('/api/argument/by/<ArgId>', methods=['GET'])
 @token_required
 # @cache.cached(timeout=10, key_prefix=make_cache_key)
-@cache.memoize(60)
-@limiter.limit('3 per minute')
+@cache.memoize(60, make_name=make_cache_key)
+@limiter.limit('3 per minute', key_func=make_cache_key)
 # @cache.cached(timeout=600, key_prefix=make_cache_key)
 def get_argument_by_id(current_user, ArgId):
     if not current_user.get('admin'):
