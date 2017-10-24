@@ -38,27 +38,27 @@ from werkzeug.wsgi import SharedDataMiddleware
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import limits.storage
+from flask_cache import Cache
 
 app = Flask(__name__)
+redis_url = 'redis://:argdbnapier@redis-14649.c15.us-east-1-4.ec2.cloud.redislabs.com:14649'
+cache = Cache(app, config={'CACHE_TYPE': 'redis', 'CACHE_REDIS_URL': redis_url
+                           })
 
 
-def find_token_for_limiting(current_user):
-    users = mongo.db.users
-    token = None
-    if 'x-access-token' in request.headers:
-        token = request.headers['x-access-token']
+# cache = Cache(app, config={'CACHE_TYPE': 'redis',
+#                            'CACHE_REDIS_HOST': 'localhost',
+#                            'CACHE_REDIS_PORT': 'redis-14649.c15.us-east-1-4.ec2.cloud.redislabs.com',
+#                            'CACHE_REDIS_PASSWORD': 'argdbnapier',
+#                            # 'CACHE_REDIS_DB': '0',
+#                            })
 
-    if not token:
-        return jsonify({'message': 'Token is missing!'}), 401
 
-    try:
-        token_data = jwt.decode(token, app.config['SECRET_KEY'])
-        current_user = users.find_one({'public_id': token_data['public_id']})
-        # current_user = User.query.filter_by(public_id=data['public_id']).first()
-    except:
-        return jsonify({'message': 'Token is invalid!'}), 401
-
-    return token
+def make_cache_key(*args, **kwargs):
+    path = request.path
+    args = str(hash(frozenset(request.args.items())))
+    # lang = get_locale()
+    return str((path + args).encode('utf-8'))
 
 
 def get_request_country():
@@ -67,7 +67,7 @@ def get_request_country():
 
 limiter = Limiter(app, key_func=get_request_country,
                   # storage_uri="redis://redistogo:c56eaca0869ccfa71db3d2a519281070@koi.redistogo.com:11156/")
-                  storage_uri="redis://:argdbnapier@redis-14649.c15.us-east-1-4.ec2.cloud.redislabs.com:14649")
+                  storage_uri=redis_url)
 UPLOAD_FOLDER = 'uploads'
 app.config.from_pyfile('config.cfg')
 # auth = HTTPBasicAuth()
@@ -833,7 +833,8 @@ def home():
 
 @app.route('/api/argument/<argString>', methods=['GET'])
 @token_required
-@limiter.limit('3 per day')
+# @limiter.limit('3 per minute')
+@cache.cached(timeout=5, key_prefix=make_cache_key)
 def get_arguments_with_txt(current_user, argString):
     if not current_user.get('admin'):
         return jsonify({'message': 'Cannot perform that function!'})
@@ -858,7 +859,7 @@ def get_arguments_with_txt(current_user, argString):
     # qss = argument.find({"$text": {"$search": argString}}).count()
 
     search_result = argument.find(
-        {"nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}})
+        {"sadface.nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}})
     # with_regex_1 = argument.find(
     #     {"name": {'$regex': ".*" + argString + ".*", '$options': 'i'}})
     # TODO: counts how many results were found
@@ -872,18 +873,33 @@ def get_arguments_with_txt(current_user, argString):
     #     output = 'No results Found'
 
     results = []
+    # for q in search_result:
+    #     results.append({
+    #         # "MongoDB ID": q["_id"],
+    #         "Analyst Email": q["analyst_email"],
+    #         "Analyst Name": q["analyst_name"],
+    #         "Created": q["created"],
+    #         "Edges": q["edges"],
+    #         "Edited": q["edited"],
+    #         "id": q["id"],
+    #         "Metadata": q["metadata"],
+    #         "Nodes": q["nodes"],
+    #         "Resources": q["resources"],
+    #
+    #     })
+
     for q in search_result:
         results.append({
             # "MongoDB ID": q["_id"],
-            "Analyst Email": q["analyst_email"],
-            "Analyst Name": q["analyst_name"],
-            "Created": q["created"],
-            "Edges": q["edges"],
-            "Edited": q["edited"],
-            "id": q["id"],
-            "Metadata": q["metadata"],
-            "Nodes": q["nodes"],
-            "Resources": q["resources"],
+            "Analyst Email": q['sadface']["analyst_email"],
+            "Analyst Name": q['sadface']["analyst_name"],
+            "Created": q['sadface']["created"],
+            "Edges": q['sadface']["edges"],
+            "Edited": q['sadface']["edited"],
+            "id": q['sadface']["id"],
+            "Metadata": q['sadface']["metadata"],
+            "Nodes": q['sadface']["nodes"],
+            "Resources": q['sadface']["resources"],
 
         })
 
@@ -921,6 +937,10 @@ def get_list_argument_id(current_user, argString):
 
 @app.route('/api/argument/by/<ArgId>', methods=['GET'])
 @token_required
+# @cache.cached(timeout=10, key_prefix=make_cache_key)
+@cache.memoize(120)
+# @limiter.limit('3 per minute')
+# @cache.cached(timeout=600, key_prefix=make_cache_key)
 def get_argument_by_id(current_user, ArgId):
     if not current_user.get('admin'):
         return jsonify({'message': 'Cannot perform that function!'})
@@ -1001,7 +1021,7 @@ def login():
             token = jwt.encode(
                 {'public_id': user.get('public_id'),
                  # 'exp': datetime.datetime.utcnow()},
-                 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)},
+                 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
                 app.config['SECRET_KEY'])
         # token = jwt.encode(payload=payload, key=app.config.get('SECRET_KEY'), alg='HS256')
         return jsonify({'token': token.decode('UTF-8')})
@@ -1082,6 +1102,14 @@ def index():
         return 'You are logged in as ' + session['username']
 
     return render_template('account.html')
+
+
+@app.errorhandler(429)
+def ratelimit_handler(e):
+    return make_response(
+        jsonify(error="ratelimit exceeded %s" % e.description)
+        , 429
+    )
 
 
 if __name__ == '__main__':

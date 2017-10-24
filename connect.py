@@ -985,7 +985,7 @@ def register():
                 token = jwt.encode(
                     {'public_id': public_id,
                      # 'exp': datetime.datetime.utcnow()},
-                     'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)},
+                     'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
                     app.config['SECRET_KEY'])
                 # hashpass = bcrypt.hashpw(request.form['pass'].encode('utf-8'), bcrypt.gensalt())
                 users.insert({'public_id': public_id, 'name': request.form['username'], 'password': hased_pass,
@@ -1038,7 +1038,7 @@ def login():
                         token = jwt.encode(
                             {'public_id': login_user.get('public_id'),
                              # 'exp': datetime.datetime.utcnow()},
-                             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)},
+                             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
                             app.config['SECRET_KEY'])
 
                         users.update_one({"_id": login_user.get('_id')}, {"$set": {"token": token}})
@@ -1129,7 +1129,7 @@ def generate_new_api_key():
         token = jwt.encode(
             {'public_id': login_user.get('public_id'),
              # 'exp': datetime.datetime.utcnow()},
-             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=10)},
+             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
             app.config['SECRET_KEY'])
         users.update_one({"_id": login_user.get('_id')}, {"$set": {"token": token}})
         if 'privileges' in session:
