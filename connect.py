@@ -350,7 +350,9 @@ def token_required(f):
     def decorated(*args, **kwargs):
         users = mongo.db.users
         token = None
-
+        options = {
+            'verify_exp': False
+        }
         if 'username' in session:
             login_user = users.find_one({'name': session['username']})
             token = login_user.get('token')
@@ -364,7 +366,7 @@ def token_required(f):
             return jsonify({'message': 'Token is missing!'}), 401
 
         try:
-            token_data = jwt.decode(token, app.config['SECRET_KEY'])
+            token_data = jwt.decode(token, app.config['SECRET_KEY'], options=options)
             # current_user = users.find_one({'name': session['username']})
             current_user = users.find_one({'public_id': token_data['public_id']})
             # current_user = User.query.filter_by(public_id=data['public_id']).first()
@@ -1153,7 +1155,7 @@ def account():
         token = login_user.get('token')
         user_email = login_user.get('email')
 
-        search_results = argument.find({'sadface.analyst_email':user_email}).limit(10)
+        search_results = argument.find({'sadface.analyst_email': user_email}).limit(10)
 
         argument_ids_list = []
         for argument in search_results:

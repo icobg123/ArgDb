@@ -536,7 +536,9 @@ def token_required(f):
     def decorated(*args, **kwargs):
         users = mongo.db.users
         token = None
-
+        options = {
+            'verify_exp': False
+        }
         if 'x-access-token' in request.headers:
             token = request.headers['x-access-token']
 
@@ -544,7 +546,7 @@ def token_required(f):
             return jsonify({'message': 'Token is missing!'}), 401
 
         try:
-            token_data = jwt.decode(token, app.config['SECRET_KEY'])
+            token_data = jwt.decode(token, app.config['SECRET_KEY'], options=options)
             current_user = users.find_one({'public_id': token_data['public_id']})
             # current_user = User.query.filter_by(public_id=data['public_id']).first()
         except:
