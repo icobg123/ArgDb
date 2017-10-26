@@ -9,15 +9,44 @@
                         <h2>Status {{ privileges }}</h2>
                     </div>
                 </div>
+                {#                {{ argument_ids_list }}#}
+                {% if argument_ids_list %}
+                    <div class="col-sm-6">
+                        <p>
+                            The last documents your email appears in.
+                        </p>
+                        <div class="list-group">
+                            {% for item in argument_ids_list %}
+                                {#                            {{ item }}#}
+                                <a class="list-group-item list-group-item-action"
+                                   href="{{ url_for('.get_argument_by_id',ArgId=item['id']) }}">
+                                    {{ loop.index }}: {{ item['id'] }}
+                                    {#                                {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
+                                </a>
+
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-sm-6">
+                        <p>You haven't analysed any args.</p>
+                    </div>
+                {% endif %}
+
+
+
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                         <h3>API Token:</h3>
                         <pre id="token_api">{{ token }}</pre>
+                    </div>
+                    <div class="col-sm-6">
                         <div class="form-group">
                             <div class="col-xs-offset-1 col-xs-10">
-                                <button id="copy_api" data-clipboard-target="#token_api" type="submit"
-                                        name="register_btn" class="btn btn-primary">Copy
-                                </button>
+{#                                <button id="copy_api" data-clipboard-target="#token_api" type="button"#}
+{#                                        name="register_btn" class="btn btn-primary">Copy#}
+{#                                </button>#}
                             </div>
                         </div>
                         <form class="form-horizontal" method=POST action="{{ url_for('generate_new_api_key') }}">
@@ -26,6 +55,9 @@
                                     <button id="" type="submit" name="register_btn" class="btn btn-primary">GENERATE API
                                         KEY
                                     </button>
+                                      <button id="copy_api" data-clipboard-target="#token_api" type="button"
+                                        name="register_btn" class="btn btn-primary">Copy
+                                </button>
                                 </div>
                             </div>
                         </form>

@@ -513,26 +513,16 @@ def home():
     return render_template('homepage.html', err=err, current_user=username)
 
 
-@app.route('/argument', methods=['GET'])
-def get_all_arguments():
-    argument = mongo.db.argument
-
-    output = []
-
-    for q in argument.find():
-        output.append({"name": q["name"], "contents": q["contents"]})
-
-    output = json.dumps(output)
-    # jsont = ({'result': output})
-    # r = json.dumps(output)
-    # print(type(r))
-    # loaded_r = json.load(r)
-    return render_template('search_results.html', json=output)
-
-
 @app.route('/argument/by/<ArgId>', methods=['GET', 'POST'])
 # @token_required
 def get_argument_by_id(ArgId):
+    # if 'analyst_name' in session:
+    #     session.pop('analyst_name', None)
+    # if 'analyst_email' in session:
+    #     session.pop('analyst_email', None)
+    # if 'id' in session:
+    #     session.pop('id', None)
+
     if 'argumentString' in request.form:
         if request.form['argumentString']:
             return search_for_arg()
@@ -563,52 +553,26 @@ def get_argument_by_id(ArgId):
     sadface.sd = sadface_results
     dot_string = sadface.export_dot()
     graph = graphviz.Source(dot_string, format='svg')
+    # session['analyst_name'] = sadface_results.get("analyst_name")
+    # session['analyst_email'] = sadface_results.get("analyst_email")
+    # session['id'] = result
 
-    return render_template('single_arg.html', argument=arg_found, arg_id=result, current_user=username,
+    analyst_name = sadface_results.get("analyst_name")
+    analyst_email = sadface_results.get("analyst_email")
+    if 'analyst_email' in session:
+        # session.pop('analyst_name', None)
+        # session.pop('analyst_email', None)
+        # session.pop('id', None)asd
+        asd = 'asd'
+
+    return render_template('single_arg.html',
+                           argument=arg_found,
+                           arg_id=result,
+                           current_user=username,
+                           analyst_name=analyst_name,
+                           analyst_email=analyst_email,
                            graph=Markup(graph.pipe().decode('utf-8')))
 
-
-# # TODO: Advamced Search
-# @app.route('/advanced_search', methods=['GET', 'POST'])
-# # @token_required
-# def advanced_search():
-#     if 'argumentString' in request.form:
-#         if request.form['argumentString']:
-#             return search_for_arg()
-#
-#     # if not current_user.get('admin'):
-#     #     return jsonify({'message': 'Cannot perform that function!'})
-#     users = mongo.db.users
-#     username = ""
-#     if 'username' in session:
-#         login_user = users.find_one({'name': session['username']})
-#         username = login_user.get('name')
-#     argument = mongo.db.argument
-#     analyst_email = request.form.get('analyst_email')
-#     analyst_name = request.form.get('analyst_name')
-#     ArgId = "icara".replace(" ", "|")
-#     search_results = argument.find({"sadface.analyst_email": analyst_email, "sadface.analyst_name": analyst_name})
-#     # search_results = argument.find_one({"sadface.id": {'$regex': ".*" + ArgId + ".*", "$options": "i"}})
-#     sadface_results = search_results.get("sadface", {})
-#     result = sadface_results.get('id')
-#     arg_found = json.dumps({'argument IDs': ({
-#         "Analyst Email": sadface_results.get("analyst_email"),
-#         "Analyst Name": sadface_results.get("analyst_name"),
-#         "Created": sadface_results.get("created"),
-#         "Edges": sadface_results.get("edges"),
-#         "Edited": sadface_results.get("edited"),
-#         "id": sadface_results.get("id"),
-#         "Metadata": sadface_results.get("metadata"),
-#         "Nodes": sadface_results.get("nodes"),
-#         "Resources": sadface_results.get("resources")})}, sort_keys=False, indent=2)
-#
-#     sadface.sd = sadface_results
-#     dot_string = sadface.export_dot()
-#     graph = graphviz.Source(dot_string, format='svg')
-#
-#     return render_template('advanced_search.html', argument=arg_found, arg_id=result, current_user=username,
-#                            graph=Markup(graph.pipe().decode('utf-8')))
-#
 
 # TODO: Advamced Searcj
 @app.route('/advanced_search', methods=['GET', 'POST'])
@@ -629,7 +593,127 @@ def advanced_search():
         session.pop('analyst_email', None)
         session.pop('id', None)
 
+    if 'analyst_name' in session:
+        session.pop('analyst_name', None)
+    if 'analyst_email' in session:
+        session.pop('analyst_email', None)
+    if 'id' in session:
+        session.pop('id', None)
+
     return render_template('advanced_search.html', current_user=username, err=err)
+
+
+@app.route('/list_of_docs/session_k_<string:session_key>+session_v_<string:session_value>', methods=['GET', 'POST'])
+# @token_required
+def set_sessions(session_key, session_value):
+    if request.method == 'POST':
+        return search_for_arg()
+
+    users = mongo.db.users
+    username = ""
+    if 'username' in session:
+        login_user = users.find_one({'name': session['username']})
+        username = login_user.get('name')
+
+    if request.method == 'POST' and 'argumentString' in request.form:
+        return search_for_arg()
+
+    argument = mongo.db.argument
+    err = None
+    page, per_page, offset = get_page_args()
+    try:
+        page = int(request.args.get('page', 1))
+    except ValueError:
+        page = 1
+    # page, per_page, offset = get_page_args()
+    # per_page = 5
+    # page = request.args.get(get_page_parameter(), type=int, default=1)
+    # offset = int(request.args['offset'])
+    # limit = int(request.args['limit'])
+    # typeOF = type(argString)
+    # TODO: Separate into /api/ and /web/
+    per_page = 10
+    offset = (page - 1) * per_page
+    search_fields = {session_key: session_value}
+    populated_search_fields = []
+    query_dict = {}
+
+    for key, value in search_fields.items():
+        if value:
+            populated_search_fields.append(key)
+
+    for field in populated_search_fields:
+        query_dict['sadface.' + field] = search_fields[field]
+
+    search_results = argument.find(query_dict).skip(offset).limit(per_page)
+    count_me = search_results.count()
+
+    pagination = get_pagination(page=page,
+                                per_page=per_page,
+                                total=count_me,
+                                offset=offset,
+                                # formreq=f,
+                                record_name='users',
+                                format_total=True,
+                                format_number=True,
+                                )
+
+    output = []
+    for q in search_results:
+        output.append({
+            # "MongoDB ID": q["_id"],
+            "Analyst Email": q['sadface']["analyst_email"],
+            "Analyst Name": q['sadface']["analyst_name"],
+            "Created": q['sadface']["created"],
+            "Edges": q['sadface']["edges"],
+            "Edited": q['sadface']["edited"],
+            "id": q['sadface']["id"],
+            # "Metadata": q['sadface']["metadata"],
+            "Nodes": q['sadface']["nodes"],
+            # "Resources": q['sadface']["resources"],
+
+        })
+    typeOF = type(output)
+    return render_template('advanced_search_results.html', json=output, typeof=typeOF,
+                           populated_search_fields=populated_search_fields,
+                           search_fields=search_fields,
+                           search_results=search_results,
+                           current_user=username,
+                           # search_nodes=nodes_text,
+                           pagination=pagination,
+                           page=page,
+                           per_page=per_page,
+                           cursor=count_me)
+
+    # session_key = session_key
+    # session_value = session_value
+    # users = mongo.db.users
+    # session[session_key] = session_value
+    # icara = session[session_key]
+    #
+    # #
+    # return redirect(url_for('advanced_search_find'))
+
+
+#
+# @app.route('/set_sessions/session_k_<string:session_key>+session_v_<string:session_value>', methods=['GET', 'POST'])
+# # @token_required
+# def set_sessions(session_key, session_value):
+#     if 'analyst_name' in session:
+#         session.pop('analyst_name', None)
+#     if 'analyst_email' in session:
+#         session.pop('analyst_email', None)
+#     if 'id' in session:
+#         session.pop('id', None)
+#     session_key = session_key
+#     session_value = session_value
+#     users = mongo.db.users
+#     session[session_key] = session_value
+#     icara = session[session_key]
+#
+#     # return (session_key + "  " + session_value)
+#     #
+#     return redirect(url_for('advanced_search_find'))
 
 
 @app.route('/advanced_search_results', methods=['GET', 'POST'])
@@ -705,21 +789,23 @@ def advanced_search_find():
     #         value = request.form[str(field)]
     #         # search_fields[str(field)] = request.form[str(field)]
     #         session[str(field)] = request.form[str(field)]
-
+    analyst_name = None
+    analyst_email = None
+    id = None
     if 'analyst_name' in session and not request.form.get('analyst_name'):
         analyst_name = session['analyst_name']
-    else:
+    elif request.form.get('analyst_name'):
         analyst_name = request.form['analyst_name']
         session['analyst_name'] = request.form['analyst_name']
 
     if 'analyst_email' in session and not request.form.get('analyst_email'):
         analyst_email = session['analyst_email']
-    else:
+    elif request.form.get('analyst_email'):
         analyst_email = request.form['analyst_email']
         session['analyst_email'] = request.form['analyst_email']
     if 'id' in session and not request.form.get('document_id'):
         id = session['id']
-    else:
+    elif request.form.get('document_id'):
         id = request.form['document_id']
         session['id'] = request.form['document_id']
 
@@ -816,7 +902,7 @@ def advanced_search_find():
                            cursor=count_me)
 
 
-@app.route('/argument/<argString>+', methods=['GET', 'POST'])
+@app.route('/argument/<argString>', methods=['GET', 'POST'])
 def get_one_argument(argString):
     if request.method == 'POST':
         return search_for_arg()
@@ -914,22 +1000,22 @@ def get_one_argument(argString):
 
 # return jsonify({'result': output})
 
-
-@app.route('/argument', methods=['POST'])
-def add_argument():
-    argument = mongo.db.argument
-
-    name = request.json['name']
-    contents = request.json['contents']
-
-    argument_id = argument.insert({'name': name, 'contents': contents})
-
-    new_argument = argument.find_one({'_id': argument_id})
-
-    output = {'name': new_argument['name'], 'contents': new_argument['contents']}
-
-    return jsonify({'result': output})
-
+#
+# @app.route('/argument', methods=['POST'])
+# def add_argument():
+#     argument = mongo.db.argument
+#
+#     name = request.json['name']
+#     contents = request.json['contents']
+#
+#     argument_id = argument.insert({'name': name, 'contents': contents})
+#
+#     new_argument = argument.find_one({'_id': argument_id})
+#
+#     output = {'name': new_argument['name'], 'contents': new_argument['contents']}
+#
+#     return jsonify({'result': output})
+#
 
 # Disable caching for development purposes
 @app.after_request
@@ -1061,16 +1147,19 @@ def account():
         if request.form['argumentString']:
             return search_for_arg()
     users = mongo.db.users
+    argument = mongo.db.argument
     if 'username' in session:
         login_user = users.find_one({'name': session['username']})
         token = login_user.get('token')
         user_email = login_user.get('email')
-        # user_id = current_user.get('public_id')
-        # admin = str(current_user.get('admin'))
-        # if not current_user.get('admin'):
-        #     admin = "no admin"
-        # else:
-        #     admin = "Admin"
+
+        search_results = argument.find({'sadface.analyst_email':user_email}).limit(10)
+
+        argument_ids_list = []
+        for argument in search_results:
+            argument_ids_list.append({
+                "id": argument['sadface']["id"]
+            })
 
         if not login_user.get('admin'):
             privileges = user_email + " Email not verified"
@@ -1085,6 +1174,7 @@ def account():
         return render_template('account.html',
                                current_user=login_user.get('name'),
                                privileges=privileges,
+                               argument_ids_list=argument_ids_list,
                                # token=token
                                token=token.decode('UTF-8')
                                )

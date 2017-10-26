@@ -794,7 +794,10 @@ def home():
 
             return redirect(url_for('get_arguments_with_txt', argString=argumentString))
 
-    return render_template('homepage.html', err=err)
+    return make_response(
+        jsonify(msg="Homepage")
+        , 200
+    )  # return render_template('homepage.html', err=err)
 
 
 #
@@ -834,7 +837,7 @@ def home():
 @app.route('/api/argument/<argString>', methods=['GET'])
 @token_required
 # @limiter.limit('3 per minute')
-@cache.cached(timeout=5, key_prefix=make_cache_key)
+# @cache.cached(timeout=5, key_prefix=make_cache_key)
 def get_arguments_with_txt(current_user, argString):
     if not current_user.get('admin'):
         return jsonify({'message': 'Cannot perform that function!'})
@@ -938,8 +941,8 @@ def get_list_argument_id(current_user, argString):
 @app.route('/api/argument/by/<ArgId>', methods=['GET'])
 @token_required
 # @cache.cached(timeout=10, key_prefix=make_cache_key)
-@cache.memoize(60, make_name=make_cache_key)
-@limiter.limit('3 per minute', key_func=make_cache_key)
+@cache.memoize(20, make_name=make_cache_key)
+# @limiter.limit('3 per minute', key_func=make_cache_key)
 # @cache.cached(timeout=600, key_prefix=make_cache_key)
 def get_argument_by_id(current_user, ArgId):
     if not current_user.get('admin'):
