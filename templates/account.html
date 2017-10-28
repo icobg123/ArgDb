@@ -33,20 +33,47 @@
                         <p>You haven't analysed any args.</p>
                     </div>
                 {% endif %}
+                {% if session['err'] %}
+                    <p>session : {{ session['err'] }}</p>
+                {% endif %}
+                {#                {{ err }}#}
+                <form class="form-horizontal" method=POST action="{{ url_for('change_pass') }}">
+                    {#                    <div class="form-group">#}
+                    {#                        <label class="control-label col-xs-3" for="exampleInputEmail1">Username</label>#}
+                    {#                        <div class="col-xs-9">#}
+                    {#                            <input type="text" class="form-control" name="username" placeholder="Username">#}
+                    {#                        </div>#}
+                    {#                    </div>#}
+                    <div class="form-group">
+                        <label class="control-label col-xs-2" for="exampleInputPassword1">Change Pass</label>
+                        <div class="col-xs-2">
+                            <input type="password" class="form-control" name="pass" placeholder="Password">
+                        </div>
 
-
+                        <button type="submit" name="register_btn" class="btn btn-primary">Change Password</button>
+                    </div>
+                    {#                    <div class="form-group">#}
+                    {#                        <label class="control-label col-xs-3" for="exampleInputPassword1">Email</label>#}
+                    {#                        <div class="col-xs-9">#}
+                    {#                            <input type="email" class="form-control" name="email" placeholder="Email">#}
+                    {#                        </div>#}
+                    {#                    </div>#}
+                </form>
 
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <h3>API Token:</h3>
+                    </div>
+                    <div class="col-sm-6">
+
                         <pre id="token_api">{{ token }}</pre>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <div class="col-xs-offset-1 col-xs-10">
-{#                                <button id="copy_api" data-clipboard-target="#token_api" type="button"#}
-{#                                        name="register_btn" class="btn btn-primary">Copy#}
-{#                                </button>#}
+                                {#                                <button id="copy_api" data-clipboard-target="#token_api" type="button"#}
+                                {#                                        name="register_btn" class="btn btn-primary">Copy#}
+                                {#                                </button>#}
                             </div>
                         </div>
                         <form class="form-horizontal" method=POST action="{{ url_for('generate_new_api_key') }}">
@@ -55,9 +82,9 @@
                                     <button id="" type="submit" name="register_btn" class="btn btn-primary">GENERATE API
                                         KEY
                                     </button>
-                                      <button id="copy_api" data-clipboard-target="#token_api" type="button"
-                                        name="register_btn" class="btn btn-primary">Copy
-                                </button>
+                                    <button id="copy_api" data-clipboard-target="#token_api" type="button"
+                                            name="register_btn" class="btn btn-primary">Copy
+                                    </button>
                                 </div>
                             </div>
                         </form>

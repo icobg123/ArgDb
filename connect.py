@@ -334,7 +334,7 @@ argument_schema_bck = {
     "type": "object"
 }
 
-app.config['ALLOWED_EXTENSIONS'] = set(['json'])
+# app.config['ALLOWED_EXTENSIONS'] = set(['json'])
 
 mail = Mail(app)
 
@@ -386,6 +386,8 @@ def allowed_file(filename):
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
+    if 'err' in session:
+        session.pop('err', None)
     # if request.method == 'POST':
     #     if request.form['argumentString']:
     #         return search_for_arg()
@@ -452,26 +454,28 @@ def upload_file():
     return render_template('upload.html', argument_schema=argument_schema, current_user=username)
 
 
-@app.route('/handle_data', methods=['POST'])
-def handle_data():
-    projectpath = request.form['projectFilepath']
-    # your code
+# @app.route('/handle_data', methods=['POST'])
+# def handle_data():
+#     projectpath = request.form['projectFilepath']
+#     # your code
+#
+#
+# @app.route('/uploads/<filename>')
+# def uploaded_file(filename):
+#     return send_from_directory(app.config['UPLOAD_FOLDER'],
+#                                filename)
 
 
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename)
-
-
-app.add_url_rule('/uploads/<filename>', 'uploaded_file',
-                 build_only=True)
-app.wsgi_app = SharedDataMiddleware(app.wsgi_app, {
-    '/uploads': app.config['UPLOAD_FOLDER']
-})
+# app.add_url_rule('/uploads/<filename>', 'uploaded_file',
+#                  build_only=True)
+# app.wsgi_app = SharedDataMiddleware(app.wsgi_app, {
+#     '/uploads': app.config['UPLOAD_FOLDER']
+# })
 
 
 def search_for_arg():
+    if 'err' in session:
+        session.pop('err', None)
     users = mongo.db.users
     username = ""
     if 'username' in session:
@@ -491,6 +495,8 @@ def search_for_arg():
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    if 'err' in session:
+        session.pop('err', None)
     err = None
     users = mongo.db.users
     username = ""
@@ -518,12 +524,8 @@ def home():
 @app.route('/argument/by/<ArgId>', methods=['GET', 'POST'])
 # @token_required
 def get_argument_by_id(ArgId):
-    # if 'analyst_name' in session:
-    #     session.pop('analyst_name', None)
-    # if 'analyst_email' in session:
-    #     session.pop('analyst_email', None)
-    # if 'id' in session:
-    #     session.pop('id', None)
+    if 'err' in session:
+        session.pop('err', None)
 
     if 'argumentString' in request.form:
         if request.form['argumentString']:
@@ -581,6 +583,8 @@ def get_argument_by_id(ArgId):
 # @app.route('/advanced_search?page=1', methods=['GET', 'POST'])
 # @token_required
 def advanced_search():
+    if 'err' in session:
+        session.pop('err', None)
     if request.method == 'POST' and 'argumentString' in request.form:
         return search_for_arg()
     err = None
@@ -607,7 +611,7 @@ def advanced_search():
 
 @app.route('/list_of_docs/session_k_<string:session_key>+session_v_<string:session_value>', methods=['GET', 'POST'])
 # @token_required
-def set_sessions(session_key, session_value):
+def list_of_arguments(session_key, session_value):
     if request.method == 'POST':
         return search_for_arg()
 
@@ -721,6 +725,8 @@ def set_sessions(session_key, session_value):
 @app.route('/advanced_search_results', methods=['GET', 'POST'])
 # @token_required
 def advanced_search_find():
+    if 'err' in session:
+        session.pop('err', None)
     users = mongo.db.users
     username = ""
     if 'username' in session:
@@ -906,6 +912,9 @@ def advanced_search_find():
 
 @app.route('/argument/<argString>', methods=['GET', 'POST'])
 def get_one_argument(argString):
+    if 'err' in session:
+        session.pop('err', None)
+
     if request.method == 'POST':
         return search_for_arg()
 
@@ -1036,9 +1045,47 @@ def to_pretty_json(value):
 app.jinja_env.filters['tojson_pretty'] = to_pretty_json
 
 
-# TODO: Check if email is unique figure out how to reset passwords etc
+@app.route('/account/change_password', methods=['POST'])
+def change_pass():
+    # err = None
+    # if 'err' in session:
+    #     session.pop('err', None)
+    users = mongo.db.users
+    if 'username' in session:
+        existing_user = users.find_one({'name': session['username']})
+
+        if request.method == 'POST':
+            if 'pass' in request.form:
+                if not request.form['pass']:
+                    err = 'Please fill in all fields'
+                    session['err'] = err
+                    return redirect(url_for('account'))
+                    # return render_template('account.html', err=err)
+
+                hased_pass = generate_password_hash(request.form['pass'], method='sha256')
+                users.update_one({"_id": existing_user.get('_id')}, {"$set": {"password": hased_pass}})
+
+                email = existing_user.get('email')
+                msg = Message('Password Changed', sender='icobg123@gmail.com', recipients=[email])
+
+                # link = url_for('confirm_email', token=token, _external=True)
+                #
+                msg.body = 'Your password has been changed'
+
+                mail.send(msg)
+                err = "Your password has been changed."
+                session['err'] = err
+                return redirect(url_for('account'))
+
+    return redirect(url_for('account'))
+
+    # TODO: Check if email is unique figure out how to reset passwords etc
+
+
 @app.route('/register', methods=['POST', 'GET'])
 def register():
+    if 'err' in session:
+        session.pop('err', None)
     err = None
     if request.method == 'POST':
         if 'argumentString' in request.form:
@@ -1103,6 +1150,8 @@ def register():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+    if 'err' in session:
+        session.pop('err', None)
     if 'username' in session:
         return redirect(url_for('account'))
     if request.method == 'POST':
@@ -1145,6 +1194,10 @@ def login():
 @app.route('/account', methods=['POST', 'GET'])
 # @token_required
 def account():
+    # if 'err' in session:
+    #     session.pop('err', None)
+
+
     if request.method == 'POST':
         if request.form['argumentString']:
             return search_for_arg()
@@ -1156,7 +1209,7 @@ def account():
         user_email = login_user.get('email')
 
         search_results = argument.find({'sadface.analyst_email': user_email}).limit(10)
-
+        sec_key = app.config['SECRET_KEY']
         argument_ids_list = []
         for argument in search_results:
             argument_ids_list.append({
@@ -1177,11 +1230,12 @@ def account():
                                current_user=login_user.get('name'),
                                privileges=privileges,
                                argument_ids_list=argument_ids_list,
+                               sec_key=sec_key,
                                # token=token
                                token=token.decode('UTF-8')
                                )
 
-    return render_template('log_ing.html')
+    return redirect('login')
 
 
 @app.route('/logout')
@@ -1215,6 +1269,8 @@ def confirm_email(token):
 
 @app.route('/generate_new_api_key', methods=['GET', 'POST'])
 def generate_new_api_key():
+    if 'err' in session:
+        session.pop('err', None)
     users = mongo.db.users
     if 'username' in session:
         login_user = users.find_one({'name': session['username']})
@@ -1269,5 +1325,5 @@ def get_pagination(**kwargs):
 
 
 if __name__ == '__main__':
-    app.secret_key = '1234'
+    # app.secret_key = '1234'
     app.run(debug=True)

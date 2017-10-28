@@ -527,8 +527,9 @@ argument_schema_backup = {
     "type": "object"
 }
 
-app.config['ALLOWED_EXTENSIONS'] = set(['json'])
-app.config['SECRET_KEY'] = '1234'
+
+# app.config['ALLOWED_EXTENSIONS'] = set(['json'])
+# app.config['SECRET_KEY'] = '1234'
 
 
 def token_required(f):
@@ -561,6 +562,11 @@ def token_required(f):
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return 'Sorry, Nothing at this URL.', 404
 
 
 @app.route('/api/upload', methods=['GET', 'POST'])
@@ -989,7 +995,7 @@ def add_argument():
 # Disable caching for development purposes
 @app.after_request
 def apply_caching(response):
-    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Cache-Control'] = 'cacheable, redis, cached for 30 min'
     return response
 
 
@@ -1118,5 +1124,5 @@ def ratelimit_handler(e):
 
 
 if __name__ == '__main__':
-    app.secret_key = '1234'
+    # app.secret_key = '1234'
     app.run(debug=True)

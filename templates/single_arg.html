@@ -10,14 +10,14 @@
                 <h1>Document ID: {{ arg_id }}</h1>
                 <div class="">
                     Analyst name: <a class=""
-                                     href="{{ url_for('.set_sessions',session_key='analyst_name',session_value=analyst_name) }}">
+                                     href="{{ url_for('.list_of_arguments',session_key='analyst_name',session_value=analyst_name) }}">
                     {{ analyst_name }}
                     {#                            {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
                 </a>
                 </div>
                 <div class="">
                     Analyst email: <a class=""
-                                      href="{{ url_for('.set_sessions',session_key='analyst_email',session_value=analyst_email) }}">
+                                      href="{{ url_for('.list_of_arguments',session_key='analyst_email',session_value=analyst_email) }}">
                     {{ analyst_email }}
                     {#                            {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
                 </a>
