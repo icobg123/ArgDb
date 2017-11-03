@@ -61,11 +61,11 @@ def make_cache_key(*args, **kwargs):
     return str((path + args).encode('utf-8'))
 
 
-def get_request_country():
+def get_api_key_for_limiter():
     return request.headers['x-access-token']
 
 
-limiter = Limiter(app, key_func=get_request_country,
+limiter = Limiter(app, key_func=get_api_key_for_limiter,
                   # storage_uri="redis://redistogo:c56eaca0869ccfa71db3d2a519281070@koi.redistogo.com:11156/")
                   storage_uri=redis_url)
 UPLOAD_FOLDER = 'uploads'
@@ -526,6 +526,11 @@ argument_schema_backup = {
     ],
     "type": "object"
 }
+advanced_search_schema = {
+    "analyst_name": "Simon Wells",
+    "analyst_email": "example@email.com",
+    "Sadface document id": "UUID4"
+}
 
 
 # app.config['ALLOWED_EXTENSIONS'] = set(['json'])
@@ -584,7 +589,8 @@ def upload_file(current_user):
         if request.files['file'].filename == '':
             err = "Please select a File."
             return jsonify({'message': err},
-                           {'schema': argument_schema})
+                           {'schema': argument_schema}), 204, {
+                       'Content-Type': 'application/json'}
         else:
             file = request.files['file']
             filename = secure_filename(file.filename)
@@ -629,7 +635,7 @@ def upload_file(current_user):
                             # "Resources": parsed_to_json.get("resources"),
                             # "found": check_if_exists_dumps
 
-                        })}, sort_keys=False, indent=2), 200, {
+                        })}, sort_keys=False, indent=2), 409, {
                                    'Content-Type': 'application/json'}
                         # return outcome
                     else:
@@ -644,7 +650,8 @@ def upload_file(current_user):
                         parsed_to_json['uploader'] = current_user.get('public_id')
                         parsed_to_json['time_of_upload'] = datetime.datetime.now()
                         post_id = argument.insert_one(parsed_to_json).inserted_id
-                        return jsonify({'message': outcome})
+                        return jsonify({'message': outcome}, indent=2), 201, {
+                            'Content-Type': 'application/json'}
                 else:
                     errors_list = []
                     # asd = 123
@@ -666,7 +673,7 @@ def upload_file(current_user):
                     #     post_id = argument.insert_one(parsed_to_json).inserted_id
                     # parsed_to_json_type = json.dumps(parsed_to_json)
 
-                    return json.dumps({'Errors': errors_list}, sort_keys=False, indent=2), 200, {
+                    return json.dumps({'Errors': errors_list}, sort_keys=False, indent=2), 400, {
                         'Content-Type': 'application/json'}
                     # return render_template('upload_results.html',
                     #                      outcome=errors_list)  # 201 to show that the upload was successful
@@ -677,11 +684,14 @@ def upload_file(current_user):
                     #                   type=valid)  # 201 to show that the upload was successful
             else:
                 err = "Wrong file extension. Please upload a JSON document."
-                return err
+                # return err
+                return jsonify({"Error": err}), 406, {
+                    'Content-Type': 'application/json'}
                 # return render_template('upload.html', err=err, argument_schema=argument_schema)
 
     return jsonify({'message': 'Please POST a JSON document in the following structure!'},
-                   {'schema': argument_schema})
+                   {'schema': argument_schema}), 200, {
+               'Content-Type': 'application/json'}
     # return render_template('upload.html', argument_schema=argument_schema)
 
 
@@ -959,21 +969,159 @@ def get_argument_by_id(current_user, ArgId):
     # ArgId = ArgId.replace(" ", "|")
     search_results = argument.find_one({"sadface.id": {'$regex': ".*" + ArgId + ".*", "$options": "i"}})
 
-    result = search_results.get("sadface", {})
+    if search_results:
 
-    # return render_template('homepage.html', doomed=result)
-    return json.dumps({'argument IDs': ({
-        "Analyst Email": result.get("analyst_email"),
-        "Analyst Name": result.get("analyst_name"),
-        "Created": result.get("created"),
-        "Edges": result.get("edges"),
-        "Edited": result.get("edited"),
-        "id": result.get("id"),
-        "Metadata": result.get("metadata"),
-        "Nodes": result.get("nodes"),
-        "Resources": result.get("resources"),
+        result = search_results.get("sadface", {})
 
-    })}, sort_keys=False, indent=2), 200, {'Content-Type': 'application/json'}
+        # return render_template('homepage.html', doomed=result)
+        return json.dumps({'argument IDs': ({
+            "Analyst Email": result.get("analyst_email"),
+            "Analyst Name": result.get("analyst_name"),
+            "Created": result.get("created"),
+            "Edges": result.get("edges"),
+            "Edited": result.get("edited"),
+            "id": result.get("id"),
+            "Metadata": result.get("metadata"),
+            "Nodes": result.get("nodes"),
+            "Resources": result.get("resources"),
+
+        })}, sort_keys=False, indent=2), 200, {'Content-Type': 'application/json'}
+
+    else:
+        return jsonify({"No document was found with ID": ArgId}), 404, {'Content-Type': 'application/json'}
+
+
+@app.route('/api/delete_document/<doc_id>', methods=['DELETE'])
+@token_required
+def delete_one_argument(current_user, doc_id):
+    if not current_user.get('admin'):
+        return jsonify({'message': 'Cannot perform that function!'})
+    argument = mongo.db.argument
+    users = mongo.db.users
+
+    search_results = argument.find_one({"sadface.id": {'$regex': ".*" + doc_id + ".*", "$options": "i"}})
+
+    doc_to_be_delted = search_results.get("sadface", {})
+
+    # current_user = users.find_one({'public_id': token_data['public_id']})
+    if search_results.get("uploader") == current_user.get('public_id'):
+        result = argument.delete_one({"sadface.id": {'$regex': ".*" + doc_id + ".*", "$options": "i"}})
+
+        return jsonify({'Successfully deleted document with SADFace ID': doc_id}), 200, {
+            'Content-Type': 'application/json'}
+    else:
+        return jsonify({'You cannot delete document with SADFace ID:': doc_id}), 401, {
+            'Content-Type': 'application/json'}
+
+
+@app.route('/api/advanced_search_results', methods=['GET', 'POST'])
+# @token_required
+def advanced_search_find():
+    if 'err' in session:
+        session.pop('err', None)
+    users = mongo.db.users
+    username = ""
+    argument = mongo.db.argument
+    # TODO: Separate into /api/ and /web/
+    analyst_name = None
+    analyst_email = None
+    id = None
+
+    ArgId = "icara".replace(" ", "|")
+
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if request.files['file'].filename == '':
+            err = "Please select a File."
+            return jsonify({'message': err},
+                           {'schema': argument_schema}), 204, {
+                       'Content-Type': 'application/json'}
+        else:
+            file = request.files['file']
+            filename = secure_filename(file.filename)
+
+            if filename and allowed_file(file.filename):
+                parsed_to_string = file.read().decode("utf-8")
+                # To Dict
+                parsed_to_json = json.loads(parsed_to_string)
+                # parsed_to_json = request.get_json()
+                # TODO: the validator checks against the schema and inserts the provided json only if it contains the
+                # TODO: required fields and it will upload it to the
+
+                analyst_name = parsed_to_json['analyst_name']
+                analyst_email = parsed_to_json['analyst_email']
+                id = parsed_to_json['document_id']
+
+                search_fields = {"analyst_email": analyst_email, "analyst_name": analyst_name, "id": id}
+
+                search_results = argument.find(
+                    {"sadface.nodes.text":
+                         {'$regex': ".*" + analyst_name + ".*",
+                          "$options": "i"}})
+
+                populated_search_fields = []
+                query_dict = {}
+                # for each item in the form check if it has information inside and adds it to a list with all query parameters
+                for key, value in search_fields.items():
+                    if value:
+                        populated_search_fields.append(key)
+
+                # for each query parameter add its contents to a dict in order to
+                # create the query which to pass to the mongoGB search function
+                for field in populated_search_fields:
+                    query_dict['sadface.' + field] = {'$regex': '.*' + search_fields[field] + '.*', '$options': 'i'}
+                    # query_dict['sadface.' + field] = search_fields[field]
+
+                search_results = argument.find(query_dict)
+                # search_results = argument.find(query_dict).skip(offset).limit(per_page)
+                count_me = search_results.count()
+                # last_id = search_results[offset]['_id']
+                # pagination = Pagination(page=page, total=search_results.count(), search=search, record_name='users')
+
+                # documents = argument.find({'_id': {'$lte': last_id}}).sort('_id', pymongo.DESCENDING).limit(limit)
+                # # TODO: counts how many results were found
+
+                output = []
+                for q in search_results:
+                    output.append({
+                        # "MongoDB ID": q["_id"],
+                        "Analyst Email": q['sadface']["analyst_email"],
+                        "Analyst Name": q['sadface']["analyst_name"],
+                        "Created": q['sadface']["created"],
+                        "Edges": q['sadface']["edges"],
+                        "Edited": q['sadface']["edited"],
+                        "id": q['sadface']["id"],
+                        # "Metadata": q['sadface']["metadata"],
+                        "Nodes": q['sadface']["nodes"],
+                        # "Resources": q['sadface']["resources"],
+
+                    })
+
+                typeOF = type(output)
+
+                return jsonify({"Results found": count_me},
+                               {"Results": output})
+                # return render_template('advanced_search_results.html', json=output, typeof=typeOF,
+                #                        populated_search_fields=populated_search_fields,
+                #                        search_fields=search_fields,
+                #                        search_results=search_results,
+                #                        current_user=username,
+                #                        # search_nodes=nodes_text,
+                #                        cursor=count_me)
+
+            else:
+                err = "Wrong file extension. Please upload a JSON document."
+                # return err
+                return jsonify({"Error": err}), 406, {
+                    'Content-Type': 'application/json'}
+                # return render_template('upload.html', err=err, argument_schema=argument_schema)
+
+
+                # search_results = argument.find(
+                #     {"sadface.nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}}).skip(offset).limit(per_page)
+
+    return jsonify({'message': 'Please POST a JSON document in the following structure!'},
+                   {"File structure": advanced_search_schema})
 
 
 @app.route('/argument', methods=['POST'])

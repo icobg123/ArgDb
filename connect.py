@@ -835,7 +835,10 @@ def advanced_search_find():
     # for each query parameter add its contents to a dict in order to
     # create the query which to pass to the mongoGB search function
     for field in populated_search_fields:
-        query_dict['sadface.' + field] = search_fields[field]
+        # query_dict['sadface.' + field] = search_fields[field]
+        query_dict['sadface.' + field] = \
+            {'$regex': '.*' + search_fields[field] + '.*',
+             '$options': 'i'}
 
     f = request.data
     # for key in f.keys():
