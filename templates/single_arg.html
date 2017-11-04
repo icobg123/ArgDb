@@ -5,38 +5,29 @@
             {#        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/91525/potofgold.svg" style="height:50px">#}
 
             <div class="col-sm-12">
-                {#                argument_schema#}
-                {#                <title>{{ result }}</title>#}
-                <h1>Document ID: {{ arg_id }} <a class="btn btn-primary"
-                                                 href="{{ url_for('.download_arg',ArgId=arg_id) }}"><i
-                        class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
-                </a></h1>
-{#                <div class="mt-10">#}
-{#                    Download:#}
-{#                    <a class="btn btn-primary"#}
-{#                       href="{{ url_for('.download_arg',ArgId=arg_id) }}"><i class="fa fa-floppy-o"#}
-{#                                                                             aria-hidden="true"></i> {{ arg_id }}#}
-                        {#                            {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
-{#                    </a>#}
-{#                </div>#}
-                <div class="mt-10">
+
+                <h1>Document ID: {{ arg_id }}
+                    <a class="btn btn-primary"
+                       href="{{ url_for('.download_arg',ArgId=arg_id) }}"><i
+                            class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
+                    </a>
+                </h1>
+
+                <h3>
                     Analyst name: <a class=""
                                      href="{{ url_for('.list_of_arguments',session_key='analyst_name',session_value=analyst_name) }}">
                     {{ analyst_name }}
                     {#                            {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
                 </a>
-                </div>
-                <div class="mt-10">
+                </h3>
+                <h3>
                     Analyst email: <a class=""
                                       href="{{ url_for('.list_of_arguments',session_key='analyst_email',session_value=analyst_email) }}">
                     {{ analyst_email }}
-                    {#                            {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
+
                 </a>
-                </div>
-                {#                <h1>analyst_name: {{ analyst_name }}</h1>#}
-                {##}
-                {##}
-                {#                <h1>analyst_email: {{ analyst_email }}</h1>#}
+                </h3>
+
 
                 <div class="row">
                     <div class="col-sm-12 text-center">{{ graph }}</div>
@@ -44,7 +35,7 @@
                 <pre> {{ argument }}</pre>
 
             </div>
-            {#            <div class="col-sm-6">{{ graph }}</div>#}
+
 
         </div>
         <div class="row">
