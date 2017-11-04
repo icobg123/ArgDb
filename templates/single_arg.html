@@ -7,23 +7,26 @@
             <div class="col-sm-12">
                 {#                argument_schema#}
                 {#                <title>{{ result }}</title>#}
-                <h1>Document ID: {{ arg_id }}</h1>
-                <div class="">
-                    Download:
-                    <button type="button" class="btn btn-info"><a class=""
-                                                                  href="{{ url_for('.download_arg',ArgId=arg_id) }}">
-                        {{ arg_id }}
+                <h1>Document ID: {{ arg_id }} <a class="btn btn-primary"
+                                                 href="{{ url_for('.download_arg',ArgId=arg_id) }}"><i
+                        class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
+                </a></h1>
+{#                <div class="mt-10">#}
+{#                    Download:#}
+{#                    <a class="btn btn-primary"#}
+{#                       href="{{ url_for('.download_arg',ArgId=arg_id) }}"><i class="fa fa-floppy-o"#}
+{#                                                                             aria-hidden="true"></i> {{ arg_id }}#}
                         {#                            {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
-                    </a></button>
-                </div>
-                <div class="">
+{#                    </a>#}
+{#                </div>#}
+                <div class="mt-10">
                     Analyst name: <a class=""
                                      href="{{ url_for('.list_of_arguments',session_key='analyst_name',session_value=analyst_name) }}">
                     {{ analyst_name }}
                     {#                            {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
                 </a>
                 </div>
-                <div class="">
+                <div class="mt-10">
                     Analyst email: <a class=""
                                       href="{{ url_for('.list_of_arguments',session_key='analyst_email',session_value=analyst_email) }}">
                     {{ analyst_email }}
