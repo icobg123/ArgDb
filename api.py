@@ -974,7 +974,7 @@ def get_argument_by_id(current_user, ArgId):
         result = search_results.get("sadface", {})
 
         # return render_template('homepage.html', doomed=result)
-        return json.dumps({'argument IDs': ({
+        return json.dumps({
             "Analyst Email": result.get("analyst_email"),
             "Analyst Name": result.get("analyst_name"),
             "Created": result.get("created"),
@@ -985,7 +985,7 @@ def get_argument_by_id(current_user, ArgId):
             "Nodes": result.get("nodes"),
             "Resources": result.get("resources"),
 
-        })}, sort_keys=False, indent=2), 200, {'Content-Type': 'application/json'}
+        }, sort_keys=False, indent=2), 200, {'Content-Type': 'application/json'}
 
     else:
         return jsonify({"No document was found with ID": ArgId}), 404, {'Content-Type': 'application/json'}

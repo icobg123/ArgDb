@@ -9,6 +9,14 @@
                 {#                <title>{{ result }}</title>#}
                 <h1>Document ID: {{ arg_id }}</h1>
                 <div class="">
+                    Download:
+                    <button type="button" class="btn btn-info"><a class=""
+                                                                  href="{{ url_for('.download_arg',ArgId=arg_id) }}">
+                        {{ arg_id }}
+                        {#                            {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
+                    </a></button>
+                </div>
+                <div class="">
                     Analyst name: <a class=""
                                      href="{{ url_for('.list_of_arguments',session_key='analyst_name',session_value=analyst_name) }}">
                     {{ analyst_name }}

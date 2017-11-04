@@ -1,6 +1,7 @@
 import os
 
 from flask.globals import current_app
+from flask.wrappers import Response
 from flask_mail import Mail, Message
 # from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from itsdangerous import (TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired,
@@ -16,7 +17,7 @@ from graphviz import Source
 import jsonschema
 from bson import regex
 from flask import Flask, jsonify, session, abort, request, render_template, redirect, Markup, url_for, \
-    send_from_directory
+    send_from_directory, make_response, stream_with_context
 from flask_pymongo import PyMongo, pymongo
 from flask.helpers import flash
 from jsonschema import validate
@@ -28,6 +29,8 @@ from passlib.apps import custom_app_context as pwd_context
 import json
 import jwt
 import re
+
+from werkzeug.datastructures import Headers
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 from werkzeug.utils import secure_filename
@@ -1010,6 +1013,56 @@ def get_one_argument(argString):
                            page=page,
                            per_page=per_page,
                            cursor=count_me)
+
+
+@app.route('/download/argument/<ArgId>', methods=['GET'])
+def download_arg(ArgId):
+    argument = mongo.db.argument
+    # ArgId = ArgId.replace(" ", "|")
+    search_results = argument.find_one({"sadface.id": {'$regex': ".*" + ArgId + ".*", "$options": "i"}})
+
+    if search_results:
+
+        result = search_results.get("sadface", {})
+
+        single_argument = {
+            "Analyst Email": result.get("analyst_email"),
+            "Analyst Name": result.get("analyst_name"),
+            "Created": result.get("created"),
+            "Edges": result.get("edges"),
+            "Edited": result.get("edited"),
+            "id": result.get("id"),
+            "Metadata": result.get("metadata"),
+            "Nodes": result.get("nodes"),
+            "Resources": result.get("resources")}
+        to_pass = jsonify(single_argument)
+
+        # headers = Headers()
+        # headers.set('Content-Disposition', 'attachment', filename=result.get("id") + '.json')
+
+        to_pass.headers['Content-Disposition'] = 'attachment;filename=' + result.get("id") + '.json'
+        return to_pass
+        # return render_template('homepage.html', doomed=result)
+        # return make_response(jsonify(single_argument), {'Content-Type': 'application/json'})
+        # return Response(
+        #     stream_with_context(single_argument),
+        #     mimetype='text/json', headers=headers
+        # )
+        # return json.dumps({'argument IDs': ({
+        #     "Analyst Email": result.get("analyst_email"),
+        #     "Analyst Name": result.get("analyst_name"),
+        #     "Created": result.get("created"),
+        #     "Edges": result.get("edges"),
+        #     "Edited": result.get("edited"),
+        #     "id": result.get("id"),
+        #     "Metadata": result.get("metadata"),
+        #     "Nodes": result.get("nodes"),
+        #     "Resources": result.get("resources"),
+        #
+        # })}, sort_keys=False, indent=2), 200, {'Content-Type': 'application/json'}
+
+    else:
+        return jsonify({"No document was found with ID": ArgId}), 404, {'Content-Type': 'application/json'}
 
 
 # return jsonify({'result': output})
