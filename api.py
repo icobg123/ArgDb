@@ -852,7 +852,7 @@ def home():
 #     return render_template('search_results.html', json=output)
 
 
-@app.route('/api/argument/<argString>', methods=['GET'])
+@app.route('/api/argument/text/<argString>', methods=['GET'])
 @token_required
 # @limiter.limit('3 per minute')
 # @cache.cached(timeout=5, key_prefix=make_cache_key)
@@ -956,18 +956,18 @@ def get_list_argument_id(current_user, argString):
         'Content-Type': 'application/json'}
 
 
-@app.route('/api/argument/by/<ArgId>', methods=['GET'])
+@app.route('/api/argument/id/<arg_id>', methods=['GET'])
 @token_required
 # @cache.cached(timeout=10, key_prefix=make_cache_key)
 @cache.memoize(20, make_name=make_cache_key)
 # @limiter.limit('3 per minute', key_func=make_cache_key)
 # @cache.cached(timeout=600, key_prefix=make_cache_key)
-def get_argument_by_id(current_user, ArgId):
+def get_argument_by_id(current_user, arg_id):
     if not current_user.get('admin'):
         return jsonify({'message': 'Cannot perform that function!'})
     argument = mongo.db.argument
-    # ArgId = ArgId.replace(" ", "|")
-    search_results = argument.find_one({"sadface.id": {'$regex': ".*" + ArgId + ".*", "$options": "i"}})
+    # arg_id = arg_id.replace(" ", "|")
+    search_results = argument.find_one({"sadface.id": {'$regex': ".*" + arg_id + ".*", "$options": "i"}})
 
     if search_results:
 
@@ -988,7 +988,7 @@ def get_argument_by_id(current_user, ArgId):
         }, sort_keys=False, indent=2), 200, {'Content-Type': 'application/json'}
 
     else:
-        return jsonify({"No document was found with ID": ArgId}), 404, {'Content-Type': 'application/json'}
+        return jsonify({"No document was found with ID": arg_id}), 404, {'Content-Type': 'application/json'}
 
 
 @app.route('/api/delete_document/<doc_id>', methods=['DELETE'])
@@ -1027,7 +1027,7 @@ def advanced_search_find():
     analyst_email = None
     id = None
 
-    ArgId = "icara".replace(" ", "|")
+    arg_id = "icara".replace(" ", "|")
 
     if request.method == 'POST':
         # check if the post request has the file part

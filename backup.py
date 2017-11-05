@@ -140,7 +140,7 @@ def get_all_arguments():
     return render_template('search_results.html', json=output)
 
 
-@app.route('/argument/<argString>', methods=['GET'])
+@app.route('/argument/text/<argString>', methods=['GET'])
 def get_one_argument(argString):
     argument = mongo.db.argument
     argString = argString.replace(" ", "|")

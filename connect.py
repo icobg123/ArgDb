@@ -524,9 +524,9 @@ def home():
     return render_template('homepage.html', err=err, current_user=username)
 
 
-@app.route('/argument/by/<ArgId>', methods=['GET', 'POST'])
+@app.route('/argument/id/<arg_id>', methods=['GET', 'POST'])
 # @token_required
-def get_argument_by_id(ArgId):
+def get_argument_by_id(arg_id):
     if 'err' in session:
         session.pop('err', None)
 
@@ -542,11 +542,11 @@ def get_argument_by_id(ArgId):
         login_user = users.find_one({'name': session['username']})
         username = login_user.get('name')
     argument = mongo.db.argument
-    # ArgId = ArgId.replace(" ", "|")
-    search_results = argument.find_one({"sadface.id": {'$regex': ".*" + ArgId + ".*", "$options": "i"}})
+    # arg_id = arg_id.replace(" ", "|")
+    search_results = argument.find_one({"sadface.id": {'$regex': ".*" + arg_id + ".*", "$options": "i"}})
     sadface_results = search_results.get("sadface", {})
     result = sadface_results.get('id')
-    arg_found = json.dumps({'argument IDs': ({
+    arg_found = json.dumps({
         "Analyst Email": sadface_results.get("analyst_email"),
         "Analyst Name": sadface_results.get("analyst_name"),
         "Created": sadface_results.get("created"),
@@ -555,7 +555,7 @@ def get_argument_by_id(ArgId):
         "id": sadface_results.get("id"),
         "Metadata": sadface_results.get("metadata"),
         "Nodes": sadface_results.get("nodes"),
-        "Resources": sadface_results.get("resources")})}, sort_keys=False, indent=2)
+        "Resources": sadface_results.get("resources")}, sort_keys=False, indent=2)
 
     sadface.sd = sadface_results
     dot_string = sadface.export_dot()
@@ -612,7 +612,8 @@ def advanced_search():
     return render_template('advanced_search.html', current_user=username, err=err)
 
 
-@app.route('/list_of_docs/session_k_<string:session_key>+session_v_<string:session_value>', methods=['GET', 'POST'])
+@app.route('/argument/<string:session_key>/<string:session_value>', methods=['GET', 'POST'])
+# @app.route('/argument/\textlessstring:session_key\textgreater/\textlessstring:session_value\textgreater', methods=['GET', 'POST'])
 # @token_required
 def list_of_arguments(session_key, session_value):
     if request.method == 'POST':
@@ -822,7 +823,7 @@ def advanced_search_find():
 
     # analyst_email = request.form.get('analyst_email')
     # analyst_name = request.form.get('analyst_name')
-    ArgId = "icara".replace(" ", "|")
+    arg_id = "icara".replace(" ", "|")
 
     # search_results = argument.find(
     #     {"sadface.nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}}).skip(offset).limit(per_page)
@@ -916,7 +917,7 @@ def advanced_search_find():
                            cursor=count_me)
 
 
-@app.route('/argument/<argString>', methods=['GET', 'POST'])
+@app.route('/argument/text/<argString>', methods=['GET', 'POST'])
 def get_one_argument(argString):
     if 'err' in session:
         session.pop('err', None)
@@ -1015,11 +1016,11 @@ def get_one_argument(argString):
                            cursor=count_me)
 
 
-@app.route('/download/argument/<ArgId>', methods=['GET'])
-def download_arg(ArgId):
+@app.route('/download/argument/<arg_id>', methods=['GET'])
+def download_arg(arg_id):
     argument = mongo.db.argument
-    # ArgId = ArgId.replace(" ", "|")
-    search_results = argument.find_one({"sadface.id": {'$regex': ".*" + ArgId + ".*", "$options": "i"}})
+    # arg_id = arg_id.replace(" ", "|")
+    search_results = argument.find_one({"sadface.id": {'$regex': ".*" + arg_id + ".*", "$options": "i"}})
 
     if search_results:
 
@@ -1062,7 +1063,7 @@ def download_arg(ArgId):
         # })}, sort_keys=False, indent=2), 200, {'Content-Type': 'application/json'}
 
     else:
-        return jsonify({"No document was found with ID": ArgId}), 404, {'Content-Type': 'application/json'}
+        return jsonify({"No document was found with ID": arg_id}), 404, {'Content-Type': 'application/json'}
 
 
 # return jsonify({'result': output})
@@ -1085,11 +1086,11 @@ def download_arg(ArgId):
 #
 
 # Disable caching for development purposes
-@app.after_request
-def apply_caching(response):
-    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-    return response
-
+# @app.after_request
+# def apply_caching(response):
+#     response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+#     return response
+#
 
 # Display JSON neatly in the templates
 def to_pretty_json(value):
@@ -1101,8 +1102,10 @@ def to_pretty_json(value):
 app.jinja_env.filters['tojson_pretty'] = to_pretty_json
 
 
-@app.route('/account/change_password', methods=['POST'])
+@app.route('/account/change_password', methods=['GET', 'POST'])
 def change_pass():
+    # if request.method == 'GET':
+    #     return redirect(url_for('account'))
     # err = None
     # if 'err' in session:
     #     session.pop('err', None)

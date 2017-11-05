@@ -19,7 +19,7 @@
                             {% for item in argument_ids_list %}
                                 {#                            {{ item }}#}
                                 <a class="list-group-item list-group-item-action"
-                                   href="{{ url_for('.get_argument_by_id',ArgId=item['id']) }}">
+                                   href="{{ url_for('.get_argument_by_id',arg_id=item['id']) }}">
                                     {{ loop.index }}: {{ item['id'] }}
                                     {#                                {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
                                 </a>
