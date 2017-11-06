@@ -5,8 +5,13 @@
             <div class="col-xs-12">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h1>Hi there {{ current_user }}</h1>
-                        <h2>Status {{ privileges }}</h2>
+                        <h3>Welcome back <b>{{ current_user }}</b></h3>
+                        {% if not verified %}
+                            <div class="alert alert-warning" role="alert">
+                                An email has been sent to {{ user_email }}. Please verify your account to gain access to
+                                the API.
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
                 {#                {{ argument_ids_list }}#}
@@ -29,67 +34,72 @@
                         </div>
                     </div>
                 {% else %}
-                    <div class="col-sm-6">
-                        <p>You haven't analysed any args.</p>
+                    <div class="col-sm-12">
+                        <p>Your email address does not appear in any documents.</p>
                     </div>
                 {% endif %}
                 {% if session['err'] %}
                     <p>session : {{ session['err'] }}</p>
                 {% endif %}
                 {#                {{ err }}#}
-                <form class="form-horizontal" method=POST action="{{ url_for('change_pass') }}">
-                    {#                    <div class="form-group">#}
-                    {#                        <label class="control-label col-xs-3" for="exampleInputEmail1">Username</label>#}
-                    {#                        <div class="col-xs-9">#}
-                    {#                            <input type="text" class="form-control" name="username" placeholder="Username">#}
-                    {#                        </div>#}
-                    {#                    </div>#}
-                    <div class="form-group">
-                        <label class="control-label col-xs-2" for="exampleInputPassword1">Change Pass</label>
-                        <div class="col-xs-2">
-                            <input type="password" class="form-control" name="pass" placeholder="Password">
-                        </div>
-
-                        <button type="submit" name="register_btn" class="btn btn-primary">Change Password</button>
-                    </div>
-                    {#                    <div class="form-group">#}
-                    {#                        <label class="control-label col-xs-3" for="exampleInputPassword1">Email</label>#}
-                    {#                        <div class="col-xs-9">#}
-                    {#                            <input type="email" class="form-control" name="email" placeholder="Email">#}
-                    {#                        </div>#}
-                    {#                    </div>#}
-                </form>
-
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h3>API Token:</h3>
-                    </div>
-                    <div class="col-sm-6">
-
-                        <pre id="token_api">{{ token }}</pre>
-                    </div>
-                    <div class="col-sm-6">
+                <div class="col-sm-12">
+                    <form class="form" method=POST action="{{ url_for('change_pass') }}">
+                        {#                <form class="form-horizontal" method=POST action="{{ url_for('change_pass') }}">#}
+                        {#                    <div class="form-group">#}
+                        {#                        <label class="control-label col-xs-3" for="exampleInputEmail1">Username</label>#}
+                        {#                        <div class="col-xs-9">#}
+                        {#                            <input type="text" class="form-control" name="username" placeholder="Username">#}
+                        {#                        </div>#}
+                        {#                    </div>#}
                         <div class="form-group">
-                            <div class="col-xs-offset-1 col-xs-10">
-                                {#                                <button id="copy_api" data-clipboard-target="#token_api" type="button"#}
-                                {#                                        name="register_btn" class="btn btn-primary">Copy#}
-                                {#                                </button>#}
+                            <label class="control-label col-xs-2" for="exampleInputPassword1">Change Password</label>
+                            <div class="col-xs-2">
+                                <input type="password" class="form-control" name="pass" placeholder="Password">
                             </div>
+
+                            <button type="submit" name="register_btn" class="btn btn-primary">Change Password</button>
                         </div>
-                        <form class="form-horizontal" method=POST action="{{ url_for('generate_new_api_key') }}">
+                        {#                    <div class="form-group">#}
+                        {#                        <label class="control-label col-xs-3" for="exampleInputPassword1">Email</label>#}
+                        {#                        <div class="col-xs-9">#}
+                        {#                            <input type="email" class="form-control" name="email" placeholder="Email">#}
+                        {#                        </div>#}
+                        {#                    </div>#}
+                    </form>
+                </div>
+                {% if verified %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>API Token:</h3>
+                        </div>
+                        <div class="col-sm-6">
+
+                            <pre id="token_api">{{ token }}</pre>
+                        </div>
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <div class="col-xs-offset-1 col-xs-10">
-                                    <button id="" type="submit" name="register_btn" class="btn btn-primary">GENERATE API
-                                        KEY
-                                    </button>
-                                    <button id="copy_api" data-clipboard-target="#token_api" type="button"
-                                            name="register_btn" class="btn btn-primary">Copy
-                                    </button>
+                                    {#                                <button id="copy_api" data-clipboard-target="#token_api" type="button"#}
+                                    {#                                        name="register_btn" class="btn btn-primary">Copy#}
+                                    {#                                </button>#}
                                 </div>
                             </div>
-                        </form>
+                            <form class="form-horizontal" method=POST action="{{ url_for('generate_new_api_key') }}">
+                                <div class="form-group">
+                                    <div class="col-xs-offset-1 col-xs-10">
+                                        <button id="" type="submit" name="register_btn" class="btn btn-primary">GENERATE
+                                            API
+                                            KEY
+                                        </button>
+                                        <button id="copy_api" data-clipboard-target="#token_api" type="button"
+                                                name="register_btn" class="btn btn-primary">Copy
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
         </div>
     </div>

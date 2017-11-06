@@ -597,11 +597,14 @@ def advanced_search():
         login_user = users.find_one({'name': session['username']})
         username = login_user.get('name')
 
-    if 'analyst_name' in session and 'analyst_email' in session and 'id' in session:
+    if 'analyst_name' in session and 'analyst_email' in session and 'id' in session and 'argument_text' in session:
         session.pop('analyst_name', None)
+        session.pop('argument_text', None)
         session.pop('analyst_email', None)
         session.pop('id', None)
 
+    if 'argument_text' in session:
+        session.pop('argument_text', None)
     if 'analyst_name' in session:
         session.pop('analyst_name', None)
     if 'analyst_email' in session:
@@ -612,10 +615,10 @@ def advanced_search():
     return render_template('advanced_search.html', current_user=username, err=err)
 
 
-@app.route('/argument/<string:session_key>/<string:session_value>', methods=['GET', 'POST'])
-# @app.route('/argument/\textlessstring:session_key\textgreater/\textlessstring:session_value\textgreater', methods=['GET', 'POST'])
+@app.route('/argument/<string:s_key>/<string:s_value>', methods=['GET', 'POST'])
+# @app.route('/argument/\textlessstring:s_key\textgreater/\textlessstring:s_value\textgreater', methods=['GET', 'POST'])
 # @token_required
-def list_of_arguments(session_key, session_value):
+def list_of_arguments(s_key, s_value):
     if request.method == 'POST':
         return search_for_arg()
 
@@ -644,7 +647,7 @@ def list_of_arguments(session_key, session_value):
     # TODO: Separate into /api/ and /web/
     per_page = 10
     offset = (page - 1) * per_page
-    search_fields = {session_key: session_value}
+    search_fields = {s_key: s_value}
     populated_search_fields = []
     query_dict = {}
 
@@ -695,33 +698,33 @@ def list_of_arguments(session_key, session_value):
                            per_page=per_page,
                            cursor=count_me)
 
-    # session_key = session_key
-    # session_value = session_value
+    # s_key = s_key
+    # s_value = s_value
     # users = mongo.db.users
-    # session[session_key] = session_value
-    # icara = session[session_key]
+    # session[s_key] = s_value
+    # icara = session[s_key]
     #
     # #
     # return redirect(url_for('advanced_search_find'))
 
 
 #
-# @app.route('/set_sessions/session_k_<string:session_key>+session_v_<string:session_value>', methods=['GET', 'POST'])
+# @app.route('/set_sessions/session_k_<string:s_key>+session_v_<string:s_value>', methods=['GET', 'POST'])
 # # @token_required
-# def set_sessions(session_key, session_value):
+# def set_sessions(s_key, s_value):
 #     if 'analyst_name' in session:
 #         session.pop('analyst_name', None)
 #     if 'analyst_email' in session:
 #         session.pop('analyst_email', None)
 #     if 'id' in session:
 #         session.pop('id', None)
-#     session_key = session_key
-#     session_value = session_value
+#     s_key = s_key
+#     s_value = s_value
 #     users = mongo.db.users
-#     session[session_key] = session_value
-#     icara = session[session_key]
+#     session[s_key] = s_value
+#     icara = session[s_key]
 #
-#     # return (session_key + "  " + session_value)
+#     # return (s_key + "  " + s_value)
 #     #
 #     return redirect(url_for('advanced_search_find'))
 
@@ -737,7 +740,7 @@ def advanced_search_find():
         login_user = users.find_one({'name': session['username']})
         username = login_user.get('name')
 
-    if request.method == 'GET' and 'analyst_name' not in session and 'analyst_email' not in session and 'id' not in session:
+    if request.method == 'GET' and 'analyst_name' not in session and 'argument_text' not in session and 'analyst_email' not in session and 'id' not in session:
         return redirect(url_for('advanced_search'))
 
         # if (request.form['analyst_name'] == "" and request.form['analyst_email'] == "" and request.form[
@@ -749,8 +752,9 @@ def advanced_search_find():
         #     return render_template('advanced_search.html', err=err, current_user=username)
         # return redirect(url_for('advanced_search', err=err))
 
-    if 'analyst_name' and 'analyst_email' and 'document_id' in request.form:
-        if not (request.form['analyst_name'] or request.form['analyst_email'] or request.form['document_id']):
+    if 'analyst_name' and 'analyst_email' and 'document_id' and 'argument_text' in request.form:
+        if not (request.form['analyst_name'] or request.form['analyst_email'] or request.form['document_id'] or
+                    request.form['argument_text']):
             err = 'Please fill in at least one field'
             return render_template('advanced_search.html', err=err)
 
@@ -803,6 +807,7 @@ def advanced_search_find():
     #         session[str(field)] = request.form[str(field)]
     analyst_name = None
     analyst_email = None
+    argument_text = None
     id = None
     if 'analyst_name' in session and not request.form.get('analyst_name'):
         analyst_name = session['analyst_name']
@@ -815,6 +820,13 @@ def advanced_search_find():
     elif request.form.get('analyst_email'):
         analyst_email = request.form['analyst_email']
         session['analyst_email'] = request.form['analyst_email']
+
+    if 'argument_text' in session and not request.form.get('argument_text'):
+        argument_text = session['argument_text']
+    elif request.form.get('argument_text'):
+        argument_text = request.form['argument_text']
+        session['argument_text'] = request.form['argument_text']
+
     if 'id' in session and not request.form.get('document_id'):
         id = session['id']
     elif request.form.get('document_id'):
@@ -828,7 +840,8 @@ def advanced_search_find():
     # search_results = argument.find(
     #     {"sadface.nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}}).skip(offset).limit(per_page)
 
-    search_fields = {"analyst_email": analyst_email, "analyst_name": analyst_name, "id": id}
+    search_fields = {"analyst_email": analyst_email, "analyst_name": analyst_name, "nodes.text": argument_text,
+                     "id": id}
     populated_search_fields = []
     query_dict = {}
     # for each item in the form check if it has information inside and adds it to a list with all query parameters
@@ -881,9 +894,9 @@ def advanced_search_find():
             "Edges": q['sadface']["edges"],
             "Edited": q['sadface']["edited"],
             "id": q['sadface']["id"],
-            # "Metadata": q['sadface']["metadata"],
+            "Metadata": q['sadface']["metadata"],
             "Nodes": q['sadface']["nodes"],
-            # "Resources": q['sadface']["resources"],
+            "Resources": q['sadface']["resources"],
 
         })
 
@@ -1256,7 +1269,6 @@ def account():
     # if 'err' in session:
     #     session.pop('err', None)
 
-
     if request.method == 'POST':
         if request.form['argumentString']:
             return search_for_arg()
@@ -1276,18 +1288,23 @@ def account():
             })
 
         if not login_user.get('admin'):
-            privileges = user_email + " Email not verified"
-            session['privileges'] = privileges
+            verified = False
+            # privileges = "Please verify your email to gain access to the API token."
+            session['privileges'] = verified
+            session['user_email'] = user_email
         else:
-            privileges = "Email verified " + user_email + " , you can use the API token in the API"
-            session['privileges'] = privileges
+            verified = True
+            # verified = "Email verified , you can use the API token in the API"
+            session['verified'] = verified
+            session['user_email'] = user_email
         # return 'You are logged in as ' + jsonify(current_user) + " " + token.decode(
         #     'UTF-8') + " Current User "
         # return 'You are logged in as ' + user_id + " " + token.decode(
         #     'UTF-8') + " Current User " + admin
         return render_template('account.html',
                                current_user=login_user.get('name'),
-                               privileges=privileges,
+                               verified=verified,
+                               user_email=user_email,
                                argument_ids_list=argument_ids_list,
                                sec_key=sec_key,
                                # token=token
@@ -1331,23 +1348,38 @@ def generate_new_api_key():
     if 'err' in session:
         session.pop('err', None)
     users = mongo.db.users
+    invalid_tokens_db = mongo.db.invalidTokens
+
     if 'username' in session:
         login_user = users.find_one({'name': session['username']})
+        invalid_tokens = []
+        invalid_tokens_list = invalid_tokens_db.find_one({'public_id': login_user.get('public_id')})
+        if invalid_tokens_list:
+            invalid_tokens = invalid_tokens_list.get("token_list")
+            invalid_tokens.append(login_user.get('token'))
+            invalid_tokens_db.update_one({"_id": invalid_tokens_list.get('_id')},
+                                         {"$set": {"token_list": invalid_tokens}})
+        else:
+            invalid_tokens.append(login_user.get('token'))
+            post_id = invalid_tokens_db.insert_one(
+                {'public_id': login_user.get('public_id'), 'token_list': invalid_tokens}).inserted_id
+
         token = jwt.encode(
             {'public_id': login_user.get('public_id'),
              # 'exp': datetime.datetime.utcnow()},
              'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
             app.config['SECRET_KEY'])
         users.update_one({"_id": login_user.get('_id')}, {"$set": {"token": token}})
-        if 'privileges' in session:
-            privileges = session['privileges']
+
+        if 'verified' in session:
+            verified = session['verified']
         else:
-            privileges = 'None'
+            verified = 'None'
 
         return redirect(url_for('account'))
         # return render_template('account.html',
         #                        current_user=login_user.get('name'),
-        #                        privileges=privileges,
+        #                        verified=verified,
         #                        # token=token
         #                        token=token.decode('UTF-8')
         #                        )
