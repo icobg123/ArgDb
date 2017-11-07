@@ -1,19 +1,19 @@
 {% extends "header.html" %}
 {% block content %}
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-md-6 divCentered">
                 {#                argument_schema#}
-                <title>Upload new File</title>
-                <h1>Upload new File</h1>
-                <p>
-                    The document you are trying to upload must be in the SadFace format described by the JSON schema to
-                    the right. Please see this schema for more details. <a class="btn btn-primary"
-                                                                           href="{{ url_for('download_schema') }}"><i
-                        class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
-                </a>
-                </p>
+                <title>Upload an analysed argument to ArgDB</title>
+                <h1>Upload an analysed argument to ArgDB</h1>
+                <p>The document you are trying to upload must be in the SADFace format.</p>
+                <div class="alert alert-info" role="alert">
+                    Download the template for the JSON SADFace format.
 
+                    <a class="btn btn-primary upload-schema" href="{{ url_for('download_schema') }}">
+                        <i class="fa fa-download" aria-hidden="true"></i>
+                    </a>
+                </div>
                 {#<form method=post action="{{ url_for('handle_data') }}" enctype=multipart/form-data>#}
                 {% if err %}
                     <div class="alert alert-warning" role="alert">{{ err }}</div>
@@ -21,15 +21,20 @@
 
                 <form class="form-horizontal" method=post enctype=multipart/form-data>
                     <div class="form-group">
-                        <div class="col-xs-6">
-                            <input id="uploadFile" placeholder="Choose File" disabled="disabled"/>
+                        <div class="col-xs-12">
+
                             <div class="fileUpload btn btn-default">
                                 <span>Choose File</span>
                                 <input id="uploadBtn" class="upload" type=file name="file" accept=".json">
                             </div>
+                            <button id="btn-upload" type="submit" class="btn btn-primary" name="btn">
+                                <i class="fa fa-cloud-upload fa-2x" aria-hidden="true"></i>
+                            </button>
+
                         </div>
-                        <div class="col-xs-6">
-                            <input class="btn btn-primary" type=submit name="btn" value=Upload>
+                        <div class="col-xs-12">
+                            <input id="uploadFile" class="form-control" placeholder="File chosen" disabled/>
+                            {#                            <input class="btn btn-primary" type=submit name="btn" value=Upload>#}
                         </div>
                     </div>
                     <div class="form-group">
@@ -37,9 +42,9 @@
                     </div>
                 </form>
             </div>
-            <div class="col-sm-6">
-                <pre>{{ argument_schema|tojson_pretty|safe }}</pre>
-            </div>
+            {#            <div class="col-sm-6">#}
+            {#                <pre>{{ argument_schema|tojson_pretty|safe }}</pre>#}
+            {#            </div>#}
         </div>
     </div>
 {% endblock %}

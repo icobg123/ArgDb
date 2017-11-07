@@ -47,11 +47,25 @@ p {
 .fileUpload {
     position: relative;
     overflow: hidden;
+    width: 66%;
     /*margin: 10px;*/
+}
+
+.fileUpload span {
+    font-size: 20px;
+    /*margin: 10px;*/
+}
+
+.upload-schema {
+    /*float: right;*/
 }
 
 .btn-primary a {
     color: white;
+}
+
+#btn-upload {
+    width: 33%;
 }
 
 .fileUpload input.upload {
@@ -78,6 +92,11 @@ p {
 
 .Center-Container {
     position: relative;
+}
+
+#uploadFile {
+    margin-top: 30px;
+    width: 100%;
 }
 
 #logo {
