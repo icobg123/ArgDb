@@ -3,10 +3,13 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 divCentered">
+
+
                 {% if err %}
-                    <div class="err"><strong>Error:</strong> {{ err }}</div>
+{#                    <div class="err"><strong>Error:</strong> {{ err }}</div>#}
+                      <div class="alert alert-warning" role="alert">{{ err }}</div>
                 {% endif %}
-                <form class="form-horizontal" method=POST action="{{ url_for('register') }}">
+                <form class="form-horizontal reg_form" id="register_form" method=POST action="{{ url_for('register') }}">
                     <div class="form-group">
                         <label class="control-label col-xs-3" for="exampleInputEmail1">Username</label>
                         <div class="col-xs-9">
@@ -16,7 +19,14 @@
                     <div class="form-group">
                         <label class="control-label col-xs-3" for="exampleInputPassword1">Password</label>
                         <div class="col-xs-9">
-                            <input type="password" class="form-control" name="pass" placeholder="Password">
+                            <input type="password" class="form-control" id="password" name="pass" placeholder="Password">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3" for="exampleInputPassword1">Repeat</label>
+                        <div class="col-xs-9">
+                            <input type="password" class="form-control" name="confirm_pass" id="confirm_pass" placeholder="Password">
                         </div>
                     </div>
                     <div class="form-group">
@@ -27,7 +37,8 @@
                     </div>
                     <div class="form-group">
                         <div class="col-xs-offset-1 col-xs-10">
-                            <button type="submit" name="register_btn" class="btn btn-primary">Register</button>
+{#                            <button id="check">Validate</button>#}
+                            <button type="submit" id="btn_reg" name="register_btn"  class="btn btn-primary">Register</button>
                         </div>
                     </div>
                 </form>

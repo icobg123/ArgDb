@@ -8,20 +8,24 @@
                 <h1>Upload new File</h1>
                 <p>
                     The document you are trying to upload must be in the SadFace format described by the JSON schema to
-                    the right.
+                    the right. Please see this schema for more details. <a class="btn btn-primary"
+                                                                           href="{{ url_for('download_schema') }}"><i
+                        class="fa fa-floppy-o fa-2x" aria-hidden="true"></i>
+                </a>
                 </p>
 
                 {#<form method=post action="{{ url_for('handle_data') }}" enctype=multipart/form-data>#}
                 {% if err %}
-                    <div class="err"><strong>Error:</strong> {{ err }}</div>
+                    <div class="alert alert-warning" role="alert">{{ err }}</div>
                 {% endif %}
+
                 <form class="form-horizontal" method=post enctype=multipart/form-data>
                     <div class="form-group">
                         <div class="col-xs-6">
-                            <input id="uploadFile" placeholder="Choose File" disabled="disabled" />
+                            <input id="uploadFile" placeholder="Choose File" disabled="disabled"/>
                             <div class="fileUpload btn btn-default">
                                 <span>Choose File</span>
-                                    <input id="uploadBtn" class="upload" type=file name="file" accept=".json">
+                                <input id="uploadBtn" class="upload" type=file name="file" accept=".json">
                             </div>
                         </div>
                         <div class="col-xs-6">

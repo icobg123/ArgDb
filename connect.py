@@ -431,6 +431,7 @@ def upload_file():
                     # if Draft3Validator(schema).is_valid([2, 3, 4]):
                     if v.is_valid(parsed_to_json):
                         parsed_to_json['uploader'] = public_id
+                        parsed_to_json['time_of_upload'] = datetime.datetime.now()
                         post_id = argument.insert_one(parsed_to_json).inserted_id
                     valid = v.is_valid(parsed_to_json)
                     if valid:
@@ -1029,6 +1030,13 @@ def get_one_argument(argString):
                            cursor=count_me)
 
 
+@app.route('/download/argument/json_schema', methods=['GET'])
+def download_schema():
+    to_pass = jsonify(argument_schema)
+    to_pass.headers['Content-Disposition'] = 'attachment;filename=sadface_schema.json'
+    return to_pass
+
+
 @app.route('/download/argument/<arg_id>', methods=['GET'])
 def download_arg(arg_id):
     argument = mongo.db.argument
@@ -1051,29 +1059,9 @@ def download_arg(arg_id):
             "Resources": result.get("resources")}
         to_pass = jsonify(single_argument)
 
-        # headers = Headers()
-        # headers.set('Content-Disposition', 'attachment', filename=result.get("id") + '.json')
-
         to_pass.headers['Content-Disposition'] = 'attachment;filename=' + result.get("id") + '.json'
         return to_pass
-        # return render_template('homepage.html', doomed=result)
-        # return make_response(jsonify(single_argument), {'Content-Type': 'application/json'})
-        # return Response(
-        #     stream_with_context(single_argument),
-        #     mimetype='text/json', headers=headers
-        # )
-        # return json.dumps({'argument IDs': ({
-        #     "Analyst Email": result.get("analyst_email"),
-        #     "Analyst Name": result.get("analyst_name"),
-        #     "Created": result.get("created"),
-        #     "Edges": result.get("edges"),
-        #     "Edited": result.get("edited"),
-        #     "id": result.get("id"),
-        #     "Metadata": result.get("metadata"),
-        #     "Nodes": result.get("nodes"),
-        #     "Resources": result.get("resources"),
-        #
-        # })}, sort_keys=False, indent=2), 200, {'Content-Type': 'application/json'}
+
 
     else:
         return jsonify({"No document was found with ID": arg_id}), 404, {'Content-Type': 'application/json'}
@@ -1280,7 +1268,7 @@ def account():
         user_email = login_user.get('email')
 
         search_results = argument.find({'sadface.analyst_email': user_email}).limit(10)
-        sec_key = app.config['SECRET_KEY']
+
         argument_ids_list = []
         for argument in search_results:
             argument_ids_list.append({
@@ -1306,7 +1294,7 @@ def account():
                                verified=verified,
                                user_email=user_email,
                                argument_ids_list=argument_ids_list,
-                               sec_key=sec_key,
+
                                # token=token
                                token=token.decode('UTF-8')
                                )
