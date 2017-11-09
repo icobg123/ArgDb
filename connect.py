@@ -392,7 +392,7 @@ def upload_file():
     if 'err' in session:
         session.pop('err', None)
     # if request.method == 'POST':
-    #     if request.form['argumentString']:
+    #     if request.form['arg_str']:
     #         return search_for_arg()
     argument = mongo.db.argument
     # schema = open("uploads/schema.json").read()
@@ -411,7 +411,7 @@ def upload_file():
     if request.method == 'POST':
         # if request.form['btn'] == 'Upload':
         if 'btn' in request.form:
-            # if request.form['argumentString']:
+            # if request.form['arg_str']:
             #     return search_for_arg()
             # check if the post request has the file part
             if request.files['file'].filename == '':
@@ -452,7 +452,7 @@ def upload_file():
                     err = "Wrong file extension. Please upload a JSON document."
                     return render_template('upload.html', err=err, argument_schema=argument_schema,
                                            current_user=username)
-        elif 'argumentString' in request.form:
+        elif 'arg_str' in request.form:
             return search_for_arg()
 
     return render_template('upload.html', argument_schema=argument_schema, current_user=username)
@@ -485,16 +485,16 @@ def search_for_arg():
     if 'username' in session:
         login_user = users.find_one({'name': session['username']})
         username = login_user.get('name')
-    if not request.form['argumentString']:
+    if not request.form['arg_str']:
         err = 'Please provide a search term'
         return render_template('homepage.html', err=err, current_user=username)
 
         # elif not request.form['region']:
     # err = 'Please set your region'
     else:
-        argumentString = request.form['argumentString']
+        arg_str = request.form['arg_str']
 
-        return redirect(url_for('get_one_argument', argString=argumentString))
+        return redirect(url_for('get_one_argument', arg_str=arg_str))
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -513,14 +513,14 @@ def home():
         # return search_for_arg(username)
 
     # if request.method == 'POST':
-    #     if not request.form['argumentString']:
+    #     if not request.form['arg_str']:
     #         err = 'Please provide a search term'
     #     # elif not request.form['region']:
     #     #     err = 'Please set your region'
     #     else:
-    #         argumentString = request.form['argumentString']
+    #         arg_str = request.form['arg_str']
     #
-    #         return redirect(url_for('get_one_argument', argString=argumentString))
+    #         return redirect(url_for('get_one_argument', arg_str=arg_str))
 
     return render_template('homepage.html', err=err, current_user=username)
 
@@ -531,8 +531,8 @@ def get_argument_by_id(arg_id):
     if 'err' in session:
         session.pop('err', None)
 
-    if 'argumentString' in request.form:
-        if request.form['argumentString']:
+    if 'arg_str' in request.form:
+        if request.form['arg_str']:
             return search_for_arg()
 
     # if not current_user.get('admin'):
@@ -589,7 +589,7 @@ def get_argument_by_id(arg_id):
 def advanced_search():
     if 'err' in session:
         session.pop('err', None)
-    if request.method == 'POST' and 'argumentString' in request.form:
+    if request.method == 'POST' and 'arg_str' in request.form:
         return search_for_arg()
     err = None
     users = mongo.db.users
@@ -629,7 +629,7 @@ def list_of_arguments(s_key, s_value):
         login_user = users.find_one({'name': session['username']})
         username = login_user.get('name')
 
-    if request.method == 'POST' and 'argumentString' in request.form:
+    if request.method == 'POST' and 'arg_str' in request.form:
         return search_for_arg()
 
     argument = mongo.db.argument
@@ -644,7 +644,7 @@ def list_of_arguments(s_key, s_value):
     # page = request.args.get(get_page_parameter(), type=int, default=1)
     # offset = int(request.args['offset'])
     # limit = int(request.args['limit'])
-    # typeOF = type(argString)
+    # typeOF = type(arg_str)
     # TODO: Separate into /api/ and /web/
     per_page = 10
     offset = (page - 1) * per_page
@@ -759,7 +759,7 @@ def advanced_search_find():
             err = 'Please fill in at least one field'
             return render_template('advanced_search.html', err=err)
 
-    if request.method == 'POST' and 'argumentString' in request.form:
+    if request.method == 'POST' and 'arg_str' in request.form:
         return search_for_arg()
 
     argument = mongo.db.argument
@@ -774,12 +774,12 @@ def advanced_search_find():
     # page = request.args.get(get_page_parameter(), type=int, default=1)
     # offset = int(request.args['offset'])
     # limit = int(request.args['limit'])
-    # typeOF = type(argString)
+    # typeOF = type(arg_str)
     # TODO: Separate into /api/ and /web/
     per_page = 10
     offset = (page - 1) * per_page
 
-    # argString = argString.replace(" ", "|")
+    # arg_str = arg_str.replace(" ", "|")
     # if 'advanced_search' in request.form or request.args.get('page') or 'analyst_email' in session:
     #
     # if 'analyst_email' in session:
@@ -839,7 +839,7 @@ def advanced_search_find():
     arg_id = "icara".replace(" ", "|")
 
     # search_results = argument.find(
-    #     {"sadface.nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}}).skip(offset).limit(per_page)
+    #     {"sadface.nodes.text": {'$regex': ".*" + arg_str + ".*", "$options": "i"}}).skip(offset).limit(per_page)
 
     search_fields = {"analyst_email": analyst_email, "analyst_name": analyst_name, "nodes.text": argument_text,
                      "id": id}
@@ -881,8 +881,8 @@ def advanced_search_find():
                                 )
     # documents = argument.find({'_id': {'$lte': last_id}}).sort('_id', pymongo.DESCENDING).limit(limit)
     # # TODO: counts how many results were found
-    # next_url = '/argument/' + argString.replace("|", "+") + "?limit=" + str(limit) + '&offset=' + str(offset + limit)
-    # prev_url = '/argument/' + argString.replace("|", "+") + "?limit=" + str(limit) + '&offset=' + str(offset - limit)
+    # next_url = '/argument/' + arg_str.replace("|", "+") + "?limit=" + str(limit) + '&offset=' + str(offset + limit)
+    # prev_url = '/argument/' + arg_str.replace("|", "+") + "?limit=" + str(limit) + '&offset=' + str(offset - limit)
     # (total, processed_text1) = argument.ProcessQuery(search_results, offset, per_page)  # MongoDB query
     nodes_text = []
     output = []
@@ -905,7 +905,7 @@ def advanced_search_find():
     # for document in output:
     #     for node in document['Nodes']:
     #         if 'text' in node:
-    #             if re.search(r".*" + argString + r".*", node['text'], re.IGNORECASE):
+    #             if re.search(r".*" + arg_str + r".*", node['text'], re.IGNORECASE):
     #                 wordLimit = 10
     #                 text = node['text'].split(' ')
     #                 firstNwords = ' '.join(text[:wordLimit])
@@ -931,8 +931,8 @@ def advanced_search_find():
                            cursor=count_me)
 
 
-@app.route('/argument/text/<argString>', methods=['GET', 'POST'])
-def get_one_argument(argString):
+@app.route('/argument/text/<arg_str>', methods=['GET', 'POST'])
+def get_one_argument(arg_str):
     if 'err' in session:
         session.pop('err', None)
 
@@ -945,9 +945,9 @@ def get_one_argument(argString):
         login_user = users.find_one({'name': session['username']})
         username = login_user.get('name')
     argument = mongo.db.argument
-    argString = argString.replace(" ", "|")
+    arg_str = arg_str.replace(" ", "|")
     # search = False
-    # q = argString
+    # q = arg_str
     # if q:
     #     search = True
     # page = request.args.get(get_page_parameter(), type=int, default=1)
@@ -961,12 +961,12 @@ def get_one_argument(argString):
     # page = request.args.get(get_page_parameter(), type=int, default=1)
     # offset = int(request.args['offset'])
     # limit = int(request.args['limit'])
-    typeOF = type(argString)
+    typeOF = type(arg_str)
     # TODO: Separate into /api/ and /web/
     per_page = 10
     offset = (page - 1) * per_page
     search_results = argument.find(
-        {"sadface.nodes.text": {'$regex': ".*" + argString + ".*", "$options": "i"}}).skip(offset).limit(per_page)
+        {"sadface.nodes.text": {'$regex': ".*" + arg_str + ".*", "$options": "i"}}).skip(offset).limit(per_page)
 
     count_me = search_results.count()
     # last_id = search_results[offset]['_id']
@@ -981,8 +981,8 @@ def get_one_argument(argString):
                                 )
     # documents = argument.find({'_id': {'$lte': last_id}}).sort('_id', pymongo.DESCENDING).limit(limit)
     # # TODO: counts how many results were found
-    # next_url = '/argument/' + argString.replace("|", "+") + "?limit=" + str(limit) + '&offset=' + str(offset + limit)
-    # prev_url = '/argument/' + argString.replace("|", "+") + "?limit=" + str(limit) + '&offset=' + str(offset - limit)
+    # next_url = '/argument/' + arg_str.replace("|", "+") + "?limit=" + str(limit) + '&offset=' + str(offset + limit)
+    # prev_url = '/argument/' + arg_str.replace("|", "+") + "?limit=" + str(limit) + '&offset=' + str(offset - limit)
     # (total, processed_text1) = argument.ProcessQuery(search_results, offset, per_page)  # MongoDB query
     nodes_text = []
     output = []
@@ -1005,7 +1005,7 @@ def get_one_argument(argString):
     for document in output:
         for node in document['Nodes']:
             if 'text' in node:
-                if re.search(r".*" + argString + r".*", node['text'], re.IGNORECASE):
+                if re.search(r".*" + arg_str + r".*", node['text'], re.IGNORECASE):
                     wordLimit = 10
                     text = node['text'].split(' ')
                     firstNwords = ' '.join(text[:wordLimit])
@@ -1020,7 +1020,7 @@ def get_one_argument(argString):
     #                         total=count_me, record_name='List')
     typeOF = type(output)
     return render_template('search_results.html', json=output, typeof=typeOF,
-                           argString=argString,
+                           arg_str=arg_str,
                            search_results=search_results,
                            current_user=username,
                            search_nodes=nodes_text,
@@ -1148,8 +1148,8 @@ def register():
         session.pop('err', None)
     err = None
     if request.method == 'POST':
-        if 'argumentString' in request.form:
-            if request.form['argumentString']:
+        if 'arg_str' in request.form:
+            if request.form['arg_str']:
                 return search_for_arg()
         elif 'username' and 'pass' and 'email' in request.form:
             if not (request.form['username'] and request.form['email'] and request.form['pass']):
@@ -1215,10 +1215,10 @@ def login():
     if 'username' in session:
         return redirect(url_for('account'))
     if request.method == 'POST':
-        if 'argumentString' in request.form:
-            if request.form['argumentString']:
+        if 'arg_str' in request.form:
+            if request.form['arg_str']:
                 return search_for_arg()
-        # if request.form['argumentString']:
+        # if request.form['arg_str']:
         #     return search_for_arg()
         elif 'username' and 'pass' in request.form:
             users = mongo.db.users
@@ -1258,7 +1258,7 @@ def account():
     #     session.pop('err', None)
 
     if request.method == 'POST':
-        if request.form['argumentString']:
+        if request.form['arg_str']:
             return search_for_arg()
     users = mongo.db.users
     argument = mongo.db.argument

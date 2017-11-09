@@ -112,14 +112,14 @@ def home():
     err = None
 
     if request.method == 'POST':
-        if not request.form['argumentString']:
+        if not request.form['arg_str']:
             err = 'Please provide your Arg '
         # elif not request.form['region']:
         #     err = 'Please set your region'
         else:
-            argumentString = request.form['argumentString']
+            arg_str = request.form['arg_str']
 
-            return redirect(url_for('get_one_argument', argString=argumentString))
+            return redirect(url_for('get_one_argument', arg_str=arg_str))
 
     return render_template('homepage.html', err=err)
 
@@ -140,32 +140,32 @@ def get_all_arguments():
     return render_template('search_results.html', json=output)
 
 
-@app.route('/argument/text/<argString>', methods=['GET'])
-def get_one_argument(argString):
+@app.route('/argument/text/<arg_str>', methods=['GET'])
+def get_one_argument(arg_str):
     argument = mongo.db.argument
-    argString = argString.replace(" ", "|")
-    typeOF = type(argString)
+    arg_str = arg_str.replace(" ", "|")
+    typeOF = type(arg_str)
 
     # search_wordss = []
     #
-    # for search_words in argString:
+    # for search_words in arg_str:
     #     search_wordss.append('/' + search_words + '/')
     # q = argument.find_one({'name': name})
 
     # mongo.db.argument.ensure_index([('name': 'text')], 'name' = 'search_index')
 
     argument.create_index([('name', 'text')])
-    # qs = argument.find({"name": {'$regex': argString, '$options': 'i'}})
-    # qs = argument.find({"name": {'$in': argString}})
+    # qs = argument.find({"name": {'$regex': arg_str, '$options': 'i'}})
+    # qs = argument.find({"name": {'$in': arg_str}})
 
-    qss = argument.find({"$text": {"$search": argString}}).count()
+    qss = argument.find({"$text": {"$search": arg_str}}).count()
 
     with_regex = argument.find(
-        {"name": {'$regex': ".*" + argString + ".*", '$options': 'i'}})
+        {"name": {'$regex': ".*" + arg_str + ".*", '$options': 'i'}})
     # with_regex_1 = argument.find(
-    #     {"name": {'$regex': ".*" + argString + ".*", '$options': 'i'}})
+    #     {"name": {'$regex': ".*" + arg_str + ".*", '$options': 'i'}})
     count_me = with_regex.count()
-    # q = list(argument.find({'$text:': {'$search': argString}}))
+    # q = list(argument.find({'$text:': {'$search': arg_str}}))
 
     # if q:
     #     output = {'name': q['name'], 'contents': q['contents']}
@@ -176,7 +176,7 @@ def get_one_argument(argString):
     for q in with_regex:
         output.append({'name': q['name'], 'contents': q['contents']})
 
-    return render_template('search_results.html', json=output, typeof=typeOF, argString=count_me,
+    return render_template('search_results.html', json=output, typeof=typeOF, arg_str=count_me,
                            cursor=qss)
 
 

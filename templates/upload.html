@@ -2,10 +2,12 @@
 {% block content %}
     <div class="container">
         <div class="row">
+{#            <div class="col-sm-12"><h1 class="text-center">Upload an analysed argument to ArgDB</h1></div>#}
             <div class="col-md-6 divCentered">
+            <h1 class="text-center">Upload an argument to ArgDB</h1>
                 {#                argument_schema#}
                 <title>Upload an analysed argument to ArgDB</title>
-                <h1>Upload an analysed argument to ArgDB</h1>
+
                 <p>The document you are trying to upload must be in the SADFace format.</p>
                 <div class="alert alert-info" role="alert">
                     Download the template for the JSON SADFace format.
@@ -42,6 +44,7 @@
                     </div>
                 </form>
             </div>
+
             {#            <div class="col-sm-6">#}
             {#                <pre>{{ argument_schema|tojson_pretty|safe }}</pre>#}
             {#            </div>#}
