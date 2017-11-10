@@ -1520,8 +1520,9 @@ def api_get_argument_by_id(current_user, arg_id):
 @app.route('/api/v1/arguments', methods=['POST'])
 # @token_required
 def api_upload_file(current_user):
-    if not current_user.get('admin'):
-        return unauthorized()
+    # def api_upload_file(current_user):
+    #     if not current_user.get('admin'):
+    #         return unauthorized()
     argument = mongo.db.argument
     # schema = open("uploads/schema.json").read()
     # data = open("uploads/correct_format.json").read()
@@ -1736,9 +1737,9 @@ def api_edit_document(current_user, arg_id):
 
 @app.route('/api/v1/arguments', methods=['GET'])
 # @token_required
-def api_advanced_search_test(current_user):
-    if not current_user.get('admin'):
-        return unauthorized()
+def api_advanced_search_test():
+    # if not current_user.get('admin'):
+    #     return unauthorized()
     argument = mongo.db.argument
 
     if request.args.get('argument_text') or \
