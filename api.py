@@ -38,6 +38,8 @@ from werkzeug.wsgi import SharedDataMiddleware
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import limits.storage
+from werkzeug.contrib.cache import RedisCache
+from redis import from_url as redis_from_url
 from flask_cache import Cache
 
 app = Flask(__name__)

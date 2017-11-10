@@ -29,7 +29,8 @@ from passlib.apps import custom_app_context as pwd_context
 import json
 import jwt
 import re
-
+from werkzeug.contrib.cache import RedisCache
+from redis import from_url as redis_from_url
 from werkzeug.datastructures import Headers
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
