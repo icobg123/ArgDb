@@ -1459,7 +1459,7 @@ def login():
 
 
 @app.route('/api/v1/arguments/<arg_id>', methods=['DELETE'])
-@token_required
+# @token_required
 def api_delete_one_arg(current_user, arg_id):
     if not current_user.get('admin'):
         return unauthorized()
@@ -1483,7 +1483,7 @@ def api_delete_one_arg(current_user, arg_id):
 
 
 @app.route('/api/v1/arguments/<arg_id>', methods=['GET'])
-@token_required
+# @token_required
 # @cache.cached(timeout=10, key_prefix=make_cache_key)
 # @cache.memoize(20, make_name=make_cache_key)
 # @limiter.limit('3 per minute', key_func=make_cache_key)
@@ -1518,7 +1518,7 @@ def api_get_argument_by_id(current_user, arg_id):
 
 
 @app.route('/api/v1/arguments', methods=['POST'])
-@token_required
+# @token_required
 def api_upload_file(current_user):
     if not current_user.get('admin'):
         return unauthorized()
@@ -1638,7 +1638,7 @@ def api_upload_file(current_user):
 
 
 @app.route('/api/v1/arguments/<arg_id>', methods=['PUT'])
-@token_required
+# @token_required
 def api_edit_document(current_user, arg_id):
     if not current_user.get('admin'):
         return unauthorized()
@@ -1735,7 +1735,7 @@ def api_edit_document(current_user, arg_id):
 
 
 @app.route('/api/v1/arguments', methods=['GET'])
-@token_required
+# @token_required
 def api_advanced_search_test(current_user):
     if not current_user.get('admin'):
         return unauthorized()
