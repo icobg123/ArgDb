@@ -107,6 +107,9 @@
             {#                {% endif %}#}
             {#            </div>#}
             <div class="col-sm-12 divCentered-acc">
+                <div class="col-sm-12">
+                    <h1 class="text-center padding-account">Your Account</h1>
+                </div>
                 <div class="col-xs-3"> <!-- required for floating -->
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs tabs-left">
@@ -157,11 +160,21 @@
                         {% endif %}</div>
                         <div class="tab-pane" id="api-token">
                             <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <p>API Token</p>
+                                    </div>
+                                </div>
+
+                                {% if not verified %}
+                                    <div class="alert alert-warning" role="alert">
+                                        An email has been sent to {{ user_email }}. Please verify your account to gain
+                                        access to
+                                        the API.
+                                    </div>
+                                {% endif %}
                                 {% if verified %}
                                     <div class="row">
-                                        <div class="col-sm-12">
-                                            <p>API Token:</p>
-                                        </div>
                                         <div class="col-sm-12">
 
                                             <pre id="token_api">{{ token }}</pre>

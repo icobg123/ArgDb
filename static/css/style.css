@@ -90,9 +90,13 @@ p {
     /* border: 1px dashed deeppink; */
 }
 
+.padding-account {
+    padding: 50px 0;
+}
+
 .divCentered-acc {
     position: absolute;
-    top: 40%;
+    top: 35%;
     /*width: 50%;*/
     left: 50%;
     margin-top: -70px;
