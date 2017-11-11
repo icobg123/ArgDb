@@ -90,6 +90,16 @@ p {
     /* border: 1px dashed deeppink; */
 }
 
+.divCentered-acc {
+    position: absolute;
+    top: 40%;
+    /*width: 50%;*/
+    left: 50%;
+    margin-top: -70px;
+    transform: translate(-50%, -50%);
+    /* border: 1px dashed deeppink; */
+}
+
 .Center-Container {
     position: relative;
 }
