@@ -176,7 +176,9 @@
                                 {% if verified %}
                                     <div class="row">
                                         <div class="col-sm-12">
-
+                                            <div class="alert alert-info" role="alert">
+                                                Please include this API token in the headers of your requests in "x-access-token" key.
+                                            </div>
                                             <pre id="token_api">{{ token }}</pre>
                                         </div>
                                         <div class="col-sm-12">

@@ -1519,9 +1519,199 @@ def api_get_argument_by_id(current_user, arg_id):
         return jsonify({"No document was found with ID": arg_id}), 404, {'Content-Type': 'application/json'}
 
 
+@app.route('/api/v1/arguments/<arg_id>', methods=['PUT'])
+# @token_required
+def api_edit_document(current_user, arg_id):
+    if not current_user.get('admin'):
+        return unauthorized()
+    argument = mongo.db.argument
+    # schema = open("uploads/schema.json").read()
+    # data = open("uploads/correct_format.json").read()
+    # Header Data for debugging
+    req_headers = request.headers
+    if request.method == 'PUT':
+        # check if the post request has the file part
+        if request.files['file'].filename == '':
+            err = "Please select a File."
+            return jsonify({'message': err},
+                           {'schema': argument_schema})
+        else:
+            file = request.files['file']
+            filename = secure_filename(file.filename)
+
+            if filename and allowed_file(file.filename):
+                parsed_to_string = file.read().decode("utf-8")
+                # To Dict
+                parsed_to_json = json.loads(parsed_to_string)
+
+                # TODO: the validator checks against the schema and inserts the provided json only if it contains the
+                # TODO: required fields and it will upload it to the
+                v = Draft4Validator(argument_schema)
+
+                valid = v.is_valid(parsed_to_json)
+                parsed_to_json_type = type(parsed_to_json)
+
+                check_if_exists_arg_id = argument.find({"sadface.id": arg_id}, {"id": 1}).limit(1)
+
+                if check_if_exists_arg_id.count() > 0:
+                    if valid and arg_id == parsed_to_json.get("sadface", {}).get('id'):
+                        # TODO: make if statement that checks if there is a doc that exists with that id and if so dont upload the doc
+                        check_if_exists = argument.find({"sadface.id": parsed_to_json.get("sadface", {}).get('id')},
+                                                        {"id": 1}).limit(1)
+                        check_if_exists_uploader = argument.find_one(
+                            {'sadface.id': parsed_to_json.get("sadface", {}).get('id')})
+                        uploader = check_if_exists_uploader['uploader']
+                        check_if_exists_dumps = dumps(check_if_exists)
+                        check_if_exists_count = check_if_exists.count()
+                        if check_if_exists_count > 0 and current_user.get('public_id') == uploader:
+                            # TODO:FIND AND UPDATE THE DOCUMENT
+
+                            outcome = "The following document has been replaced"
+                            parsed_to_json['uploader'] = current_user.get('public_id')
+                            parsed_to_json['time_of_edit_upload'] = datetime.datetime.now()
+                            replaced_doc = argument.replace_one(
+                                {"sadface.id": parsed_to_json.get("sadface", {}).get('id')},
+                                parsed_to_json)
+
+                            return json.dumps(
+                                {outcome: ({"id": parsed_to_json.get("sadface", {}).get('id'), "uploader": uploader
+                                            })}, sort_keys=False, indent=2), 200, {
+                                       'Content-Type': 'application/json'}
+
+                        else:
+                            outcome = "A document with that ID does not exist or you don't" \
+                                      " have permissions to edit this document"
+
+                            return jsonify({'Documents found': check_if_exists_count}, {'message': outcome},
+                                           {'id': parsed_to_json.get("sadface", {}).get('id')})
+                    else:
+                        errors_list = []
+
+                        errors = sorted(v.iter_errors(parsed_to_json), key=lambda e: e.path)
+
+                        for error in errors:
+                            error_dict = {'key': list(error.path), 'error': error.message}
+                            errors_list.append(error_dict)
+
+                        outcome = "Unsuccessful Upload, invalid Json"
+
+                        if errors:
+                            outcome = errors_list
+                        else:
+                            outcome = "The provided URL ID: " + arg_id + " does not match the ID document in the JSON file you supplied."
+                        return jsonify({'Errors': outcome}), 200
+
+                        # return json.dumps({'Errors': errors_list}, sort_keys=False, indent=2), 200, {
+                        #     'Content-Type': 'application/json'}
+                else:
+                    outcome = "The provided URL ID: " + arg_id + " does not match any documents in the database."
+                    return jsonify({'Error': outcome}), 200
+            else:
+                err = "Wrong file extension. Please upload a JSON document."
+                jsonify({'message': err})
+
+    return jsonify({
+        'message': 'In order to edit a document please POST a JSON document in the following structure!'
+                   ' With all keys including the ones you wish to override'},
+        {'schema': argument_schema})
+
+
+@app.route('/api/v1/arguments', methods=['GET'])
+# @token_required
+def api_advanced_search():
+    # if not current_user.get('admin'):
+    #     return unauthorized()
+    argument = mongo.db.argument
+
+    if request.args.get('argument_text') or \
+            request.args.get('analyst_email') or \
+            request.args.get('analyst_name') or \
+            request.args.get('created') or \
+            request.args.get('id'):
+        # if ('analyst_name' or 'analyst_email' or 'id' or 'argument_text' or 'created') in request.args:
+        # if request.args.get('analyst_name')
+        analyst_name = request.args.get('analyst_name', default=None, type=str)
+        analyst_email = request.args.get('analyst_email', default=None, type=str)
+        id = request.args.get('id', default=None, type=str)
+        argument_text = request.args.get('argument_text', default=None, type=str)
+        created = request.args.get('created', default=None, type=str)
+
+        # analyst_name = parsed_to_json['analyst_name']
+        # analyst_email = parsed_to_json['analyst_email']
+        # id = parsed_to_json['document_id']
+        # argument_text = parsed_to_json['text']
+
+        search_fields = {"analyst_email": analyst_email,
+                         "analyst_name": analyst_name,
+                         "nodes.text": argument_text,
+                         "created": created,
+                         "id": id}
+
+        populated_search_fields = []
+        query_dict = {}
+        # for each item in the form check if it has information inside and adds it to a list with all query parameters
+        for key, value in search_fields.items():
+            if value:
+                populated_search_fields.append(key)
+
+        # for each query parameter add its contents to a dict in order to
+        # create the query which to pass to the mongoGB search function
+        for field in populated_search_fields:
+            query_dict['sadface.' + field] = {'$regex': '.*' + search_fields[field] + '.*', '$options': 'i'}
+
+        search_results = argument.find(query_dict)
+
+        count_me = search_results.count()
+        # # TODO: counts how many results were found
+
+        output = []
+
+        fields_to_return = []
+        dict_fields_to_return = {}
+        if request.args.get('fields', default=None):
+            fields_to_return = request.args.get('fields', default=None)
+            fields_to_return = fields_to_return.split(',')
+            for q in search_results:
+                for field in fields_to_return:
+                    try:
+                        dict_fields_to_return[field] = q['sadface'][field]
+                    except:
+                        return not_found()
+
+                output.append(dict_fields_to_return)
+        else:
+            for q in search_results:
+                output.append({
+                    # "MongoDB ID": q["_id"],
+                    "analyst_email": q['sadface']["analyst_email"],
+                    "analyst_name": q['sadface']["analyst_name"],
+                    "created": q['sadface']["created"],
+                    "edges": q['sadface']["edges"],
+                    "edited": q['sadface']["edited"],
+                    "id": q['sadface']["id"],
+                    "metadata": q['sadface']["metadata"],
+                    "nodes": q['sadface']["nodes"],
+                    "resources": q['sadface']["resources"],
+
+                })
+
+        resp = jsonify(
+            {"Results found": count_me},
+            # {"fields to return": fields_to_return},
+            {"Results": output})
+
+        return resp
+
+    resp = jsonify({"Information": "Please provide arguments to search on."},
+                   {"Example URL": "/api/v1/arguments?analyst_name=simon&fields=id Will return all ids of SADFace "
+                                   "documents which contain simon in their analst_name field."})
+    resp.status_code = 200
+    return resp
+
+
 @app.route('/api/v1/arguments', methods=['POST'])
 # @token_required
-def api_upload_file(current_user):
+def api_upload(current_user):
     # def api_upload_file(current_user):
     #     if not current_user.get('admin'):
     #         return unauthorized()
@@ -1638,196 +1828,6 @@ def api_upload_file(current_user):
                    {'schema': argument_schema}), 200, {
                'Content-Type': 'application/json'}
     # return render_template('upload.html', argument_schema=argument_schema)
-
-
-@app.route('/api/v1/arguments/<arg_id>', methods=['PUT'])
-# @token_required
-def api_edit_document(current_user, arg_id):
-    if not current_user.get('admin'):
-        return unauthorized()
-    argument = mongo.db.argument
-    # schema = open("uploads/schema.json").read()
-    # data = open("uploads/correct_format.json").read()
-    # Header Data for debugging
-    req_headers = request.headers
-    if request.method == 'PUT':
-        # check if the post request has the file part
-        if request.files['file'].filename == '':
-            err = "Please select a File."
-            return jsonify({'message': err},
-                           {'schema': argument_schema})
-        else:
-            file = request.files['file']
-            filename = secure_filename(file.filename)
-
-            if filename and allowed_file(file.filename):
-                parsed_to_string = file.read().decode("utf-8")
-                # To Dict
-                parsed_to_json = json.loads(parsed_to_string)
-
-                # TODO: the validator checks against the schema and inserts the provided json only if it contains the
-                # TODO: required fields and it will upload it to the
-                v = Draft4Validator(argument_schema)
-
-                valid = v.is_valid(parsed_to_json)
-                parsed_to_json_type = type(parsed_to_json)
-
-                check_if_exists_arg_id = argument.find({"sadface.id": arg_id}, {"id": 1}).limit(1)
-
-                if check_if_exists_arg_id.count() > 0:
-                    if valid and arg_id == parsed_to_json.get("sadface", {}).get('id'):
-                        # TODO: make if statement that checks if there is a doc that exists with that id and if so dont upload the doc
-                        check_if_exists = argument.find({"sadface.id": parsed_to_json.get("sadface", {}).get('id')},
-                                                        {"id": 1}).limit(1)
-                        check_if_exists_uploader = argument.find_one(
-                            {'sadface.id': parsed_to_json.get("sadface", {}).get('id')})
-                        uploader = check_if_exists_uploader['uploader']
-                        check_if_exists_dumps = dumps(check_if_exists)
-                        check_if_exists_count = check_if_exists.count()
-                        if check_if_exists_count > 0 and current_user.get('public_id') == uploader:
-                            # TODO:FIND AND UPDATE THE DOCUMENT
-
-                            outcome = "The following document has been replaced"
-                            parsed_to_json['uploader'] = current_user.get('public_id')
-                            parsed_to_json['time_of_edit_upload'] = datetime.datetime.now()
-                            replaced_doc = argument.replace_one(
-                                {"sadface.id": parsed_to_json.get("sadface", {}).get('id')},
-                                parsed_to_json)
-
-                            return json.dumps(
-                                {outcome: ({"id": parsed_to_json.get("sadface", {}).get('id'), "uploader": uploader
-                                            })}, sort_keys=False, indent=2), 200, {
-                                       'Content-Type': 'application/json'}
-
-                        else:
-                            outcome = "A document with that ID does not exist or you don't" \
-                                      " have permissions to edit this document"
-
-                            return jsonify({'Documents found': check_if_exists_count}, {'message': outcome},
-                                           {'id': parsed_to_json.get("sadface", {}).get('id')})
-                    else:
-                        errors_list = []
-
-                        errors = sorted(v.iter_errors(parsed_to_json), key=lambda e: e.path)
-
-                        for error in errors:
-                            error_dict = {'key': list(error.path), 'error': error.message}
-                            errors_list.append(error_dict)
-
-                        outcome = "Unsuccessful Upload, invalid Json"
-
-                        if errors:
-                            outcome = errors_list
-                        else:
-                            outcome = "The provided URL ID: " + arg_id + " does not match the ID document in the JSON file you supplied."
-                        return jsonify({'Errors': outcome}), 200
-
-                        # return json.dumps({'Errors': errors_list}, sort_keys=False, indent=2), 200, {
-                        #     'Content-Type': 'application/json'}
-                else:
-                    outcome = "The provided URL ID: " + arg_id + " does not match any documents in the database."
-                    return jsonify({'Error': outcome}), 200
-            else:
-                err = "Wrong file extension. Please upload a JSON document."
-                jsonify({'message': err})
-
-    return jsonify({
-        'message': 'In order to edit a document please POST a JSON document in the following structure!'
-                   ' With all keys including the ones you wish to override'},
-        {'schema': argument_schema})
-
-
-@app.route('/api/v1/arguments', methods=['GET'])
-# @token_required
-def api_advanced_search_test():
-    # if not current_user.get('admin'):
-    #     return unauthorized()
-    argument = mongo.db.argument
-
-    if request.args.get('argument_text') or \
-            request.args.get('analyst_email') or \
-            request.args.get('analyst_name') or \
-            request.args.get('created') or \
-            request.args.get('id'):
-        # if ('analyst_name' or 'analyst_email' or 'id' or 'argument_text' or 'created') in request.args:
-        # if request.args.get('analyst_name')
-        analyst_name = request.args.get('analyst_name', default=None, type=str)
-        analyst_email = request.args.get('analyst_email', default=None, type=str)
-        id = request.args.get('id', default=None, type=str)
-        argument_text = request.args.get('argument_text', default=None, type=str)
-        created = request.args.get('created', default=None, type=str)
-
-        # analyst_name = parsed_to_json['analyst_name']
-        # analyst_email = parsed_to_json['analyst_email']
-        # id = parsed_to_json['document_id']
-        # argument_text = parsed_to_json['text']
-
-        search_fields = {"analyst_email": analyst_email,
-                         "analyst_name": analyst_name,
-                         "nodes.text": argument_text,
-                         "created": created,
-                         "id": id}
-
-        populated_search_fields = []
-        query_dict = {}
-        # for each item in the form check if it has information inside and adds it to a list with all query parameters
-        for key, value in search_fields.items():
-            if value:
-                populated_search_fields.append(key)
-
-        # for each query parameter add its contents to a dict in order to
-        # create the query which to pass to the mongoGB search function
-        for field in populated_search_fields:
-            query_dict['sadface.' + field] = {'$regex': '.*' + search_fields[field] + '.*', '$options': 'i'}
-
-        search_results = argument.find(query_dict)
-
-        count_me = search_results.count()
-        # # TODO: counts how many results were found
-
-        output = []
-
-        fields_to_return = []
-        dict_fields_to_return = {}
-        if request.args.get('fields', default=None):
-            fields_to_return = request.args.get('fields', default=None)
-            fields_to_return = fields_to_return.split(',')
-            for q in search_results:
-                for field in fields_to_return:
-                    try:
-                        dict_fields_to_return[field] = q['sadface'][field]
-                    except:
-                        return not_found()
-
-                output.append(dict_fields_to_return)
-        else:
-            for q in search_results:
-                output.append({
-                    # "MongoDB ID": q["_id"],
-                    "analyst_email": q['sadface']["analyst_email"],
-                    "analyst_name": q['sadface']["analyst_name"],
-                    "created": q['sadface']["created"],
-                    "edges": q['sadface']["edges"],
-                    "edited": q['sadface']["edited"],
-                    "id": q['sadface']["id"],
-                    "metadata": q['sadface']["metadata"],
-                    "nodes": q['sadface']["nodes"],
-                    "resources": q['sadface']["resources"],
-
-                })
-
-        resp = jsonify(
-            {"Results found": count_me},
-            # {"fields to return": fields_to_return},
-            {"Results": output})
-
-        return resp
-
-    resp = jsonify({"Information": "Please provide arguments to search on."},
-                   {"Example URL": "/api/v1/arguments?analyst_name=simon&fields=id Will return all ids of SADFace "
-                                   "documents which contain simon in their analst_name field."})
-    resp.status_code = 200
-    return resp
 
 
 if __name__ == '__main__':
