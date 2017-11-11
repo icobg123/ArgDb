@@ -435,7 +435,8 @@ def upload_file():
                         dict_to_upload['uploader'] = public_id
                         dict_to_upload['time_of_upload'] = datetime.datetime.now()
 
-                        post_id = argument.insert_one(dict_to_upload).inserted_id
+                        post_id = argument.insert_one(dict_to_upload
+                                                      ).inserted_id
                     valid = v.is_valid(parsed_to_json)
                     if valid:
                         outcome = "Successful Upload"

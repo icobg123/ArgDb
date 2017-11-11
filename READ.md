@@ -1,6 +1,9 @@
 **ArgDB API**
+====================
+
+Returns JSON data about a single SADFace argument.
 ----
-  Returns JSON data about a single SADFace argument.
+
 
 * **URL**
 
@@ -120,10 +123,12 @@
     {"error": "Token is missing!"}
     ```
  
-----
- Edits or modifies an argument in the SADFace format to the database. 
- Takes SADFace JSON file with the same id as the argument to be edited. 
+
+Edits or modifies an argument in the SADFace format to the database. 
+---------------------
  
+ Takes SADFace JSON file with the same id as the argument to be edited. 
+
 
 * **URL**
 
@@ -208,10 +213,9 @@
     }
     ```
  
-----
- Deletes an argument from the database with the provided id if the caller is the user that uploaded the argument.
- 
 
+Deletes an argument from the database with the provided id if the caller is the user that uploaded the argument.
+----
 * **URL**
 
   /api/v1/arguments/<arg_id>
@@ -265,9 +269,8 @@
     ```
      
 
+Returns a list of arguments which match the provided parameters.
 ----
-  Returns a list of arguments which match the provided parameters.
-
 * **URL**
 
   /api/v1/arguments
@@ -527,10 +530,11 @@
     }
     ```
  
+
+Uploads an argument in the SADFace format to the database. 
 ----
- Uploads an argument in the SADFace format to the database. 
- Takes SADFace argument with an id that does not exists in the database. 
- 
+Takes SADFace argument with an id that does not exists in the database. 
+
  
 
 * **URL**
@@ -601,7 +605,7 @@
     {
     "error": "The provided URL id: uuid4 does not match the argument id in the JSON file you supplied."}
     ```
-    OR
+  OR
     
   * **Code:** 406 NOT ACCEPTABLE <br />
     **Content:** 
