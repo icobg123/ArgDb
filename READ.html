@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title></title>
+
+    <!-- Le styles -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="bootstrap/css/docs.css" rel="stylesheet">
+    <link href="bootstrap/js/google-code-prettify/prettify.css" rel="stylesheet">
+
+  </head>
+
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+
+  
+
+  <div class="container">
+
+  <div class="row">
+
+<div class="span3 bs-docs-sidebar"><ul class="nav nav-list bs-docs-sidenav" data-spy="affix"><li><a href="#1">1. <strong>ArgDB API</strong></a></li><li><a href="#2">1.1. Returns JSON data about a single SADFace argument.</a></li><li><a href="#3">1.2. Edits or modifies an argument in the SADFace format to the database. </a></li><li><a href="#4">1.3. Deletes an argument from the database with the provided id if the caller is the user that uploaded the argument.</a></li><li><a href="#5">1.4. Returns a list of arguments which match the provided parameters.</a></li><li><a href="#6">1.5. Uploads an argument in the SADFace format to the database. </a></li></ul></div><div class="span9"><h1 id="1">1. <strong>ArgDB API</strong></h1>
+
+<h2 id="2">1.1. Returns JSON data about a single SADFace argument.</h2>
+
+<ul>
+<li><p><strong>URL</strong></p>
+
+<p>/api/v1/arguments/<arg_id></p></li>
+<li><p><strong>Method:</strong></p>
+
+<p><code>GET</code></p></li>
+<li><p><strong>URL Params</strong></p>
+
+<p><strong>Required:</strong></p>
+
+<p><code>id=[uuid4]</code></p></li>
+<li><p><strong>Data Params</strong></p>
+
+<p>None</p></li>
+<li><p><strong>Success Response:</strong></p>
+
+<ul><li><strong>Code:</strong> 200 OK <br />
+<strong>Content:</strong> </li></ul>
+
+<p><code>json
+     {
+    "analyst_email": "siwells@gmail.com", 
+    "analyst_name": "Simon Wells", 
+    "created": "2017-07-11T16:32:36", 
+    "edges": [
+        {
+            "id": "d7bcef81-0d74-4ae5-96f9-bfb07031f1fa", 
+            "source_id": "49a786ce-9066-4230-8e18-42086882a160", 
+            "target_id": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45"
+        }, 
+        {
+            "id": "f57ecb48-dfd5-4789-b3c5-46f770f4113d", 
+            "source_id": "30c9c0ac-ddef-44e7-897d-52ffee97b837", 
+            "target_id": "49a786ce-9066-4230-8e18-42086882a160"
+        }, 
+        {
+            "id": "c48c3d75-a8b3-439a-9a2f-b987eaae2c9a", 
+            "source_id": "02b4009b-1a12-4d53-ab3a-efabe6c44694", 
+            "target_id": "49a786ce-9066-4230-8e18-42086882a160"
+        }, 
+        {
+            "id": "86e797aa-ecb0-4fcd-8838-263ceedb099e", 
+            "source_id": "5760a93a-55e7-447c-a245-7f8d7e7e4434", 
+            "target_id": "02b4009b-1a12-4d53-ab3a-efabe6c44694"
+        }, 
+        {
+            "id": "b2531a60-6559-4560-b57b-320f1f3b8386", 
+            "source_id": "fbaa9b79-0965-45a1-9fd4-60701c2102cf", 
+            "target_id": "5760a93a-55e7-447c-a245-7f8d7e7e4434"
+        }
+    ], 
+    "edited": "2017-07-11T16:32:36", 
+    "id": "94a975db-25ae-4d25-93cc-1c07c932e2f8", 
+    "metadata": {}, 
+    "nodes": [
+        {
+            "id": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45", 
+            "metadata": {}, 
+            "sources": [], 
+            "text": "The 'Hang Back' campaign video should not have been published, and should be withdrawn.", 
+            "type": "atom"
+        }, 
+        {
+            "id": "49a786ce-9066-4230-8e18-42086882a160", 
+            "name": "support", 
+            "type": "scheme"
+        }, 
+        {
+            "id": "30c9c0ac-ddef-44e7-897d-52ffee97b837", 
+            "metadata": {}, 
+            "sources": [], 
+            "text": "The 'Hang Back' advert does not clearly express the intended message", 
+            "type": "atom"
+        }, 
+        {
+            "id": "02b4009b-1a12-4d53-ab3a-efabe6c44694", 
+            "metadata": {}, 
+            "sources": [], 
+            "text": "The 'Hang Back' campaign was the wrong campaign to run", 
+            "type": "atom"
+        }, 
+        {
+            "id": "5760a93a-55e7-447c-a245-7f8d7e7e4434", 
+            "name": "conflict", 
+            "type": "scheme"
+        }, 
+        {
+            "id": "fbaa9b79-0965-45a1-9fd4-60701c2102cf", 
+            "metadata": {}, 
+            "sources": [], 
+            "text": "Road users have a responsibility to make our roads safer by being more vigilant.", 
+            "type": "atom"
+        }
+    ], 
+    "resources": []
+    }
+</code></p></li>
+<li><p><strong>Error Response:</strong></p>
+
+<ul><li><strong>Code:</strong> 404 NOT FOUND <br />
+<strong>Content:</strong> 
+<code>json
+{"No argument was found with id": "arg_id"}
+</code></li></ul>
+
+<p>OR</p>
+
+<ul><li><strong>Code:</strong> 401 UNAUTHORIZED <br />
+<strong>Content:</strong> 
+<code>json
+{"error": "Token is missing!"}
+</code></li></ul></li>
+</ul>
+
+<h2 id="3">1.2. Edits or modifies an argument in the SADFace format to the database. </h2>
+
+<p>Takes SADFace JSON file with the same id as the argument to be edited. </p>
+
+<ul>
+<li><p><strong>URL</strong></p>
+
+<p>/api/v1/arguments/<arg_id></p></li>
+<li><p><strong>Method:</strong></p>
+
+<p><code>PUT</code></p></li>
+<li><p><strong>URL Params</strong></p>
+
+<p><strong>Required:</strong></p>
+
+<p><code>id=[uuid4]</code></p></li>
+<li><p><strong>Data Params</strong></p>
+
+<p>JSON file in the SADFace format with the same id as <code>id=[uuid4]</code>. Must match the JSON Schema.</p></li>
+<li><p><strong>Success Response:</strong></p>
+
+<ul><li><strong>Code:</strong> 200 OK <br />
+<strong>Content:</strong> </li></ul>
+
+<p><code>json
+{
+  "The following argument has been edited": {
+        "id": "uuid4",
+        "uploader": "uuid4(hex)"
+  }
+}
+</code></p></li>
+<li><p><strong>Error Response:</strong></p>
+
+<ul><li><strong>Code:</strong> 404 NOT FOUND <br />
+<strong>Content:</strong> 
+<code>json
+{
+"error":"The provided URL id:  'arg_id' does not match any arguments in the database."
+}
+</code></li></ul>
+
+<p>OR</p>
+
+<ul><li><strong>Code:</strong> 404 NOT FOUND <br />
+<strong>Content:</strong> 
+<code>json
+{
+"error":"An argument with that id does not exist or you don't have permissions to edit this argument"
+}
+</code></li></ul>
+
+<p>OR</p>
+
+<ul><li><p><strong>Code:</strong> 401 UNAUTHORIZED <br />
+<strong>Content:</strong> 
+<code>json
+{
+"error": "Token is missing!"
+}
+</code>
+OR</p></li>
+<li><p><strong>Code:</strong> 406 NOT ACCEPTABLE <br />
+<strong>Content:</strong> 
+<code>json
+{
+"error": "The provided URL id: uuid4 does not match the argument id in the JSON file you supplied."}
+</code>
+OR</p></li>
+<li><p><strong>Code:</strong> 406 NOT ACCEPTABLE <br />
+<strong>Content:</strong> 
+<code>json
+{
+"Errors": [
+{
+  "error": "'id' is a required property", 
+  "key": []
+}
+]
+}
+</code></p></li></ul></li>
+</ul>
+
+<h2 id="4">1.3. Deletes an argument from the database with the provided id if the caller is the user that uploaded the argument.</h2>
+
+<ul>
+<li><p><strong>URL</strong></p>
+
+<p>/api/v1/arguments/<arg_id></p></li>
+<li><p><strong>Method:</strong></p>
+
+<p><code>DELETE</code></p></li>
+<li><p><strong>URL Params</strong></p>
+
+<p><strong>Required:</strong></p>
+
+<p><code>id=[uuid4]</code></p></li>
+<li><p><strong>Data Params</strong></p>
+
+<p>None</p></li>
+<li><p><strong>Success Response:</strong></p>
+
+<ul><li><strong>Code:</strong> 200 OK <br />
+<strong>Content:</strong> </li></ul>
+
+<p><code>json
+{
+   "message":"Successfully deleted argument with SADFace id: uuid4" 
+}
+</code></p></li>
+<li><p><strong>Error Response:</strong></p>
+
+<ul><li><strong>Code:</strong> 401 UNAUTHORIZED <br />
+<strong>Content:</strong> 
+<code>json
+{
+"error": "Token is missing!"
+}
+</code></li>
+<li><strong>Code:</strong> 404 NOT FOUND <br />
+<strong>Content:</strong> 
+<code>json
+{ 
+"error": "No argument found with id :uuid4"
+}
+</code></li>
+<li><strong>Code:</strong> 403 FORBidDEN <br />
+<strong>Content:</strong> 
+<code>json
+{
+"error": "You cannot delete argument with SADFace id: uuid4"
+}
+</code></li></ul></li>
+</ul>
+
+<h2 id="5">1.4. Returns a list of arguments which match the provided parameters.</h2>
+
+<ul>
+<li><p><strong>URL</strong></p>
+
+<p>/api/v1/arguments</p></li>
+<li><p><strong>Method:</strong></p>
+
+<p><code>GET</code></p></li>
+<li><p><strong>URL Params</strong></p>
+
+<p><strong>Reaquires at least one of the following in order to perform a search:</strong></p>
+
+<p><code>id=[uuid4]</code>
+<code>analyst_name=[string]</code>
+<code>argument_text=[string]</code>
+<code>analyst_email=[string]</code>
+<code>created=[YYYY-MM-DD]</code></p>
+
+<p><strong>Optional - fields to return</strong></p>
+
+<p><code>fields=[]</code> 
+The list can contain keys from SADFace</p></li>
+<li><p><strong>Data Params</strong></p>
+
+<p>None</p></li>
+<li><p><strong>Success Response:</strong></p>
+
+<ul><li><strong>Code:</strong> 200 OK <br />
+<strong>Content:</strong> </li></ul>
+
+<p><code>json
+    [
+  {
+    "Results found": 2
+  }, 
+  {
+    "Results": [
+      {
+        "analyst_email": "icobg123@gmail.com", 
+        "analyst_name": "ico", 
+        "created": "2017-07-11T16:32:36", 
+        "edges": [
+          {
+            "id": "d7bcef81-0d74-4ae5-96f9-bfb07031f1fa", 
+            "source_id": "49a786ce-9066-4230-8e18-42086882a160", 
+            "target_id": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45"
+          }, 
+          {
+            "id": "f57ecb48-dfd5-4789-b3c5-46f770f4113d", 
+            "source_id": "30c9c0ac-ddef-44e7-897d-52ffee97b837", 
+            "target_id": "49a786ce-9066-4230-8e18-42086882a160"
+          }, 
+          {
+            "id": "c48c3d75-a8b3-439a-9a2f-b987eaae2c9a", 
+            "source_id": "02b4009b-1a12-4d53-ab3a-efabe6c44694", 
+            "target_id": "49a786ce-9066-4230-8e18-42086882a160"
+          }, 
+          {
+            "id": "86e797aa-ecb0-4fcd-8838-263ceedb099e", 
+            "source_id": "5760a93a-55e7-447c-a245-7f8d7e7e4434", 
+            "target_id": "02b4009b-1a12-4d53-ab3a-efabe6c44694"
+          }, 
+          {
+            "id": "b2531a60-6559-4560-b57b-320f1f3b8386", 
+            "source_id": "fbaa9b79-0965-45a1-9fd4-60701c2102cf", 
+            "target_id": "5760a93a-55e7-447c-a245-7f8d7e7e4434"
+          }, 
+          {
+            "id": "b2531a60-6559-4560-b57b-320f1f3b8385", 
+            "source_id": "02b4009b-1a12-4d53-ab3a-efabe6c44694", 
+            "target_id": "5760a93a-55e7-447c-a245-7f8d7e7e4434"
+          }, 
+          {
+            "id": "b2531a60-6559-4560-b57b-320f1f3b8384", 
+            "source_id": "fbaa9b79-0965-45a1-9fd4-60701c2102cf", 
+            "target_id": "02b4009b-1a12-4d53-ab3a-efabe6c44694"
+          }, 
+          {
+            "id": "b2531a60-6559-4560-b57b-320f1f3b8383", 
+            "source_id": "49a786ce-9066-4230-8e18-42086882a161", 
+            "target_id": "fbaa9b79-0965-45a1-9fd4-60701c2102cc"
+          }, 
+          {
+            "id": "b2531a60-6559-4560-b57b-320f1f3b8382", 
+            "source_id": "fbaa9b79-0965-45a1-9fd4-60701c2102cd", 
+            "target_id": "49a786ce-9066-4230-8e18-42086882a161"
+          }
+        ], 
+        "id": "94b975db-25ae-4d25-93cc-1c07c932e2f2", 
+        "metadata": {}, 
+        "nodes": [
+          {
+            "id": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45", 
+            "metadata": {}, 
+            "sources": [], 
+            "text": "Noobzorks e mnogo lud", 
+            "type": "atom"
+          }, 
+          {
+            "id": "49a786ce-9066-4230-8e18-42086882a160", 
+            "name": "support", 
+            "type": "scheme"
+          }, 
+          {
+            "id": "49a786ce-9066-4230-8e18-42086882a161", 
+            "name": "support", 
+            "type": "scheme"
+          }, 
+          {
+            "id": "30c9c0ac-ddef-44e7-897d-52ffee97b837", 
+            "metadata": {}, 
+            "sources": [], 
+            "text": "Ico", 
+            "type": "atom"
+          }, 
+          {
+            "id": "02b4009b-1a12-4d53-ab3a-efabe6c44694", 
+            "metadata": {}, 
+            "sources": [], 
+            "text": "The 'Hang Back' campaign was the wrong campaign to run", 
+            "type": "atom"
+          }, 
+          {
+            "id": "5760a93a-55e7-447c-a245-7f8d7e7e4434", 
+            "name": "conflict", 
+            "type": "scheme"
+          }, 
+          {
+            "id": "fbaa9b79-0965-45a1-9fd4-60701c2102cf", 
+            "metadata": {}, 
+            "sources": [], 
+            "text": "Road users have a responsibility to make our roads safer by being more vigilant.", 
+            "type": "atom"
+          }, 
+          {
+            "id": "fbaa9b79-0965-45a1-9fd4-60701c2102cc", 
+            "metadata": {}, 
+            "sources": [], 
+            "text": "Road users have a responsibility to make our roads safer by being more vigilant.", 
+            "type": "atom"
+          }, 
+          {
+            "id": "fbaa9b79-0965-45a1-9fd4-60701c2102cd", 
+            "metadata": {}, 
+            "sources": [], 
+            "text": "TEST GRAPH", 
+            "type": "atom"
+          }
+        ], 
+        "resources": []
+      },
+  {
+    "analyst_email": "siwells@gmail.com", 
+    "analyst_name": "Simon Wells", 
+    "created": "2017-07-11T16:32:36", 
+    "edges": [
+        {
+            "id": "d7bcef81-0d74-4ae5-96f9-bfb07031f1fa", 
+            "source_id": "49a786ce-9066-4230-8e18-42086882a160", 
+            "target_id": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45"
+        }, 
+        {
+            "id": "f57ecb48-dfd5-4789-b3c5-46f770f4113d", 
+            "source_id": "30c9c0ac-ddef-44e7-897d-52ffee97b837", 
+            "target_id": "49a786ce-9066-4230-8e18-42086882a160"
+        }, 
+        {
+            "id": "c48c3d75-a8b3-439a-9a2f-b987eaae2c9a", 
+            "source_id": "02b4009b-1a12-4d53-ab3a-efabe6c44694", 
+            "target_id": "49a786ce-9066-4230-8e18-42086882a160"
+        }, 
+        {
+            "id": "86e797aa-ecb0-4fcd-8838-263ceedb099e", 
+            "source_id": "5760a93a-55e7-447c-a245-7f8d7e7e4434", 
+            "target_id": "02b4009b-1a12-4d53-ab3a-efabe6c44694"
+        }, 
+        {
+            "id": "b2531a60-6559-4560-b57b-320f1f3b8386", 
+            "source_id": "fbaa9b79-0965-45a1-9fd4-60701c2102cf", 
+            "target_id": "5760a93a-55e7-447c-a245-7f8d7e7e4434"
+        }
+    ], 
+    "edited": "2017-07-11T16:32:36", 
+    "id": "94a975db-25ae-4d25-93cc-1c07c932e2f8", 
+    "metadata": {}, 
+    "nodes": [
+        {
+            "id": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45", 
+            "metadata": {}, 
+            "sources": [], 
+            "text": "The 'Hang Back' campaign video should not have been published, and should be withdrawn.", 
+            "type": "atom"
+        }, 
+        {
+            "id": "49a786ce-9066-4230-8e18-42086882a160", 
+            "name": "support", 
+            "type": "scheme"
+        }, 
+        {
+            "id": "30c9c0ac-ddef-44e7-897d-52ffee97b837", 
+            "metadata": {}, 
+            "sources": [], 
+            "text": "The 'Hang Back' advert does not clearly express the intended message", 
+            "type": "atom"
+        }, 
+        {
+            "id": "02b4009b-1a12-4d53-ab3a-efabe6c44694", 
+            "metadata": {}, 
+            "sources": [], 
+            "text": "The 'Hang Back' campaign was the wrong campaign to run", 
+            "type": "atom"
+        }, 
+        {
+            "id": "5760a93a-55e7-447c-a245-7f8d7e7e4434", 
+            "name": "conflict", 
+            "type": "scheme"
+        }, 
+        {
+            "id": "fbaa9b79-0965-45a1-9fd4-60701c2102cf", 
+            "metadata": {}, 
+            "sources": [], 
+            "text": "Road users have a responsibility to make our roads safer by being more vigilant.", 
+            "type": "atom"
+        }
+    ], 
+    "resources": []
+    }
+    ]
+  }
+]
+</code></p></li>
+<li><p><strong>Error Response:</strong></p>
+
+<ul><li><strong>Code:</strong> 404 NOT FOUND <br />
+<strong>Content:</strong> 
+<code>json
+{"No argument was found with id": "arg_id"}
+</code></li></ul>
+
+<p>OR</p>
+
+<ul><li><p><strong>Code:</strong> 401 UNAUTHORIZED <br />
+<strong>Content:</strong> 
+<code>json
+{"error": "Token is missing!"}
+</code></p></li>
+<li><p><strong>Code:</strong> 406 NOT ACCEPTABLE <br />
+<strong>Content:</strong> 
+<code>json
+{
+"Information": "Please provide arguments to search on.",
+"Example URL": "/api/v1/arguments?analyst_name=simon&amp;fields=id Will return all ids of SADFace arguments which contain simon in their analst_name field."
+}
+</code></p></li></ul></li>
+</ul>
+
+<h2 id="6">1.5. Uploads an argument in the SADFace format to the database. </h2>
+
+<p>Takes SADFace argument with an id that does not exists in the database. </p>
+
+<ul>
+<li><p><strong>URL</strong></p>
+
+<p>/api/v1/arguments</p></li>
+<li><p><strong>Method:</strong></p>
+
+<p><code>POST</code></p></li>
+<li><p><strong>URL Params</strong></p>
+
+<p>None</p></li>
+<li><p><strong>Data Params</strong></p>
+
+<p>JSON file in the SADFace format with a unique id that does not exist in the database. Must match the JSON Schema.</p></li>
+<li><p><strong>Success Response:</strong></p>
+
+<ul><li><strong>Code:</strong> 200 OK <br />
+<strong>Content:</strong> </li></ul>
+
+<p><code>json
+{
+  "The following argument has been replaced": {
+        "id": "uuid4",
+        "uploader": "uuid4(hex)"
+  }
+}
+</code></p></li>
+<li><p><strong>Error Response:</strong></p>
+
+<ul><li><strong>Code:</strong> 404 NOT FOUND <br />
+<strong>Content:</strong> 
+<code>json
+{
+"error":"The provided URL id:  'arg_id' does not match any arguments in the database."
+}
+</code></li></ul>
+
+<p>OR</p>
+
+<ul><li><strong>Code:</strong> 409 CONFLICT <br />
+<strong>Content:</strong> 
+<code>json
+{
+"An argument with this id already exists": {
+"id": "uuid4"
+}
+}
+</code></li></ul>
+
+<p>OR</p>
+
+<ul><li><p><strong>Code:</strong> 401 UNAUTHORIZED <br />
+<strong>Content:</strong> 
+<code>json
+{
+"error": "Token is missing!"
+}
+</code>
+OR</p></li>
+<li><p><strong>Code:</strong> 406 NOT ACCEPTABLE <br />
+<strong>Content:</strong> 
+<code>json
+{
+"error": "The provided URL id: uuid4 does not match the argument id in the JSON file you supplied."}
+</code>
+OR</p></li>
+<li><p><strong>Code:</strong> 406 NOT ACCEPTABLE <br />
+<strong>Content:</strong> 
+<code>json
+{
+"Errors": [
+{
+  "error": "'id' is a required property" 
+}
+]
+}
+</code></p></li></ul></li>
+</ul>
+      </div>
+    </div>
+
+  </div>
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="bootstrap/js/jquery.js"></script>
+    <script src="bootstrap/js/google-code-prettify/prettify.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript">prettyPrint();</script>
+
+  </body>
+</html>
