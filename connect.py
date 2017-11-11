@@ -431,9 +431,11 @@ def upload_file():
                     v = Draft4Validator(argument_schema)
                     # if Draft3Validator(schema).is_valid([2, 3, 4]):
                     if v.is_valid(parsed_to_json):
-                        parsed_to_json['uploader'] = public_id
-                        parsed_to_json['time_of_upload'] = datetime.datetime.now()
-                        post_id = argument.insert_one(parsed_to_json).inserted_id
+                        dict_to_upload = {"sadface": parsed_to_json}
+                        dict_to_upload['uploader'] = public_id
+                        dict_to_upload['time_of_upload'] = datetime.datetime.now()
+
+                        post_id = argument.insert_one(dict_to_upload).inserted_id
                     valid = v.is_valid(parsed_to_json)
                     if valid:
                         outcome = "Successful Upload"
