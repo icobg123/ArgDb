@@ -602,7 +602,7 @@ Takes SADFace argument with an id that does not exists in the database.
   * **Code:** 406 NOT ACCEPTABLE <br />
     **Content:** 
     ```json
-    {
+    
     "error": "The provided URL id: uuid4 does not match the argument id in the JSON file you supplied."}
     ```
   OR

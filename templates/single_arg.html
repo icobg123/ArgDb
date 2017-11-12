@@ -15,14 +15,14 @@
 
                 <h3>
                     Analyst name: <a class=""
-                                     href="{{ url_for('.list_of_arguments',session_key='analyst_name',session_value=analyst_name) }}">
+                                     href="{{ url_for('.list_of_arguments',s_key='analyst_name',s_value=analyst_name) }}">
                     {{ analyst_name }}
                     {#                            {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
                 </a>
                 </h3>
                 <h3>
                     Analyst email: <a class=""
-                                      href="{{ url_for('.list_of_arguments',session_key='analyst_email',session_value=analyst_email) }}">
+                                      href="{{ url_for('.list_of_arguments',s_key='analyst_email',s_value=analyst_email) }}">
                     {{ analyst_email }}
 
                 </a>
@@ -32,7 +32,7 @@
                 <div class="row">
                     <div class="col-sm-12 text-center">{{ graph }}</div>
                 </div>
-                <pre> {{ argument }}</pre>
+                <pre class="prettyprint lang-js "> {{ argument }}</pre>
 
             </div>
 

@@ -12,13 +12,22 @@
     <link href="/static/css/tabs.css" rel="stylesheet">
     <link href="/static/css/tabs.sideways.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/font-awesome/css/font-awesome.min.css">
+
+
+    <link rel="stylesheet" type="text/css" href="/static/css/prettify.css">
+    <script type="text/javascript" src="/static/js/pretty/prettify.js"></script>
+    {#    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=js&amp;skin=sunburst"></script>#}
+
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="/static/js/jquery-2.2.4.js"></script>
+    <script type="text/javascript">prettyPrint();</script>
     <script src="/static/js/custom.js"></script>
     <script src="/static/js/custom_1.js"></script>
     <script src="/static/js/clipboard.min.js"></script>
 </head>
-<body>
+<body onload="PR.prettyPrint()">
 <nav class="navbar-static-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -98,6 +107,8 @@
                 </ul>
             {% else %}
                 <ul class="nav pull-right navbar-nav margin-left">
+                    <li><a href="{{ url_for('documentation') }}"><i class="fa fa-book" aria-hidden="true"></i> API
+                        Documentation</a></li>
                     <li><a href="{{ url_for('register') }}">Register</a></li>
                     <li><a href="{{ url_for('login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign in</a>
                     </li>
@@ -116,9 +127,29 @@
 </nav>
 {% block content %}
 {% endblock %}
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-        crossorigin="anonymous"></script>
+
+<footer>
+    <div class="container text-center">
+        <hr/>
+        <hr>
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="nav  nav-justified">
+                    {#                    <li><a href="/">© 2013 Company Name.</a></li>#}
+                    {#                    <li><a href="#">Terms of Service</a></li>#}
+                    <li><a href="{{ url_for('documentation') }}"><i class="fa fa-book" aria-hidden="true"></i> API
+                        Documentation</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+{#<script src="bootstrap/js/google-pre-prettify/prettify.js"></script>#}
+{#<script src="bootstrap/js/bootstrap.js"></script>#}
+{#<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"#}
+{#        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"#}
+{#        crossorigin="anonymous"></script>#}
 <script src="/static/js/expandable_panels.js"></script>
 
 </body>

@@ -501,6 +501,34 @@ def search_for_arg():
         return redirect(url_for('get_one_argument', arg_str=arg_str))
 
 
+@app.route('/api_documentation', methods=['GET'])
+def documentation():
+    if 'err' in session:
+        session.pop('err', None)
+    err = None
+    users = mongo.db.users
+    username = ""
+    if 'username' in session:
+        login_user = users.find_one({'name': session['username']})
+        username = login_user.get('name')
+
+    if request.method == 'POST':
+        return search_for_arg()
+        # return search_for_arg(username)
+
+    # if request.method == 'POST':
+    #     if not request.form['arg_str']:
+    #         err = 'Please provide a search term'
+    #     # elif not request.form['region']:
+    #     #     err = 'Please set your region'
+    #     else:
+    #         arg_str = request.form['arg_str']
+    #
+    #         return redirect(url_for('get_one_argument', arg_str=arg_str))
+
+    return render_template('documetnation.html', err=err, current_user=username)
+
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if 'err' in session:

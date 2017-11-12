@@ -80,6 +80,14 @@ p {
     filter: alpha(opacity=0);
 }
 
+pre.methods {
+    width: fit-content;
+}
+
+.str {
+    color: #337ab7 !important;
+}
+
 .divCentered {
     position: absolute;
     top: 50%;
