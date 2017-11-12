@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e0db6b7f-cf94-4adc-91ec-65b0af295886" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/header.html" afterPath="$PROJECT_DIR$/templates/header.html" />
     </list>
     <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -268,8 +267,8 @@
       <file leaf-file-name="header.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/header.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="412">
-              <caret line="151" column="0" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
+            <state relative-caret-position="395">
+              <caret line="48" column="40" selection-start-line="48" selection-start-column="40" selection-end-line="48" selection-end-column="40" />
               <folding>
                 <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -1427,7 +1426,14 @@
       <option name="project" value="LOCAL" />
       <updated>1510449476463</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Added documentation page with pretty json&#10;a link for it to the header and created a footer with the same link&#10;&#10;">
+      <created>1510449617943</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1510449617943</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -1445,9 +1451,9 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1590909" sideWeight="0.5143923" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.115800865" sideWeight="0.49418023" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.43073592" sideWeight="0.49418023" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32792208" sideWeight="0.49883604" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24350649" sideWeight="0.48560768" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24350649" sideWeight="0.48560768" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33982685" sideWeight="0.4975058" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15831557" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1504,7 +1510,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added pagination to the search result page of the WebUi" />
     <MESSAGE value="Started work on the advanced search.&#10;Working pagination for advanced search.&#10;need to figure out how to do AND OR in advanced search&#10;" />
     <MESSAGE value="delete some old files" />
     <MESSAGE value="added the search terms on advanced search result page" />
@@ -1528,6 +1533,7 @@
     <MESSAGE value="WebUI&#10;Added info where to put the API token to the user page" />
     <MESSAGE value="Added Documentation in md file &#10;&#10;API&#10;Fixed the PUT and POST to take in a sadface doc that doesnt have the sadface key in it&#10;&#10;WebUI&#10;same as above" />
     <MESSAGE value="working on the MD file" />
+    <MESSAGE value="&#10;" />
     <MESSAGE value="Added documentation page with pretty json&#10;a link for it to the header and created a footer with the same link&#10;&#10;" />
     <option name="LAST_COMMIT_MESSAGE" value="Added documentation page with pretty json&#10;a link for it to the header and created a footer with the same link&#10;&#10;" />
   </component>
@@ -1718,7 +1724,6 @@
             <element signature="e#2161#2306#0" expanded="false" />
             <element signature="e#2344#2384#0" expanded="false" />
             <element signature="e#2892#2925#0" expanded="false" />
-            <element signature="e#3083#10418#0" expanded="false" />
             <element signature="e#3229#10394#0" expanded="false" />
             <element signature="e#3250#10388#0" expanded="false" />
             <element signature="e#3319#10315#0" expanded="false" />
@@ -1811,7 +1816,6 @@
             <element signature="e#23408#24142#0" expanded="false" />
             <element signature="e#23462#24120#0" expanded="false" />
             <element signature="e#23575#23618#0" expanded="false" />
-            <element signature="e#23834#23989#0" expanded="false" />
             <element signature="e#24240#24342#0" expanded="false" />
             <element signature="e#24447#31245#0" expanded="false" />
             <element signature="e#24548#24593#0" expanded="false" />
@@ -1944,11 +1948,9 @@
             <element signature="e#59749#61379#0" expanded="false" />
             <element signature="e#60280#61273#0" expanded="false" />
             <element signature="e#60280#60359#0" expanded="false" />
-            <element signature="e#60516#60607#0" expanded="false" />
             <element signature="e#60634#61273#0" expanded="false" />
             <element signature="e#60687#60814#0" expanded="false" />
             <element signature="e#60828#60850#0" expanded="false" />
-            <element signature="e#61509#62401#0" expanded="false" />
             <element signature="e#61773#62312#0" expanded="false" />
             <element signature="e#61995#62197#0" expanded="false" />
             <element signature="e#62478#62532#0" expanded="false" />
@@ -1996,11 +1998,8 @@
             <element signature="e#73501#79407#0" expanded="false" />
             <element signature="e#73589#73725#0" expanded="false" />
             <element signature="e#73638#73725#0" expanded="false" />
-            <element signature="e#73752#79407#0" expanded="false" />
-            <element signature="e#73909#79136#0" expanded="false" />
             <element signature="e#74060#74097#0" expanded="false" />
             <element signature="e#74355#74404#0" expanded="false" />
-            <element signature="e#74611#77436#0" expanded="false" />
             <element signature="e#74611#74643#0" expanded="false" />
             <element signature="e#75497#76054#0" expanded="false" />
             <element signature="e#75561#75631#0" expanded="false" />
@@ -2506,8 +2505,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/header.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="151" column="0" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
+        <state relative-caret-position="395">
+          <caret line="48" column="40" selection-start-line="48" selection-start-column="40" selection-end-line="48" selection-end-column="40" />
           <folding>
             <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
