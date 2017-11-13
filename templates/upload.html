@@ -2,52 +2,136 @@
 {% block content %}
     <div class="container">
         <div class="row">
-{#            <div class="col-sm-12"><h1 class="text-center">Upload an analysed argument to ArgDB</h1></div>#}
-            <div class="col-md-6 divCentered">
-            <h1 class="text-center">Upload an argument to ArgDB</h1>
-                {#                argument_schema#}
-                <title>Upload an analysed argument to ArgDB</title>
+            {#            <div class="col-sm-12"><h1 class="text-center">Upload an analysed argument to ArgDB</h1></div>#}
+            {% if json_parsed %}
+                <div class="col-md-6 col-md-offset-3">
+                    <h1 class="text-center">Upload an argument to ArgDB</h1>
+                    {#                argument_schema#}
+                    <title>Upload an analysed argument to ArgDB</title>
 
-                <p>The document you are trying to upload must be in the SADFace format.</p>
-                <div class="alert alert-info" role="alert">
-                    Download the template for the JSON SADFace format.
+                    <p>The document you are trying to upload must be in the SADFace format.</p>
+                    <div class="alert alert-info" role="alert">
+                        Download the template for the JSON SADFace format.
 
-                    <a class="btn btn-primary upload-schema" href="{{ url_for('download_schema') }}">
-                        <i class="fa fa-download" aria-hidden="true"></i>
-                    </a>
+                        <a class="btn btn-primary upload-schema" href="{{ url_for('download_schema') }}">
+                            <i class="fa fa-download" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                    {#<form method=post action="{{ url_for('handle_data') }}" enctype=multipart/form-data>#}
+                    {% if err %}
+                        <div class="alert alert-warning" role="alert">{{ err }}</div>
+                    {% endif %}
+
+                    <form class="form-horizontal" method=post enctype=multipart/form-data>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+
+                                <div class="fileUpload btn btn-default">
+                                    <span>Choose File</span>
+                                    <input id="uploadBtn" class="upload" type=file name="file" accept=".json">
+                                </div>
+                                <button id="btn-upload" type="submit" class="btn btn-primary" name="btn">
+                                    <i class="fa fa-cloud-upload fa-2x" aria-hidden="true"></i>
+                                </button>
+
+                            </div>
+                            <div class="col-xs-12">
+                                <input id="uploadFile" class="form-control" placeholder="File chosen" disabled/>
+                                {#                            <input class="btn btn-primary" type=submit name="btn" value=Upload>#}
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                        </div>
+                    </form>
+                    {% if already_exists %}
+                        <h2>Unsuccessful upload</h2>
+                        <div class="alert alert-warning" role="alert">
+                            An argument with id:
+                            <strong>{{ already_exists }}</strong>
+                            already exists in the database.
+                        </div>
+                    {% elif err_list %}
+                        <h1>Unsuccessful upload</h1>
+                        <div class="alert alert-warning" role="alert">
+                            The argument you tried uploading to the database contains the following errors:
+                            <ul>
+                                {% for error in err_list %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% elif doc_id %}
+                        <h1>Successful upload</h1>
+                        <div class="alert alert-success" role="alert">
+                            Your argument with id <strong>{{ doc_id }}</strong> was successfully uploaded to the
+                            database.
+                            <ul>
+                                {% for error in err_list %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
                 </div>
-                {#<form method=post action="{{ url_for('handle_data') }}" enctype=multipart/form-data>#}
-                {% if err %}
-                    <div class="alert alert-warning" role="alert">{{ err }}</div>
+            {% else %}
+                <div class="col-md-6 divCentered">
+                    <h1 class="text-center">Upload an argument to ArgDB</h1>
+                    {#                argument_schema#}
+                    <title>Upload an analysed argument to ArgDB</title>
+
+                    <p>The document you are trying to upload must be in the SADFace format.</p>
+                    <div class="alert alert-info" role="alert">
+                        Download the template for the JSON SADFace format.
+
+                        <a class="btn btn-primary upload-schema" href="{{ url_for('download_schema') }}">
+                            <i class="fa fa-download" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                    {#<form method=post action="{{ url_for('handle_data') }}" enctype=multipart/form-data>#}
+                    {% if err %}
+                        <div class="alert alert-warning" role="alert">{{ err }}</div>
+                    {% endif %}
+
+                    <form class="form-horizontal" method=post enctype=multipart/form-data>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+
+                                <div class="fileUpload btn btn-default">
+                                    <span>Choose File</span>
+                                    <input id="uploadBtn" class="upload" type=file name="file" accept=".json">
+                                </div>
+                                <button id="btn-upload" type="submit" class="btn btn-primary" name="btn">
+                                    <i class="fa fa-cloud-upload fa-2x" aria-hidden="true"></i>
+                                </button>
+
+                            </div>
+                            <div class="col-xs-12">
+                                <input id="uploadFile" class="form-control" placeholder="File chosen" disabled/>
+                                {#                            <input class="btn btn-primary" type=submit name="btn" value=Upload>#}
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                        </div>
+                    </form>
+                </div>
+            {% endif %}
+
+            <div class="col-sm-10 col-sm-offset-1">
+                {#                argument_schema#}
+                {#                <title>Upload new File</title>#}
+
+
+
+                {% if json_parsed %}
+                    <pre>{{ json_parsed }}</pre>
                 {% endif %}
 
-                <form class="form-horizontal" method=post enctype=multipart/form-data>
-                    <div class="form-group">
-                        <div class="col-xs-12">
-
-                            <div class="fileUpload btn btn-default">
-                                <span>Choose File</span>
-                                <input id="uploadBtn" class="upload" type=file name="file" accept=".json">
-                            </div>
-                            <button id="btn-upload" type="submit" class="btn btn-primary" name="btn">
-                                <i class="fa fa-cloud-upload fa-2x" aria-hidden="true"></i>
-                            </button>
-
-                        </div>
-                        <div class="col-xs-12">
-                            <input id="uploadFile" class="form-control" placeholder="File chosen" disabled/>
-                            {#                            <input class="btn btn-primary" type=submit name="btn" value=Upload>#}
-                        </div>
-                    </div>
-                    <div class="form-group">
-
-                    </div>
-                </form>
             </div>
 
-            {#            <div class="col-sm-6">#}
-            {#                <pre>{{ argument_schema|tojson_pretty|safe }}</pre>#}
-            {#            </div>#}
         </div>
+
     </div>
+
 {% endblock %}

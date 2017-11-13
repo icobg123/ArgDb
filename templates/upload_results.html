@@ -5,19 +5,40 @@
             <div class="col-sm-12">
                 {#                argument_schema#}
                 <title>Upload new File</title>
+                {% if already_exists %}
+                    <h1>Unsuccessful upload</h1>
+                    <div class="alert alert-warning" role="alert">
+                        An argument with id:
+                        <strong>{{ already_exists }}</strong>
+                        already exists in the database.
+                    </div>
+                {% elif err_list %}
+                    <h1>Unsuccessful upload</h1>
+                    <div class="alert alert-warning" role="alert">
+                        The argument you tried uploading to the database contains the following errors:
+                        <ul>
+                            {% for error in err_list %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% elif doc_id %}
+                    <h1>Successful upload</h1>
+                    <div class="alert alert-success" role="alert">
+                        Your argument with id <strong>{{ doc_id }}</strong> was successfully uploaded to the database.
+                        <ul>
+                            {% for error in err_list %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
 
-                <pre> HEADERS{{ req_headers }}</pre>
-                <h1>{{ outcome }}</h1>
-                <h1>VALIDATOR {{ validator }}</h1>
-                <p>
-                    The document you are trying to upload must be in the sadFACE format described by the JSON schema to
-                    the right.
-                </p>
-                json_parsed{{ json_parsed }}<br>
-                <pre>TYPE {{ parsed_to_json_type }}</pre>
-                <pre>JSON{{ json_parsed }}</pre>
-                <pre>STRING{{ string_parsed }}</pre>
-                type{{ type }}<br>
+
+
+                <pre>{{ json_parsed }}</pre>
+
+
             </div>
 
         </div>

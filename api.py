@@ -99,7 +99,7 @@ argument_schema = {
                     "type": "string"
                 },
                 "analyst_name": {
-                    "default": "Simon Wells",
+                    "default": "John Doe",
                     "description": "An explanation about the purpose of this instance.",
                     "id": "/properties/sadface/properties/analyst_name",
                     "title": "The analyst_name schema",
@@ -241,7 +241,7 @@ argument_schema_bck = {
             "type": "string"
         },
         "analyst_name": {
-            "default": "Simon Wells",
+            "default": "John Doe",
             "description": "An explanation about the purpose of this instance.",
             "id": "/properties/analyst_name",
             "title": "The analyst_name schema",
@@ -383,7 +383,7 @@ argument_schema_backup = {
             "type": "string"
         },
         "analyst_name": {
-            "default": "Simon Wells",
+            "default": "John Doe",
             "description": "An explanation about the purpose of this instance.",
             "id": "/properties/analyst_name",
             "title": "The analyst_name schema",
@@ -530,7 +530,7 @@ argument_schema_backup = {
     "type": "object"
 }
 advanced_search_schema = {
-    "analyst_name": "Simon Wells",
+    "analyst_name": "John Doe",
     "analyst_email": "example@email.com",
     "document_id": "UUID4",
     "text": "text"
@@ -687,7 +687,7 @@ def upload_file(current_user):
                     #     post_id = argument.insert_one(parsed_to_json).inserted_id
                     # parsed_to_json_type = json.dumps(parsed_to_json)
 
-                    return json.dumps({'Errors': errors_list}, sort_keys=False, indent=2), 400, {
+                    return json.dumps({'errors': errors_list}, sort_keys=False, indent=2), 400, {
                         'Content-Type': 'application/json'}
                     # return render_template('upload_results.html',
                     #                      outcome=errors_list)  # 201 to show that the upload was successful
@@ -699,7 +699,7 @@ def upload_file(current_user):
             else:
                 err = "Wrong file extension. Please upload a JSON document."
                 # return err
-                return jsonify({"Error": err}), 406, {
+                return jsonify({"error": err}), 406, {
                     'Content-Type': 'application/json'}
                 # return render_template('upload.html', err=err, argument_schema=argument_schema)
 
@@ -780,7 +780,7 @@ def edit_document(current_user):
 
                     outcome = "Unsuccessful Upload, invalid Json"
 
-                    return json.dumps({'Errors': errors_list}, sort_keys=False, indent=2), 200, {
+                    return json.dumps({'errors': errors_list}, sort_keys=False, indent=2), 200, {
                         'Content-Type': 'application/json'}
 
             else:
@@ -1100,7 +1100,7 @@ def advanced_search_list():
             else:
                 err = "Wrong file extension. Please upload a JSON document."
                 # return err
-                return jsonify({"Error": err}), 406,
+                return jsonify({"error": err}), 406,
                 # return render_template('upload.html', err=err, argument_schema=argument_schema)
                 # search_results = argument.find(
                 #     {"sadface.nodes.text": {'$regex': ".*" + arg_str + ".*", "$options": "i"}}).skip(offset).limit(per_page)
@@ -1261,7 +1261,7 @@ def advanced_search_find():
             else:
                 err = "Wrong file extension. Please upload a JSON document."
                 # return err
-                return jsonify({"Error": err}), 406,
+                return jsonify({"error": err}), 406,
                 # return render_template('upload.html', err=err, argument_schema=argument_schema)
                 # search_results = argument.find(
                 #     {"sadface.nodes.text": {'$regex': ".*" + arg_str + ".*", "$options": "i"}}).skip(offset).limit(per_page)
@@ -1507,7 +1507,7 @@ def api_get_argument_by_id(current_user, arg_id):
 
 @app.route('/api/v1/arguments/<arg_id>', methods=['PUT'])
 @token_required
-def api_edit_document(current_user, arg_id):
+def api_edit_argument(current_user, arg_id):
     if not current_user.get('admin'):
         return unauthorized()
     argument = mongo.db.argument
@@ -1544,29 +1544,33 @@ def api_edit_document(current_user, arg_id):
                         uploader = check_if_exists_uploader['uploader']
                         check_if_exists_dumps = dumps(check_if_exists)
                         check_if_exists_count = check_if_exists.count()
-                        if check_if_exists_count > 0 and current_user.get('public_id') == uploader:
-                            # TODO:FIND AND UPDATE THE DOCUMENT
+                        if check_if_exists_count > 0:
+                            if current_user.get('public_id') == uploader:
+                                # if check_if_exists_count > 0 and current_user.get('public_id') == uploader:
+                                # TODO:FIND AND UPDATE THE DOCUMENT
 
-                            outcome = "The following argument has been replaced"
-                            dict_to_upload = {"sadface": parsed_to_json}
-                            dict_to_upload['uploader'] = current_user.get('public_id')
-                            dict_to_upload['time_of_edit_upload'] = datetime.datetime.now()
-                            # parsed_to_json['uploader'] = current_user.get('public_id')
-                            # parsed_to_json['time_of_edit_upload'] = datetime.datetime.now()
-                            replaced_doc = argument.replace_one({"sadface.id": parsed_to_json.get('id')},
-                                                                dict_to_upload)
-                            # replaced_doc = argument.replace_one(
-                            #     {"sadface.id": parsed_to_json.get("sadface", {}).get('id')}, parsed_to_json)
+                                outcome = "The following argument has been replaced"
+                                dict_to_upload = {"sadface": parsed_to_json}
+                                dict_to_upload['uploader'] = current_user.get('public_id')
+                                dict_to_upload['time_of_edit_upload'] = datetime.datetime.now()
+                                # parsed_to_json['uploader'] = current_user.get('public_id')
+                                # parsed_to_json['time_of_edit_upload'] = datetime.datetime.now()
+                                replaced_doc = argument.replace_one({"sadface.id": parsed_to_json.get('id')},
+                                                                    dict_to_upload)
+                                # replaced_doc = argument.replace_one(
+                                #     {"sadface.id": parsed_to_json.get("sadface", {}).get('id')}, parsed_to_json)
 
-                            return jsonify({outcome: ({"id": parsed_to_json.get('id')}),"dict":dict_to_upload}), 200
-                            # return jsonify({outcome: ({"id": parsed_to_json.get("sadface", {}).get('id')})}, 200)
-
+                                return jsonify({outcome: ({"id": parsed_to_json.get('id')}), "dict": dict_to_upload}), 200
+                                # return jsonify({outcome: ({"id": parsed_to_json.get("sadface", {}).get('id')})}, 200)
+                            else:
+                                outcome = "You don't have permission to edit this document as you are not the original uploader."
+                                return jsonify({'arguments found': check_if_exists_count}, {'error': outcome}), 401
                         else:
-                            outcome = "A argument with that id does not exist or you don't" \
-                                      " have permissions to edit this argument"
+                            outcome = "A argument with that id does not exist"
 
-                            return jsonify({'arguments found': check_if_exists_count}, {'Error': outcome},
-                                           {'id': parsed_to_json.get("sadface", {}).get('id')}), 404
+                            # return jsonify({'arguments found': check_if_exists_count}, {'error': outcome},
+                            #                {'id': parsed_to_json.get("sadface", {}).get('id')}), 404
+                            return not_found()
                     else:
                         errors_list = []
 
@@ -1580,21 +1584,21 @@ def api_edit_document(current_user, arg_id):
 
                         if errors:
                             outcome = errors_list
-                            return jsonify({'Errors': outcome}), 406,
+                            return jsonify({'errors': outcome}), 406,
                         else:
                             outcome = "The provided URL id: " + arg_id + " does not match the argument id in the JSON file you supplied."
 
-                        return jsonify({'Errors': outcome}), 404,
+                        return jsonify({'errors': outcome}), 404,
 
-                        # return json.dumps({'Errors': errors_list}, sort_keys=False, indent=2), 200, {
+                        # return json.dumps({'errors': errors_list}, sort_keys=False, indent=2), 200, {
                         #     'Content-Type': 'application/json'}
                 else:
                     outcome = "The provided URL id: " + arg_id + " does not match any arguments in the database."
-                    # return jsonify({'Error': outcome}), 404
+                    # return jsonify({'error': outcome}), 404
                     return not_found()
             else:
                 err = "Wrong file extension. Please upload a JSON file."
-                return jsonify({'Errors': err}), 406
+                return jsonify({'errors': err}), 406
 
     return jsonify({
         'message': 'In order to edit a argument please POST a JSON file in the following structure!'
@@ -1792,7 +1796,7 @@ def api_upload(current_user):
                     #     post_id = argument.insert_one(parsed_to_json).inserted_id
                     # parsed_to_json_type = json.dumps(parsed_to_json)
 
-                    return jsonify({'Errors': errors_list}), 406
+                    return jsonify({'errors': errors_list}), 406
                     # return render_template('upload_results.html',
                     #                      outcome=errors_list)  # 201 to show that the upload was successful
                     # return render_template('upload_results.html', json_parsed=asd, outcome=outcome,
@@ -1803,7 +1807,7 @@ def api_upload(current_user):
             else:
                 err = "Wrong file extension. Please upload a JSON file."
                 # return err
-                return jsonify({"Error": err}), 406,
+                return jsonify({"error": err}), 406,
                 # return render_template('upload.html', err=err, argument_schema=argument_schema)
 
     return jsonify({'message': 'Please POST a JSON file in the following structure!'},

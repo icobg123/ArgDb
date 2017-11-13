@@ -2,11 +2,10 @@
 {% block content %}
     <div class="container">
         <div class="row">
+
             <div class="col-md-6 divCentered">
-
-
+                <h1 class="text-center">Registration</h1>
                 {% if err %}
-                    {#                    <div class="err"><strong>Error:</strong> {{ err }}</div>#}
                     <div class="alert alert-warning" role="alert">{{ err }}</div>
                 {% endif %}
                 <form class="form-horizontal reg_form" id="register_form" method=POST
@@ -25,13 +24,13 @@
                         </div>
 
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-3" for="exampleInputPassword1">Repeat</label>
-                        <div class="col-xs-9">
-                            <input type="password" class="form-control" name="confirm_pass" id="confirm_pass"
-                                   placeholder="Password">
-                        </div>
-                    </div>
+                    {#                    <div class="form-group">#}
+                    {#                        <label class="control-label col-xs-3" for="exampleInputPassword1">Repeat</label>#}
+                    {#                        <div class="col-xs-9">#}
+                    {#                            <input type="password" class="form-control" name="confirm_pass" id="confirm_pass"#}
+                    {#                                   placeholder="Password">#}
+                    {#                        </div>#}
+                    {#                    </div>#}
                     <div class="form-group">
                         <label class="control-label col-xs-3" for="exampleInputPassword1">Email</label>
                         <div class="col-xs-9">

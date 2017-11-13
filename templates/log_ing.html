@@ -3,6 +3,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 divCentered">
+                <h1 class="text-center">Sign in</h1>
+                {% if invalidComb %}
+                    <div class="alert alert-warning" role="alert">
+                        Invalid username/password combination.
+                    </div>
+                {% endif %}
                 <form class="form-horizontal" method=POST action="{{ url_for('login') }}">
                     <div class="form-group">
 

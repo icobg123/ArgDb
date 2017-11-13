@@ -31,7 +31,7 @@ Returns JSON data about a single SADFace argument.
     ```json
          {
         "analyst_email": "siwells@gmail.com", 
-        "analyst_name": "Simon Wells", 
+        "analyst_name": "John Doe", 
         "created": "2017-07-11T16:32:36", 
         "edges": [
             {
@@ -426,7 +426,7 @@ Returns a list of arguments which match the provided parameters.
           },
       {
         "analyst_email": "siwells@gmail.com", 
-        "analyst_name": "Simon Wells", 
+        "analyst_name": "John Doe", 
         "created": "2017-07-11T16:32:36", 
         "edges": [
             {

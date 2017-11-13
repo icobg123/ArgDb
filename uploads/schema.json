@@ -12,7 +12,7 @@
       "type": "string"
     },
     "analyst_name": {
-      "default": "Simon Wells",
+      "default": "John Doe",
       "description": "An explanation about the purpose of this instance.",
       "id": "/properties/analyst_name",
       "minLength": 5,

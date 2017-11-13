@@ -67,7 +67,7 @@ argument_schema = {
                     "type": "string"
                 },
                 "analyst_name": {
-                    "default": "Simon Wells",
+                    "default": "John Doe",
                     "description": "An explanation about the purpose of this instance.",
                     "id": "/properties/sadface/properties/analyst_name",
                     "title": "The analyst_name schema",
@@ -204,12 +204,13 @@ argument_schema_bck = {
             "default": "siwells@gmail.com",
             "description": "An explanation about the purpose of this instance.",
             "id": "/properties/analyst_email",
+
             "pattern": "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$)",
             "title": "The analyst_email schema",
             "type": "string"
         },
         "analyst_name": {
-            "default": "Simon Wells",
+            "default": "John Doe",
             "description": "An explanation about the purpose of this instance.",
             "id": "/properties/analyst_name",
             "title": "The analyst_name schema",
@@ -231,7 +232,10 @@ argument_schema_bck = {
                         "default": "d7bcef81-0d74-4ae5-96f9-bfb07031f1fa",
                         "description": "The id of the edge",
                         "id": "/properties/edges/items/properties/id",
-                        "maxLength": 19,
+                        "maxLength": 36,
+                        "minLength": 36,
+
+                        "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}",
 
                         "title": "The id schema",
                         "type": "string"
@@ -240,16 +244,20 @@ argument_schema_bck = {
                         "default": "49a786ce-9066-4230-8e18-42086882a160",
                         "description": "The Id of the node from which the Edge begins",
                         "id": "/properties/edges/items/properties/source_id",
-                        "maxLength": 19,
+                        "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}",
+                        "maxLength": 36,
+                        "minLength": 36,
 
                         "title": "The source_id schema",
                         "type": "string"
                     },
                     "target_id": {
                         "default": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45",
+                        "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}",
                         "description": "The Id of the node from at which the Edge ends",
                         "id": "/properties/edges/items/properties/target_id",
-                        "maxLength": 19,
+                        "maxLength": 36,
+                        "minLength": 36,
 
                         "title": "The target_id schema",
                         "type": "string"
@@ -275,8 +283,9 @@ argument_schema_bck = {
             "default": "94a975db-25ae-4d25-93cc-1c07c932e2f8",
             "description": "The Id of the document (argument scheme/a)",
             "id": "/properties/id",
-            "maxLength": 19,
-
+            "maxLength": 36,
+            "minLength": 36,
+            "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}",
             "title": "The id schema",
             "type": "string"
         },
@@ -295,7 +304,9 @@ argument_schema_bck = {
                     "id": {
                         "default": "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45",
                         "description": "The Id of the node",
-                        "maxLength": 19,
+                        "pattern": "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}",
+                        "maxLength": 36,
+                        "minLength": 36,
 
                         "type": "string"
                     },
@@ -428,30 +439,79 @@ def upload_file():
                     # parsed_to_json = request.get_json()
                     # TODO: the validator checks against the schema and inserts the provided json only if it contains the
                     # TODO: required fields and it will upload it to the
-                    v = Draft4Validator(argument_schema)
+                    v = Draft4Validator(argument_schema_bck)
+                    # v = Draft4Validator(argument_schema)
                     # if Draft3Validator(schema).is_valid([2, 3, 4]):
-                    if v.is_valid(parsed_to_json):
-                        dict_to_upload = {"sadface": parsed_to_json}
-                        dict_to_upload['uploader'] = public_id
-                        dict_to_upload['time_of_upload'] = datetime.datetime.now()
-
-                        post_id = argument.insert_one(dict_to_upload
-                                                      ).inserted_id
                     valid = v.is_valid(parsed_to_json)
                     if valid:
-                        outcome = "Successful Upload"
+                        # if v.is_valid(parsed_to_json):
+                        outcome = parsed_to_json.get('id')
+                        check_if_exists = argument.find({"sadface.id": outcome}, {"id": 1}).limit(1)
+                        check_if_exists_count = check_if_exists.count()
+                        print(check_if_exists_count)
+
+                        if check_if_exists_count > 0:
+                            outcome = parsed_to_json.get('id')
+                            parsed_to_json = json.dumps(parsed_to_json, sort_keys=True, indent=4,
+                                                        separators=(',', ': '))
+                            # parsed_to_json = jsonify(parsed_to_json)
+
+                            return render_template('upload.html', json_parsed=parsed_to_json,
+                                                   already_exists=outcome,
+                                                   # validator=v,
+                                                   # req_headers=req_headers,
+                                                   # string_parsed=parsed_to_string,
+                                                   current_user=username,
+                                                   type=valid)
+                        else:
+
+                            dict_to_upload = {"sadface": parsed_to_json}
+                            dict_to_upload['uploader'] = public_id
+                            dict_to_upload['time_of_upload'] = datetime.datetime.now()
+
+                            post_id = argument.insert_one(dict_to_upload
+                                                          ).inserted_id
+                            outcome = parsed_to_json.get('id')
+                            parsed_to_json = json.dumps(parsed_to_json, sort_keys=True, indent=4,
+                                                        separators=(',', ': '))
+
+                            return render_template('upload.html', json_parsed=parsed_to_json, doc_id=outcome,
+                                                   # validator=v,
+                                                   # req_headers=req_headers,
+                                                   # string_parsed=parsed_to_string,
+                                                   current_user=username,
+                                                   check_if_exists_count=check_if_exists_count,
+                                                   type=valid)
+                            # valid = v.is_valid(parsed_to_json)
+                    # if valid:
+                    #     outcome = "Successful Upload"
                     else:
                         outcome = "Unsuccessful Upload"
+                        errors_list = []
+                        # asd = 123
+                        errors = sorted(v.iter_errors(parsed_to_json), key=lambda e: e.path)
+                        # errors = sorted(v.iter_errors(parsed_to_json), key=str)
 
-                    # if validate(parsed_to_json, schema):
-                    #     post_id = argument.insert_one(parsed_to_json).inserted_id
-                    # parsed_to_json_type = json.dumps(parsed_to_json)
-                    return render_template('upload_results.html', json_parsed=parsed_to_json, outcome=outcome,
-                                           validator=v,
-                                           req_headers=req_headers,
-                                           string_parsed=parsed_to_string,
-                                           current_user=username,
-                                           type=valid)  # 201 to show that the upload was successful
+                        for error in errors:
+                            error_dict = {'key': list(error.path), 'error': error.message}
+                            errors_list.append(error_dict)
+                        parsed_to_json = json.dumps(parsed_to_json, sort_keys=True, indent=4,
+                                                    separators=(',', ': '))
+                        return render_template('upload.html', json_parsed=parsed_to_json, err_list=errors_list,
+                                               # validator=v,
+                                               # req_headers=req_headers,
+                                               # string_parsed=parsed_to_string,
+                                               current_user=username,
+                                               type=valid)
+                        # if validate(parsed_to_json, schema):
+                        #     post_id = argument.insert_one(parsed_to_json).inserted_id
+                        # parsed_to_json_type = json.dumps(parsed_to_json)
+                        # return render_template('upload_results.html', json_parsed=parsed_to_json, outcome=outcome,
+                        #                        validator=v,
+                        #                        req_headers=req_headers,
+                        #                        string_parsed=parsed_to_string,
+                        #                        current_user=username,
+                        #                        type=valid)  # 201 to show that the upload was successful
                 else:
                     err = "Wrong file extension. Please upload a JSON document."
                     return render_template('upload.html', err=err, argument_schema=argument_schema,
@@ -1278,7 +1338,8 @@ def login():
                     # return session['username']
                     return redirect(url_for('account'))
 
-            return 'Invalid username/password combination'
+            invalidComb = True
+            return render_template('log_ing.html', invalidComb=invalidComb)
 
     return render_template('log_ing.html')
 
