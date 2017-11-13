@@ -1,7 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e0db6b7f-cf94-4adc-91ec-65b0af295886" name="Default" comment="" />
+    <list default="true" id="e0db6b7f-cf94-4adc-91ec-65b0af295886" name="Default" comment="Added documentation page with pretty json&#10;a link for it to the header and created a footer with the same link&#10;&#10;">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-Splus.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-aea.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-agc.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-apollo.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-basic.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-cbm.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-cl.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-clj.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-css.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-dart.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-el.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-erl.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-erlang.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-ex.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-exs.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-fs.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-go.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-hs.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-kotlin.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-lasso.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-lassoscript.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-latex.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-lgt.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-lisp.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-ll.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-llvm.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-logtalk.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-ls.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-lsp.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-lua.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-matlab.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-ml.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-mumps.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-n.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-nemerle.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-pascal.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-proto.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-r.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-rd.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-rkt.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-rust.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-s.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-scala.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-scm.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-sql.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-ss.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-swift.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-tcl.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-tex.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-vb.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-vbs.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-vhd.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-vhdl.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-wiki.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-xq.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-xquery.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-yaml.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/lang-yml.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/prettify.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/js/pretty/run_prettify.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/prettify-small/google-code-prettify/prettify.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/prettify-small/google-code-prettify/skins/desert.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/prettify-small/google-code-prettify/skins/doxy.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/prettify-small/google-code-prettify/skins/sons-of-obsidian.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/prettify-small/google-code-prettify/skins/sunburst.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -242,16 +309,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="register.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/register.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="884">
-              <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
@@ -265,8 +322,8 @@
       <file leaf-file-name="header.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/header.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="395">
-              <caret line="48" column="40" selection-start-line="48" selection-start-column="40" selection-end-line="48" selection-end-column="40" />
+            <state relative-caret-position="276">
+              <caret line="65" column="60" selection-start-line="65" selection-start-column="60" selection-end-line="65" selection-end-column="60" />
               <folding>
                 <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -1438,7 +1495,14 @@
       <option name="project" value="LOCAL" />
       <updated>1510498070998</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="Added documentation page with pretty json&#10;a link for it to the header and created a footer with the same link&#10;&#10;">
+      <created>1510498083163</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1510498083163</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -1452,11 +1516,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1590909" sideWeight="0.5143923" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.43073592" sideWeight="0.49418023" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.43073592" sideWeight="0.49418023" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32792208" sideWeight="0.49883604" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24350649" sideWeight="0.48560768" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1556,21 +1620,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="uml://Python/#/home/gaby/PycharmProjects/ArgDb/ArgDb/api.py">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>Python</ID>
-          <OriginalElement>#/home/gaby/PycharmProjects/ArgDb/ArgDb/api.py</OriginalElement>
-          <nodes />
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="1138.0" y="733.0" />
-          <SelectedNodes />
-          <Categories />
-          <SCOPE>All</SCOPE>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/94b975db-25ae-4d25-93cc-1c07c932e2f9.dot" />
     <entry file="file://$PROJECT_DIR$/94b975db-25ae-4d25-93cc-1c07c932e2f2.dot" />
     <entry file="file://$PROJECT_DIR$/94b975db-25ae-4d25-93cc-1c07c932e2f2.png" />
@@ -2508,10 +2557,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/uploads/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/header.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="48" column="40" selection-start-line="48" selection-start-column="40" selection-end-line="48" selection-end-column="40" />
+        <state relative-caret-position="276">
+          <caret line="65" column="60" selection-start-line="65" selection-start-column="60" selection-end-line="65" selection-end-column="60" />
           <folding>
             <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
