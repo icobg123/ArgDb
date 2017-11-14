@@ -1181,7 +1181,7 @@ def get_one_argument(arg_str):
 
 @app.route('/download/argument/json_schema', methods=['GET'])
 def download_schema():
-    to_pass = jsonify(argument_schema)
+    to_pass = jsonify(argument_schema_bck)
     to_pass.headers['Content-Disposition'] = 'attachment;filename=sadface_schema.json'
     return to_pass
 
