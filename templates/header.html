@@ -80,6 +80,10 @@
                         <div class="form-group">
                             <label for="arg_str"></label>
                             <input title="icara" type="text" name="arg_str" class="form-control"
+                                   {% if arg_string %}placeholder="{{ arg_string }}"
+                                   {% else %}
+                                   placeholder=""
+                                   {% endif %}
                                    value="{{ request.form.arg_str }}">
                         </div>
                         <button type="submit" class="btn btn-primary">
@@ -87,6 +91,10 @@
                         </button>
                         {#                    <input class="btn btn-primary" type="submit" value="Search">#}
                     </form>
+
+                    {#                    {% if arg_string %}#}
+                    {#                        <div class="alert alert-warning" role="alert">{{ arg_string }} KILL ME</div>#}
+                    {#                    {% endif %}#}
                 </div>
 
             {% endif %}

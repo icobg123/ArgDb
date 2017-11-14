@@ -401,6 +401,10 @@ def allowed_file(filename):
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
+    arg_string = None
+    if 'errorString' in session:
+        arg_string = session['errorString']
+        session.pop('errorString', None)
     if 'err' in session:
         session.pop('err', None)
     # if request.method == 'POST':
@@ -519,7 +523,7 @@ def upload_file():
         elif 'arg_str' in request.form:
             return search_for_arg()
 
-    return render_template('upload.html', argument_schema=argument_schema, current_user=username)
+    return render_template('upload.html', argument_schema=argument_schema, current_user=username, arg_string=arg_string)
 
 
 # @app.route('/handle_data', methods=['POST'])
@@ -540,6 +544,11 @@ def upload_file():
 #     '/uploads': app.config['UPLOAD_FOLDER']
 # })
 
+def redirect_url(default='index'):
+    return request.args.get('next') or \
+           request.referrer or \
+           url_for(default)
+
 
 def search_for_arg():
     if 'err' in session:
@@ -551,7 +560,11 @@ def search_for_arg():
         username = login_user.get('name')
     if not request.form['arg_str']:
         err = 'Please provide a search term'
-        return render_template('homepage.html', err=err, current_user=username)
+        session['errorString'] = err
+        # return render_template('homepage.html', err=err, current_user=username)
+        # return redirect(redirect_url())
+
+        return redirect(redirect_url())
 
         # elif not request.form['region']:
     # err = 'Please set your region'
@@ -563,6 +576,10 @@ def search_for_arg():
 
 @app.route('/api_documentation', methods=['GET'])
 def documentation():
+    arg_string = None
+    if 'errorString' in session:
+        arg_string = session['errorString']
+        session.pop('errorString', None)
     if 'err' in session:
         session.pop('err', None)
     err = None
@@ -586,11 +603,15 @@ def documentation():
     #
     #         return redirect(url_for('get_one_argument', arg_str=arg_str))
 
-    return render_template('documetnation.html', err=err, current_user=username)
+    return render_template('documetnation.html', err=err, current_user=username,arg_string=arg_string)
 
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    arg_string = None
+    if 'errorString' in session:
+        arg_string = session['errorString']
+        session.pop('errorString', None)
     if 'err' in session:
         session.pop('err', None)
     err = None
@@ -614,12 +635,16 @@ def home():
     #
     #         return redirect(url_for('get_one_argument', arg_str=arg_str))
 
-    return render_template('homepage.html', err=err, current_user=username)
+    return render_template('homepage.html', err=err, current_user=username,arg_string=arg_string)
 
 
 @app.route('/argument/id/<arg_id>', methods=['GET', 'POST'])
 # @token_required
 def get_argument_by_id(arg_id):
+    arg_string = None
+    if 'errorString' in session:
+        arg_string = session['errorString']
+        session.pop('errorString', None)
     if 'err' in session:
         session.pop('err', None)
 
@@ -670,6 +695,7 @@ def get_argument_by_id(arg_id):
                            arg_id=result,
                            current_user=username,
                            analyst_name=analyst_name,
+                           arg_string=arg_string,
                            analyst_email=analyst_email,
                            graph=Markup(graph.pipe().decode('utf-8')))
 
@@ -679,6 +705,10 @@ def get_argument_by_id(arg_id):
 # @app.route('/advanced_search?page=1', methods=['GET', 'POST'])
 # @token_required
 def advanced_search():
+    arg_string = None
+    if 'errorString' in session:
+        arg_string = session['errorString']
+        session.pop('errorString', None)
     if 'err' in session:
         session.pop('err', None)
     if request.method == 'POST' and 'arg_str' in request.form:
@@ -705,13 +735,17 @@ def advanced_search():
     if 'id' in session:
         session.pop('id', None)
 
-    return render_template('advanced_search.html', current_user=username, err=err)
+    return render_template('advanced_search.html', current_user=username, err=err,arg_string=arg_string)
 
 
 @app.route('/argument/<string:s_key>/<string:s_value>', methods=['GET', 'POST'])
 # @app.route('/argument/\textlessstring:s_key\textgreater/\textlessstring:s_value\textgreater', methods=['GET', 'POST'])
 # @token_required
 def list_of_arguments(s_key, s_value):
+    arg_string = None
+    if 'errorString' in session:
+        arg_string = session['errorString']
+        session.pop('errorString', None)
     if request.method == 'POST':
         return search_for_arg()
 
@@ -788,6 +822,7 @@ def list_of_arguments(s_key, s_value):
                            # search_nodes=nodes_text,
                            pagination=pagination,
                            page=page,
+                           arg_string=arg_string,
                            per_page=per_page,
                            cursor=count_me)
 
@@ -825,6 +860,10 @@ def list_of_arguments(s_key, s_value):
 @app.route('/advanced_search_results', methods=['GET', 'POST'])
 # @token_required
 def advanced_search_find():
+    arg_string = None
+    if 'errorString' in session:
+        arg_string = session['errorString']
+        session.pop('errorString', None)
     if 'err' in session:
         session.pop('err', None)
     users = mongo.db.users
@@ -849,7 +888,7 @@ def advanced_search_find():
         if not (request.form['analyst_name'] or request.form['analyst_email'] or request.form['document_id'] or
                     request.form['argument_text']):
             err = 'Please fill in at least one field'
-            return render_template('advanced_search.html', err=err)
+            return render_template('advanced_search.html', err=err, arg_string=arg_string)
 
     if request.method == 'POST' and 'arg_str' in request.form:
         return search_for_arg()
@@ -1037,6 +1076,10 @@ def advanced_search_find():
 
 @app.route('/argument/text/<arg_str>', methods=['GET', 'POST'])
 def get_one_argument(arg_str):
+    arg_string = None
+    if 'errorString' in session:
+        arg_string = session['errorString']
+        session.pop('errorString', None)
     if 'err' in session:
         session.pop('err', None)
 
@@ -1082,6 +1125,7 @@ def get_one_argument(arg_str):
                                 record_name='arguments',
                                 format_total=True,
                                 format_number=True,
+
                                 )
     # documents = argument.find({'_id': {'$lte': last_id}}).sort('_id', pymongo.DESCENDING).limit(limit)
     # # TODO: counts how many results were found
@@ -1129,6 +1173,7 @@ def get_one_argument(arg_str):
                            current_user=username,
                            search_nodes=nodes_text,
                            pagination=pagination,
+                           arg_string=arg_string,
                            page=page,
                            per_page=per_page,
                            total=count_me)
@@ -1143,6 +1188,10 @@ def download_schema():
 
 @app.route('/download/argument/<arg_id>', methods=['GET'])
 def download_arg(arg_id):
+    arg_string = None
+    if 'errorString' in session:
+        arg_string = session['errorString']
+        session.pop('errorString', None)
     argument = mongo.db.argument
     # arg_id = arg_id.replace(" ", "|")
     search_results = argument.find_one({"sadface.id": {'$regex': ".*" + arg_id + ".*", "$options": "i"}})
@@ -1248,6 +1297,10 @@ def change_pass():
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
+    arg_string = None
+    if 'errorString' in session:
+        arg_string = session['errorString']
+        session.pop('errorString', None)
     if 'err' in session:
         session.pop('err', None)
     err = None
@@ -1274,10 +1327,10 @@ def register():
 
             if existing_user is not None:
                 err = "Username already exists"
-                return render_template('register.html', err=err)
+                return render_template('register.html', err=err, arg_string=arg_string)
             elif existing_email is not None:
                 err = "Email already exists"
-                return render_template('register.html', err=err)
+                return render_template('register.html', err=err, arg_string=arg_string)
             else:
                 hased_pass = generate_password_hash(request.form['pass'], method='sha256')
                 public_id = uuid.uuid4().hex
@@ -1314,6 +1367,10 @@ def register():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+    arg_string = None
+    if 'errorString' in session:
+        arg_string = session['errorString']
+        session.pop('errorString', None)
     if 'err' in session:
         session.pop('err', None)
     if 'username' in session:
@@ -1351,7 +1408,7 @@ def login():
                     return redirect(url_for('account'))
 
             invalidComb = True
-            return render_template('log_ing.html', invalidComb=invalidComb)
+            return render_template('log_ing.html', invalidComb=invalidComb, arg_string=arg_string)
 
     return render_template('log_ing.html')
 
@@ -1359,6 +1416,10 @@ def login():
 @app.route('/account', methods=['POST', 'GET'])
 # @token_required
 def account():
+    arg_string = None
+    if 'errorString' in session:
+        arg_string = session['errorString']
+        session.pop('errorString', None)
     # if 'err' in session:
     #     session.pop('err', None)
 
@@ -1401,7 +1462,8 @@ def account():
                                argument_ids_list=argument_ids_list,
 
                                # token=token
-                               token=token.decode('UTF-8')
+                               token=token.decode('UTF-8'),
+                               arg_string=arg_string
                                )
 
     return redirect('login')
@@ -1438,6 +1500,10 @@ def confirm_email(token):
 
 @app.route('/generate_new_api_key', methods=['GET', 'POST'])
 def generate_new_api_key():
+    arg_string = None
+    if 'errorString' in session:
+        arg_string = session['errorString']
+        session.pop('errorString', None)
     if 'err' in session:
         session.pop('err', None)
     users = mongo.db.users
