@@ -84,8 +84,43 @@ pre.methods {
     width: fit-content;
 }
 
+table.table-argument td, table.table-argument th {
+    border: 1px solid #ddd;
+}
+
+table.table.table-argument {
+    border: 2px solid #ddd;
+}
+
+.result_number {
+    vertical-align: middle !important;
+    text-align: center;
+}
+
+.pagination-page-info {
+    text-transform: capitalize;
+    margin-bottom: 10px;
+}
+
+a.argument, a.argument {
+    text-decoration: none !important;
+}
+
+a:focus, a:hover > .table-argument {
+    background-color: #f5f5f5 !important;
+}
+
 .str {
     color: #337ab7 !important;
+}
+
+table.table-adv-search {
+    font-size: 22px;
+
+}
+
+.table-adv-search > tbody > tr > td, .table-adv-search.table > tbody > tr > th {
+    border: none;
 }
 
 .divCentered {

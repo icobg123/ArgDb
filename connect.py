@@ -967,7 +967,7 @@ def advanced_search_find():
                                 total=count_me,
                                 offset=offset,
                                 formreq=f,
-                                record_name='users',
+                                record_name='arguments',
                                 format_total=True,
                                 format_number=True,
                                 )
@@ -981,21 +981,20 @@ def advanced_search_find():
     for q in search_results:
         output.append({
             # "MongoDB ID": q["_id"],
-            "Analyst Email": q['sadface']["analyst_email"],
-            "Analyst Name": q['sadface']["analyst_name"],
-            "Created": q['sadface']["created"],
-            "Edges": q['sadface']["edges"],
-            "Edited": q['sadface']["edited"],
+            "analyst_email": q['sadface']["analyst_email"],
+            "analyst_name": q['sadface']["analyst_name"],
+            "created": q['sadface']["created"],
+            "edges": q['sadface']["edges"],
+            "edited": q['sadface']["edited"],
             "id": q['sadface']["id"],
-            "Metadata": q['sadface']["metadata"],
-            "Nodes": q['sadface']["nodes"],
-            "Resources": q['sadface']["resources"],
+            "metadata": q['sadface']["metadata"],
+            "nodes": q['sadface']["nodes"],
+            "resources": q['sadface']["resources"],
 
         })
-
-    # For each doc that matches the search result go through all nodes and return the text which contains the search
+        # For each doc that matches the search result go through all nodes and return the text which contains the search
     # for document in output:
-    #     for node in document['Nodes']:
+    #     for node in document['nodes']:
     #         if 'text' in node:
     #             if re.search(r".*" + arg_str + r".*", node['text'], re.IGNORECASE):
     #                 wordLimit = 10
@@ -1005,6 +1004,18 @@ def advanced_search_find():
     #                     firstNwords += "..."
     #                 nodes_text.append(firstNwords)
     #                 break
+
+    # For each doc that matches the search result go through all nodes and return the text which contains the search
+    for document in output:
+        for node in document['nodes']:
+            if 'text' in node:
+                wordLimit = 20
+                text = node['text'].split(' ')
+                firstNwords = ' '.join(text[:wordLimit])
+                if len(text) > wordLimit:
+                    firstNwords += "..."
+                nodes_text.append(firstNwords)
+                break
 
     # output = json.dumps(output, sort_keys=True, indent=4, separators=(',', ': '))
     # with_regex = jsonify(with_regex)
@@ -1017,10 +1028,11 @@ def advanced_search_find():
                            search_results=search_results,
                            current_user=username,
                            # search_nodes=nodes_text,
+                           search_nodes=nodes_text,
                            pagination=pagination,
                            page=page,
                            per_page=per_page,
-                           cursor=count_me)
+                           total=count_me)
 
 
 @app.route('/argument/text/<arg_str>', methods=['GET', 'POST'])
@@ -1067,7 +1079,7 @@ def get_one_argument(arg_str):
                                 per_page=per_page,
                                 total=count_me,
                                 offset=offset,
-                                record_name='users',
+                                record_name='arguments',
                                 format_total=True,
                                 format_number=True,
                                 )
@@ -1081,24 +1093,24 @@ def get_one_argument(arg_str):
     for q in search_results:
         output.append({
             # "MongoDB ID": q["_id"],
-            "Analyst Email": q['sadface']["analyst_email"],
-            "Analyst Name": q['sadface']["analyst_name"],
-            "Created": q['sadface']["created"],
-            "Edges": q['sadface']["edges"],
-            "Edited": q['sadface']["edited"],
+            "analyst_email": q['sadface']["analyst_email"],
+            "analyst_name": q['sadface']["analyst_name"],
+            "created": q['sadface']["created"],
+            "edges": q['sadface']["edges"],
+            "edited": q['sadface']["edited"],
             "id": q['sadface']["id"],
-            # "Metadata": q['sadface']["metadata"],
-            "Nodes": q['sadface']["nodes"],
-            # "Resources": q['sadface']["resources"],
+            "metadata": q['sadface']["metadata"],
+            "nodes": q['sadface']["nodes"],
+            "resources": q['sadface']["resources"],
 
         })
 
     # For each doc that matches the search result go through all nodes and return the text which contains the search
     for document in output:
-        for node in document['Nodes']:
+        for node in document['nodes']:
             if 'text' in node:
                 if re.search(r".*" + arg_str + r".*", node['text'], re.IGNORECASE):
-                    wordLimit = 10
+                    wordLimit = 20
                     text = node['text'].split(' ')
                     firstNwords = ' '.join(text[:wordLimit])
                     if len(text) > wordLimit:
@@ -1119,7 +1131,7 @@ def get_one_argument(arg_str):
                            pagination=pagination,
                            page=page,
                            per_page=per_page,
-                           cursor=count_me)
+                           total=count_me)
 
 
 @app.route('/download/argument/json_schema', methods=['GET'])

@@ -4,25 +4,75 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <h1>Results for:</h1>
-                {% for key,value in search_fields.items() %}
-                    {% if value %}
-                        <p>{{ key|capitalize|replace("_"," ") }}: {{ value }}</p>
-                    {% endif %}
-                {% endfor %}
-                {{ pagination.info }}
-                {{ pagination.links }}
-                <div class="list-group">
-                    {% for item in json %}
-                        <a class="list-group-item list-group-item-action"
-                           href="{{ url_for('.get_argument_by_id',arg_id=item['id']) }}">
-                            {{ loop.index + (page - 1) * per_page }}: {{ item['id'] }}
-                            {#                            {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
 
+
+                <table class="table table-adv-search ">
+                    <tbody>
+                    <tr>
+                        <th class="tg-031e" colspan="2"><h1>Search results for:</h1></th>
+                    </tr>
+                    {% for key,value in search_fields.items() %}
+                        <tr>
+
+                            {% if value %}
+                                <td class="col-xs-2">{{ key|replace("_"," ")|replace("nodes.","Argument ")|capitalize }}:</td>
+                                <td class="col-xs-10">{{ value }} </td>
+                            {% endif %}
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {#                <h1>Results for:</h1>#}
+                {#                {% for key,value in search_fields.items() %}#}
+                {#                    {% if value %}#}
+                {#                        <p>{{ key|capitalize|replace("_"," ") }}: {{ value }}</p>#}
+                {#                    {% endif %}#}
+                {#                {% endfor %}#}
+
+                {#                <div class="list-group">#}
+                {#                    {% for item in json %}#}
+                {#                        <a class="list-group-item list-group-item-action"#}
+                {#                           href="{{ url_for('.get_argument_by_id',arg_id=item['id']) }}">#}
+                {#                            {{ loop.index + (page - 1) * per_page }}: {{ item['id'] }}#}
+                {#                            {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
+                {##}
+                {#                        </a>#}
+                {#                    {% endfor %}#}
+                {#                </div>#}
+                {% if total == 0 %}
+                    <div class="col-sm-12">
+                        <h1 class="text-center">No results found!</h1>
+                    </div>
+                {% else %}
+                    {{ pagination.info }}
+                    {{ pagination.links }}
+                    {% for item in json %}
+                        <a class="argument" href="{{ url_for('.get_argument_by_id',arg_id=item['id']) }}">
+                            <table class="table table-argument table-bordered">
+
+                                <tbody>
+
+                                <tr>
+                                    <td class="col-md-1 result_number" rowspan="2">
+                                        {{ loop.index + (page - 1) * per_page }}</td>
+                                    <td class="col-md-5 ">{{ item['id'] }}</td>
+                                    <td class="col-md-3 ">{{ item['analyst_name'] }}</td>
+                                    <td class="col-md-3 ">{{ item['analyst_email'] }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">{{ search_nodes[loop.index - 1] }}</td>
+                                </tr>
+
+                                </tbody>
+
+
+                            </table>
                         </a>
                     {% endfor %}
-                </div>
-                {{ pagination.links }}
+
+                    {{ pagination.links }}
+                {% endif %}
             </div>
         </div>
 

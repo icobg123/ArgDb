@@ -8,13 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="/static/css/style.css" rel="stylesheet">
+
     <link href="/static/css/tabs.css" rel="stylesheet">
     <link href="/static/css/tabs.sideways.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/font-awesome/css/font-awesome.min.css">
 
 
     <link rel="stylesheet" type="text/css" href="/static/css/prettify.css">
+    <link href="/static/css/style.css" rel="stylesheet">
     <script type="text/javascript" src="/static/js/pretty/prettify.js"></script>
     {#    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=js&amp;skin=sunburst"></script>#}
 
@@ -75,28 +76,19 @@
                     </form>
                 </div>#}
                 <div class="col-sm-3 col-md-3">
-                    <form class="navbar-form" action='' method="post">
-
+                    <form class="navbar-form form-inline" action='' method="post">
                         <div class="form-group">
                             <label for="arg_str"></label>
                             <input title="icara" type="text" name="arg_str" class="form-control"
                                    value="{{ request.form.arg_str }}">
                         </div>
-
-                        {#<div class="form-group">
-
-                    <select class="form-control" id="sel1" name="region">
-                        <option value="EUNE">EUNE</option>
-                        <option value="EUW">EUW</option>
-                        <option value="NA">NA</option>
-                    </select>
-                </div>#}
                         <button type="submit" class="btn btn-primary">
                             <i class="fa fa-search" aria-hidden="true"></i>
                         </button>
                         {#                    <input class="btn btn-primary" type="submit" value="Search">#}
                     </form>
                 </div>
+
             {% endif %}
             {% if current_user %}
                 {#                    <h3 class="pull-right"> {{ current_user }}</h3>#}
@@ -132,7 +124,7 @@
 
 {% else %}
 
-{#    <footer>#}
+    {#    <footer>#}
     {#        <div class="container text-center">#}
     {#            <hr/>#}
     {#            <hr>#}
