@@ -603,7 +603,7 @@ def documentation():
     #
     #         return redirect(url_for('get_one_argument', arg_str=arg_str))
 
-    return render_template('documetnation.html', err=err, current_user=username,arg_string=arg_string)
+    return render_template('documetnation.html', err=err, current_user=username, arg_string=arg_string)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -635,7 +635,7 @@ def home():
     #
     #         return redirect(url_for('get_one_argument', arg_str=arg_str))
 
-    return render_template('homepage.html', err=err, current_user=username,arg_string=arg_string)
+    return render_template('homepage.html', err=err, current_user=username, arg_string=arg_string)
 
 
 @app.route('/argument/id/<arg_id>', methods=['GET', 'POST'])
@@ -735,7 +735,7 @@ def advanced_search():
     if 'id' in session:
         session.pop('id', None)
 
-    return render_template('advanced_search.html', current_user=username, err=err,arg_string=arg_string)
+    return render_template('advanced_search.html', current_user=username, err=err, arg_string=arg_string)
 
 
 @app.route('/argument/<string:s_key>/<string:s_value>', methods=['GET', 'POST'])
@@ -1382,6 +1382,10 @@ def login():
         # if request.form['arg_str']:
         #     return search_for_arg()
         elif 'username' and 'pass' in request.form:
+            if not (request.form['username'] or request.form['pass']):
+                invalidComb = True
+                return render_template('log_ing.html', invalidComb=invalidComb, arg_string=arg_string)
+
             users = mongo.db.users
             login_user = users.find_one({'name': request.form['username']})
 

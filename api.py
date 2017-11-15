@@ -67,9 +67,9 @@ def get_api_key_for_limiter():
     return request.headers['x-access-token']
 
 
-limiter = Limiter(app, key_func=get_api_key_for_limiter,
+limiter = Limiter(app, key_func=get_api_key_for_limiter, storage_uri=redis_url)
                   # storage_uri="redis://redistogo:c56eaca0869ccfa71db3d2a519281070@koi.redistogo.com:11156/")
-                  storage_uri=redis_url)
+
 UPLOAD_FOLDER = 'uploads'
 app.config.from_pyfile('config.cfg')
 # auth = HTTPBasicAuth()
@@ -1560,7 +1560,8 @@ def api_edit_argument(current_user, arg_id):
                                 # replaced_doc = argument.replace_one(
                                 #     {"sadface.id": parsed_to_json.get("sadface", {}).get('id')}, parsed_to_json)
 
-                                return jsonify({outcome: ({"id": parsed_to_json.get('id')}), "dict": dict_to_upload}), 200
+                                return jsonify(
+                                    {outcome: ({"id": parsed_to_json.get('id')}), "dict": dict_to_upload}), 200
                                 # return jsonify({outcome: ({"id": parsed_to_json.get("sadface", {}).get('id')})}, 200)
                             else:
                                 outcome = "You don't have permission to edit this document as you are not the original uploader."
