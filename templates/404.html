@@ -1,0 +1,23 @@
+{% extends "header.html" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 divCentered text-center">
+                <div class="error-template">
+
+
+                    <h1>Oops!</h1>
+                    <h2>404 Not Found</h2>
+                    <div class="">
+                        <h3>Sorry, an error has occurred.<br> Requested page not found!</h3>
+                    </div>
+                    <div class="col-sm-12">
+                        <a href="{{ url_for('home') }}" class="btn btn-primary btn-lg"><span
+                                class="glyphicon glyphicon-home"></span>
+                            Take Me Home </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

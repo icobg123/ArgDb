@@ -48,7 +48,7 @@
                         <h2>Unsuccessful upload</h2>
                         <div class="alert alert-warning" role="alert">
                             An argument with id:
-                            <strong>{{ already_exists }}</strong>
+                            <strong><a href="{{ url_for('.get_argument_by_id',arg_id=already_exists) }}">{{ already_exists }}</a></strong>
                             already exists in the database.
                         </div>
                     {% elif err_list %}
@@ -64,7 +64,9 @@
                     {% elif doc_id %}
                         <h1>Successful upload</h1>
                         <div class="alert alert-success" role="alert">
-                            Your argument with id <strong>{{ doc_id }}</strong> was successfully uploaded to the
+                            Your argument with id
+                            <strong><a href="{{ url_for('.get_argument_by_id',arg_id=doc_id) }}">{{ doc_id }}</a></strong> was
+                            successfully uploaded to the
                             database.
                             <ul>
                                 {% for error in err_list %}

@@ -12,6 +12,7 @@ from datetime import timedelta
 from typing import re
 import sadface
 import graphviz
+from pymongo import errors
 from flask_paginate import Pagination, get_page_parameter, get_page_args
 from graphviz import Source
 import jsonschema
@@ -354,6 +355,11 @@ argument_schema_bck = {
 mail = Mail(app)
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
 @app.before_request
 def make_session_permanent():
     session.permanent = True
@@ -661,7 +667,10 @@ def get_argument_by_id(arg_id):
         username = login_user.get('name')
     argument = mongo.db.argument
     # arg_id = arg_id.replace(" ", "|")
+
     search_results = argument.find_one({"sadface.id": {'$regex': ".*" + arg_id + ".*", "$options": "i"}})
+    if search_results is None:
+        return page_not_found()
     sadface_results = search_results.get("sadface", {})
     result = sadface_results.get('id')
     arg_found = json.dumps({
@@ -681,7 +690,11 @@ def get_argument_by_id(arg_id):
     # session['analyst_name'] = sadface_results.get("analyst_name")
     # session['analyst_email'] = sadface_results.get("analyst_email")
     # session['id'] = result
-
+    graph_markup = Markup(graph.pipe().decode('utf-8'))
+    if graph_markup:
+        graph_to_return = graph_markup
+    else:
+        graph_to_return = None
     analyst_name = sadface_results.get("analyst_name")
     analyst_email = sadface_results.get("analyst_email")
     if 'analyst_email' in session:
@@ -697,7 +710,7 @@ def get_argument_by_id(arg_id):
                            analyst_name=analyst_name,
                            arg_string=arg_string,
                            analyst_email=analyst_email,
-                           graph=Markup(graph.pipe().decode('utf-8')))
+                           graph=graph_to_return)
 
 
 # TODO: Advamced Searcj
@@ -802,24 +815,37 @@ def list_of_arguments(s_key, s_value):
     for q in search_results:
         output.append({
             # "MongoDB ID": q["_id"],
-            "Analyst Email": q['sadface']["analyst_email"],
-            "Analyst Name": q['sadface']["analyst_name"],
-            "Created": q['sadface']["created"],
-            "Edges": q['sadface']["edges"],
-            "Edited": q['sadface']["edited"],
+            "analyst_email": q['sadface']["analyst_email"],
+            "analyst_name": q['sadface']["analyst_name"],
+            "created": q['sadface']["created"],
+            "edges": q['sadface']["edges"],
+            "edited": q['sadface']["edited"],
             "id": q['sadface']["id"],
             # "Metadata": q['sadface']["metadata"],
-            "Nodes": q['sadface']["nodes"],
+            "nodes": q['sadface']["nodes"],
             # "Resources": q['sadface']["resources"],
 
         })
     typeOF = type(output)
+
+    nodes_text = []
+    for document in output:
+        for node in document['nodes']:
+            if 'text' in node:
+                wordLimit = 20
+                text = node['text'].split(' ')
+                firstNwords = ' '.join(text[:wordLimit])
+                if len(text) > wordLimit:
+                    firstNwords += "..."
+                nodes_text.append(firstNwords)
+                break
+
     return render_template('advanced_search_results.html', json=output, typeof=typeOF,
                            populated_search_fields=populated_search_fields,
                            search_fields=search_fields,
                            search_results=search_results,
                            current_user=username,
-                           # search_nodes=nodes_text,
+                           search_nodes=nodes_text,
                            pagination=pagination,
                            page=page,
                            arg_string=arg_string,
