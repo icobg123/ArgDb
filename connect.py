@@ -670,7 +670,7 @@ def get_argument_by_id(arg_id):
 
     search_results = argument.find_one({"sadface.id": {'$regex': ".*" + arg_id + ".*", "$options": "i"}})
     if search_results is None:
-        return page_not_found()
+        abort(404)
     sadface_results = search_results.get("sadface", {})
     result = sadface_results.get('id')
     arg_found = json.dumps({
