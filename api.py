@@ -68,7 +68,7 @@ def get_api_key_for_limiter():
 
 
 limiter = Limiter(app, key_func=get_api_key_for_limiter, storage_uri=redis_url)
-                  # storage_uri="redis://redistogo:c56eaca0869ccfa71db3d2a519281070@koi.redistogo.com:11156/")
+# storage_uri="redis://redistogo:c56eaca0869ccfa71db3d2a519281070@koi.redistogo.com:11156/")
 
 UPLOAD_FOLDER = 'uploads'
 app.config.from_pyfile('config.cfg')
@@ -1561,7 +1561,7 @@ def api_edit_argument(current_user, arg_id):
                                 #     {"sadface.id": parsed_to_json.get("sadface", {}).get('id')}, parsed_to_json)
 
                                 return jsonify(
-                                    {outcome: ({"id": parsed_to_json.get('id')}), "dict": dict_to_upload}), 200
+                                    {outcome: {"id": parsed_to_json.get('id')}, "SADFace": parsed_to_json}), 200
                                 # return jsonify({outcome: ({"id": parsed_to_json.get("sadface", {}).get('id')})}, 200)
                             else:
                                 outcome = "You don't have permission to edit this document as you are not the original uploader."
@@ -1759,7 +1759,7 @@ def api_upload(current_user):
                     else:
                         # outcome = "Successful Upload of document with id: " + parsed_to_json.get("sadface", {}).get(
                         #     'id')
-                        outcome = "Successful Upload of argument with id: " + parsed_to_json.get(
+                        outcome = "Successful Upload of argument with id:" + parsed_to_json.get(
                             'id')
                         sadface.sd = parsed_to_json
                         # sadface.sd = parsed_to_json['sadface']
@@ -1775,7 +1775,7 @@ def api_upload(current_user):
                         # parsed_to_json['uploader'] = current_user.get('public_id')
                         # parsed_to_json['time_of_upload'] = datetime.datetime.now()
                         post_id = argument.insert_one(dict_to_insert).inserted_id
-                        return jsonify({'message': outcome}), 201
+                        return jsonify({'message': outcome}, {"SADFace": parsed_to_json}), 201
                 else:
                     errors_list = []
                     # asd = 123
