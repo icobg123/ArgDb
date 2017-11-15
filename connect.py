@@ -580,7 +580,7 @@ def search_for_arg():
         return redirect(url_for('get_one_argument', arg_str=arg_str))
 
 
-@app.route('/api_documentation', methods=['GET'])
+@app.route('/api_documentation', methods=['GET','POST'])
 def documentation():
     arg_string = None
     if 'errorString' in session:
