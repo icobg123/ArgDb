@@ -19,7 +19,8 @@
                         user that uploaded the argument.</a></li>
                     <li><a href="#5">1.4. Returns a list of arguments which match the provided parameters.</a></li>
                     <li><a href="#6">1.5. Uploads an argument in the SADFace format to the database. </a></li>
-                    <li><a href="#7">1.6. Returns a JWT when a user provides their username and password as authentication.</a></li>
+                    <li><a href="#7">1.6. Returns a JWT when a user provides their username and password as
+                        authentication.</a></li>
                 </ul>
             </div>
             <div class="col-sm-12"><h1 id="1">1. <strong>ArgDB API</strong></h1>
@@ -247,7 +248,8 @@
     "error": "Token is missing!"
 }
 </pre>
-                                <p>OR</p></li>
+                              </li></ul>
+                      <p>OR</p><ul>
                             <li><strong>Code:</strong> 406 NOT ACCEPTABLE <br/>
                                 <strong>Content:</strong>
                                 <pre class="prettyprint lang-js">
@@ -255,7 +257,8 @@
     "error": "The provided URL id: uuid4 does not match the argument id in the JSON file you supplied."
 }
 </pre>
-                                <p>OR</p></li>
+                            </li></ul>
+                    <p>OR</p><ul>
                             <li><strong>Code:</strong> 406 NOT ACCEPTABLE <br/>
                                 <strong>Content:</strong>
                                 <pre class="prettyprint lang-js">
@@ -323,6 +326,9 @@
 }
 </pre>
                             </li>
+                        </ul>
+                        <p>OR</p>
+                        <ul>
                             <li><strong>Code:</strong> 404 NOT FOUND <br/>
                                 <strong>Content:</strong>
                                 <pre class="prettyprint lang-js">
@@ -331,6 +337,9 @@
 }
 </pre>
                             </li>
+                        </ul>
+                        <p>OR</p>
+                        <ul>
                             <li><strong>Code:</strong> 403 FORBidDEN <br/>
                                 <strong>Content:</strong>
                                 <pre class="prettyprint lang-js">
@@ -550,7 +559,6 @@
                             </li>
                         </ul>
 
-                        <p>
                         <p>OR</p>
 
                         <ul>
@@ -562,6 +570,10 @@
 }
 </pre>
                             </li>
+                        </ul>
+
+                        <p>OR</p>
+                        <ul>
                             <li><strong>Code:</strong> 406 NOT ACCEPTABLE <br/>
                                 <strong>Content:</strong>
                                 <pre class="prettyprint lang-js">
@@ -707,7 +719,7 @@
                     </li>
                     <li><p><strong>Data Params</strong></p>
 
-                        <p>None</p></li>
+                        <p><strong>None</strong></p></li>
                     <li><p><strong>Success Response:</strong></p>
 
                         <ul>
