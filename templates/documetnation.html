@@ -23,6 +23,7 @@
             </div>
             <div class="col-sm-12"><h1 id="1">1. <strong>ArgDB API</strong></h1>
 
+
                 <h2 id="2">1.1. Returns JSON data about a single SADFace argument.</h2>
 
                 <ul>
@@ -676,6 +677,60 @@
       }
    ]
 }</pre>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h2 id="7">1.6. Returns a JWT when a user provides their username and password as authentication.</h2>
+
+                <ul>
+                    <li><p><strong>URL</strong></p>
+
+                        <p>/api/v1/login
+                        </p>
+                    </li>
+                    <li><p><strong>Method:</strong></p>
+
+                        <pre class="prettyprint lang-js methods">GET</pre>
+                    </li>
+                    <li><p><strong>Authorisation:</strong></p>
+
+                        <pre class="prettyprint lang-js methods">Basic Auth</pre>
+                    </li>
+                    <li><p><strong>URL Params</strong></p>
+
+                        <p><strong>None</strong></p>
+
+
+                    </li>
+                    <li><p><strong>Data Params</strong></p>
+
+                        <p>None</p></li>
+                    <li><p><strong>Success Response:</strong></p>
+
+                        <ul>
+                            <li><strong>Code:</strong> 200 OK <br/>
+                                <strong>Content:</strong>
+                                <pre class="prettyprint lang-js">
+{
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfaWQiOiIyY2M1ZTgyMGZhYzc0MDFiYmJhMzk3ZDYwMDRjYWVkYyIsImV4cCI6MTUwODc4MTkzNn0.xAfC4Iex9Ji9cAEZD7NSUndsk4kcDRAayQPBqZvAbuM"
+}</pre>
+                            </li>
+                        </ul>
+
+
+                    </li>
+                    <li><p><strong>Error Response:</strong></p>
+
+                        <ul>
+                            <li><strong>Code:</strong> 401 UNAUTHORIZED <br/>
+                                <strong>Content:</strong>
+                                <pre class="prettyprint lang-js">
+{
+    "error": "Invalid username/password combination."
+}
+</pre>
                             </li>
                         </ul>
                     </li>

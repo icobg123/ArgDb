@@ -1409,17 +1409,17 @@ def unauthorized(error=None):
 
 # real API
 
-@app.route('/api/v1/login')
+@app.route('/api/v1/login',methods=['GET'])
 def login():
     authorization = request.authorization
     if not authorization or not authorization.username or not authorization.password:
-        return make_response('Could not verify', 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
+        return make_response(jsonify({"error":"Invalid username/password combination."}), 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
 
     users = mongo.db.users
     user = users.find_one({'name': authorization.username})
 
     if not user:
-        return make_response('Could not verify', 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
+        return make_response({"error":"Please provide login credentials."}, 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
 
     if check_password_hash(user.get('password'), authorization.password):
         # payload = {'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=1),
@@ -1443,7 +1443,7 @@ def login():
 
             # return jsonify({'token': token})
 
-    return make_response('Could not verify', 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
+    return make_response('{"error":"Invalid username/password combination."}', 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
 
 
 @app.route('/api/v1/arguments/<arg_id>', methods=['DELETE'])
