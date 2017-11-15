@@ -22,6 +22,10 @@
                     <div class="form-group">
                         <label for="arg_str"></label>
                         <input type="text" name="arg_str" class="form-control"
+                               {% if arg_string %}placeholder="{{ arg_string }}"
+                               {% else %}
+                               placeholder=""
+                               {% endif %}
                                value="{{ request.form.arg_str }}">
                     </div>
 
@@ -38,8 +42,8 @@
                     </button>
                     {#                    <input class="btn btn-primary" type="submit" value="Search">#}
                 </form>
-{#                <p>Professionally leverage existing go forward platforms through impactful relationships. Intrinsicly#}
-{#                    supply cross-unit resources rather than impactful portals. </p>#}
+                {#                <p>Professionally leverage existing go forward platforms through impactful relationships. Intrinsicly#}
+                {#                    supply cross-unit resources rather than impactful portals. </p>#}
                 {# <ul class="list-group">
                     <li class="list-group-item">Match Results</li>
                     <li class="list-group-item">Profile Analytics</li>
