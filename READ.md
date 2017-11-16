@@ -618,3 +618,51 @@ Takes SADFace argument with an id that does not exists in the database.
       ]
     }
     ```
+
+Sign in
+----
+Returns a JWT when a user provides their username and password as authentication.
+ 
+
+* **URL**
+
+  /api/v1/login
+
+* **Method:**
+
+  `GET`
+  
+*  **Authorisation**
+
+   `Basic Auth`
+   
+*  **URL Params**
+
+    None
+
+* **Data Params**
+
+  JSON file in the SADFace format with a unique id that does not exist in the database. Must match the JSON Schema.
+
+
+* **Success Response:**
+
+  * **Code:** 200 OK <br />
+    **Content:** 
+        
+    ```json
+    {
+      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfaWQiOiIyY2M1ZTgyMGZhYzc0MDFiYmJhMzk3ZDYwMDRjYWVkYyIsImV4cCI6MTUwODc4MTkzNn0.xAfC4Iex9Ji9cAEZD7NSUndsk4kcDRAayQPBqZvAbuM"
+    }
+     ```
+ 
+ 
+* **Error Response:**
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** 
+    ```json
+    {
+      "error": "Invalid username/password combination."
+    }
+    ```
