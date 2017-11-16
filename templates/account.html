@@ -113,139 +113,279 @@
                 <div class="col-xs-3"> <!-- required for floating -->
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs tabs-left">
-                        <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
-                        <li><a href="#args-by-you" data-toggle="tab"> Arguments by You</a></li>
-                        <li><a href="#api-token" data-toggle="tab">API</a></li>
-                        <li><a href="#settings" data-toggle="tab">Settings</a></li>
+                        {% if newapi %}
+                            <li><a href="#home" data-toggle="tab">Home {{ newapi }}</a></li>
+                            <li><a href="#args-by-you" data-toggle="tab"> Arguments by You</a></li>
+                            <li class="active"><a href="#api-token" data-toggle="tab">API</a></li>
+                            <li><a href="#settings" data-toggle="tab">Settings</a></li>
+                        {% else %}
+                            <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+                            <li><a href="#args-by-you" data-toggle="tab"> Arguments by You</a></li>
+                            <li><a href="#api-token" data-toggle="tab">API</a></li>
+                            <li><a href="#settings" data-toggle="tab">Settings</a></li>
+                        {% endif %}
                     </ul>
                 </div>
 
                 <div class="col-xs-9">
                     <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="home">
-                            <div class="col-sm-12">
-                                <p>Welcome back <b>{{ current_user }}</b></p>
-                                {% if not verified %}
-                                    <div class="alert alert-warning" role="alert">
-                                        An email has been sent to {{ user_email }}. Please verify your account to gain
-                                        access to
-                                        the API.
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="args-by-you">   {% if argument_ids_list %}
-                            <div class="col-sm-12">
-                                <p>
-                                    The last documents your email appears in.
-                                </p>
-                                <div class="list-group">
-                                    {% for item in argument_ids_list %}
-                                        {#                            {{ item }}#}
-                                        <a class="list-group-item list-group-item-action"
-                                           href="{{ url_for('.get_argument_by_id',arg_id=item['id']) }}">
-                                            {{ loop.index }}: {{ item['id'] }}
-                                            {#                                {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
-                                        </a>
-
-
-                                    {% endfor %}
+                    {% if newapi %}
+                        <div class="tab-content">
+                            <div class="tab-pane" id="home">
+                                <div class="col-sm-12">
+                                    <p>Welcome back <b>{{ current_user }}</b></p>
+                                    {% if not verified %}
+                                        <div class="alert alert-warning" role="alert">
+                                            An email has been sent to {{ user_email }}. Please verify your account to
+                                            gain
+                                            access to
+                                            the API.
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </div>
-                        {% else %}
-                            <div class="col-sm-12">
-                                <p>Your email address does not appear in any documents.</p>
-                            </div>
-                        {% endif %}</div>
-                        <div class="tab-pane" id="api-token">
-                            <div class="col-sm-12">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <p>API Token</p>
+                            <div class="tab-pane" id="args-by-you">   {% if argument_ids_list %}
+                                <div class="col-sm-12">
+                                    <p>
+                                        The last documents your email appears in.
+                                    </p>
+                                    <div class="list-group">
+                                        {% for item in argument_ids_list %}
+                                            {#                            {{ item }}#}
+                                            <a class="list-group-item list-group-item-action"
+                                               href="{{ url_for('.get_argument_by_id',arg_id=item['id']) }}">
+                                                {{ loop.index }}: {{ item['id'] }}
+                                                {#                                {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
+                                            </a>
+
+
+                                        {% endfor %}
                                     </div>
                                 </div>
-
-                                {% if not verified %}
-                                    <div class="alert alert-warning" role="alert">
-                                        An email has been sent to {{ user_email }}. Please verify your account to gain
-                                        access to
-                                        the API.
-                                    </div>
-                                {% endif %}
-                                {% if verified %}
+                            {% else %}
+                                <div class="col-sm-12">
+                                    <p>Your email address does not appear in any documents.</p>
+                                </div>
+                            {% endif %}</div>
+                            <div class="tab-pane active" id="api-token">
+                                <div class="col-sm-12">
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <div class="alert alert-info" role="alert">
-                                                Please include this API token in the headers of your requests in "x-access-token" key.
-                                            </div>
-                                            <pre id="token_api">{{ token }}</pre>
+                                            <p>API Token</p>
                                         </div>
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <div class=" col-xs-10">
-                                                    {#                                <button id="copy_api" data-clipboard-target="#token_api" type="button"#}
-                                                    {#                                        name="register_btn" class="btn btn-primary">Copy#}
-                                                    {#                                </button>#}
+                                    </div>
 
-                                                    <form class="form-horizontal" method=POST
-                                                          action="{{ url_for('generate_new_api_key') }}">
-                                                        <div class="form-group">
-
-                                                            <button id="" type="submit" name="register_btn"
-                                                                    class="btn btn-primary">
-                                                                GENERATE
-                                                                API
-                                                                KEY
-                                                            </button>
-                                                            <button id="copy_api" data-clipboard-target="#token_api"
-                                                                    type="button"
-                                                                    name="register_btn" class="btn btn-primary">Copy
-                                                            </button>
-
-                                                        </div>
-                                                    </form>
+                                    {% if not verified %}
+                                        <div class="alert alert-warning" role="alert">
+                                            An email has been sent to {{ user_email }}. Please verify your account to
+                                            gain
+                                            access to
+                                            the API.
+                                        </div>
+                                    {% endif %}
+                                    {% if verified %}
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="alert alert-info" role="alert">
+                                                    Please include this API token in the headers of your requests in
+                                                    "x-access-token" key.
                                                 </div>
+                                                <pre id="token_api">{{ token }}</pre>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <div class=" col-xs-10">
+                                                        {#                                <button id="copy_api" data-clipboard-target="#token_api" type="button"#}
+                                                        {#                                        name="register_btn" class="btn btn-primary">Copy#}
+                                                        {#                                </button>#}
+
+                                                        <form class="form-horizontal" method=POST
+                                                              action="{{ url_for('generate_new_api_key') }}">
+                                                            <div class="form-group">
+
+                                                                <button id="" type="submit" name="register_btn"
+                                                                        class="btn btn-primary">
+                                                                    GENERATE
+                                                                    API
+                                                                    KEY
+                                                                </button>
+                                                                <button id="copy_api" data-clipboard-target="#token_api"
+                                                                        type="button"
+                                                                        name="register_btn" class="btn btn-primary">Copy
+                                                                </button>
+
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="settings">
+                                <div class="col-sm-12">
+                                    <p>Settings</p>
+                                    <form class="form" method=POST action="{{ url_for('change_pass') }}">
+                                        {#                <form class="form-horizontal" method=POST action="{{ url_for('change_pass') }}">#}
+                                        {#                    <div class="form-group">#}
+                                        {#                        <label class="control-label col-xs-3" for="exampleInputEmail1">Username</label>#}
+                                        {#                        <div class="col-xs-9">#}
+                                        {#                            <input type="text" class="form-control" name="username" placeholder="Username">#}
+                                        {#                        </div>#}
+                                        {#                    </div>#}
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3" for="exampleInputPassword1">Change
+                                                Password</label>
+                                            <div class="col-xs-4">
+                                                <input type="password" class="form-control" name="pass"
+                                                       placeholder="Password">
                                             </div>
 
+                                            <button type="submit" name="register_btn" class="btn btn-primary">Change
+                                                Password
+                                            </button>
                                         </div>
-                                    </div>
-                                {% endif %}
+                                        {#                    <div class="form-group">#}
+                                        {#                        <label class="control-label col-xs-3" for="exampleInputPassword1">Email</label>#}
+                                        {#                        <div class="col-xs-9">#}
+                                        {#                            <input type="email" class="form-control" name="email" placeholder="Email">#}
+                                        {#                        </div>#}
+                                        {#                    </div>#}
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="settings">
-                            <div class="col-sm-12">
-                                <p>Settings</p>
-                                <form class="form" method=POST action="{{ url_for('change_pass') }}">
-                                    {#                <form class="form-horizontal" method=POST action="{{ url_for('change_pass') }}">#}
-                                    {#                    <div class="form-group">#}
-                                    {#                        <label class="control-label col-xs-3" for="exampleInputEmail1">Username</label>#}
-                                    {#                        <div class="col-xs-9">#}
-                                    {#                            <input type="text" class="form-control" name="username" placeholder="Username">#}
-                                    {#                        </div>#}
-                                    {#                    </div>#}
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-3" for="exampleInputPassword1">Change
-                                            Password</label>
-                                        <div class="col-xs-4">
-                                            <input type="password" class="form-control" name="pass"
-                                                   placeholder="Password">
+                    {% else %}
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="home">
+                                <div class="col-sm-12">
+                                    <p>Welcome back <b>{{ current_user }}</b></p>
+                                    {% if not verified %}
+                                        <div class="alert alert-warning" role="alert">
+                                            An email has been sent to {{ user_email }}. Please verify your account to
+                                            gain
+                                            access to
+                                            the API.
                                         </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="args-by-you">   {% if argument_ids_list %}
+                                <div class="col-sm-12">
+                                    <p>
+                                        The last documents your email appears in.
+                                    </p>
+                                    <div class="list-group">
+                                        {% for item in argument_ids_list %}
+                                            {#                            {{ item }}#}
+                                            <a class="list-group-item list-group-item-action"
+                                               href="{{ url_for('.get_argument_by_id',arg_id=item['id']) }}">
+                                                {{ loop.index }}: {{ item['id'] }}
+                                                {#                                {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
+                                            </a>
 
-                                        <button type="submit" name="register_btn" class="btn btn-primary">Change
-                                            Password
-                                        </button>
+
+                                        {% endfor %}
                                     </div>
-                                    {#                    <div class="form-group">#}
-                                    {#                        <label class="control-label col-xs-3" for="exampleInputPassword1">Email</label>#}
-                                    {#                        <div class="col-xs-9">#}
-                                    {#                            <input type="email" class="form-control" name="email" placeholder="Email">#}
-                                    {#                        </div>#}
-                                    {#                    </div>#}
-                                </form>
+                                </div>
+                            {% else %}
+                                <div class="col-sm-12">
+                                    <p>Your email address does not appear in any documents.</p>
+                                </div>
+                            {% endif %}</div>
+                            <div class="tab-pane" id="api-token">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <p>API Token</p>
+                                        </div>
+                                    </div>
+
+                                    {% if not verified %}
+                                        <div class="alert alert-warning" role="alert">
+                                            An email has been sent to {{ user_email }}. Please verify your account to
+                                            gain
+                                            access to
+                                            the API.
+                                        </div>
+                                    {% endif %}
+                                    {% if verified %}
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="alert alert-info" role="alert">
+                                                    Please include this API token in the headers of your requests in
+                                                    "x-access-token" key.
+                                                </div>
+                                                <pre id="token_api">{{ token }}</pre>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <div class=" col-xs-10">
+                                                        {#                                <button id="copy_api" data-clipboard-target="#token_api" type="button"#}
+                                                        {#                                        name="register_btn" class="btn btn-primary">Copy#}
+                                                        {#                                </button>#}
+
+                                                        <form class="form-horizontal" method=POST
+                                                              action="{{ url_for('generate_new_api_key') }}">
+                                                            <div class="form-group">
+
+                                                                <button id="" type="submit" name="register_btn"
+                                                                        class="btn btn-primary">
+                                                                    GENERATE
+                                                                    API
+                                                                    KEY
+                                                                </button>
+                                                                <button id="copy_api" data-clipboard-target="#token_api"
+                                                                        type="button"
+                                                                        name="register_btn" class="btn btn-primary">Copy
+                                                                </button>
+
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="settings">
+                                <div class="col-sm-12">
+                                    <p>Settings</p>
+                                    <form class="form" method=POST action="{{ url_for('change_pass') }}">
+                                        {#                <form class="form-horizontal" method=POST action="{{ url_for('change_pass') }}">#}
+                                        {#                    <div class="form-group">#}
+                                        {#                        <label class="control-label col-xs-3" for="exampleInputEmail1">Username</label>#}
+                                        {#                        <div class="col-xs-9">#}
+                                        {#                            <input type="text" class="form-control" name="username" placeholder="Username">#}
+                                        {#                        </div>#}
+                                        {#                    </div>#}
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3" for="exampleInputPassword1">Change
+                                                Password</label>
+                                            <div class="col-xs-4">
+                                                <input type="password" class="form-control" name="pass"
+                                                       placeholder="Password">
+                                            </div>
+
+                                            <button type="submit" name="register_btn" class="btn btn-primary">Change
+                                                Password
+                                            </button>
+                                        </div>
+                                        {#                    <div class="form-group">#}
+                                        {#                        <label class="control-label col-xs-3" for="exampleInputPassword1">Email</label>#}
+                                        {#                        <div class="col-xs-9">#}
+                                        {#                            <input type="email" class="form-control" name="email" placeholder="Email">#}
+                                        {#                        </div>#}
+                                        {#                    </div>#}
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

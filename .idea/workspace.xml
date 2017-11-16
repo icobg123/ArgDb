@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e0db6b7f-cf94-4adc-91ec-65b0af295886" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ArgDb.iml" afterPath="$PROJECT_DIR$/.idea/ArgDb.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/connect.py" afterPath="$PROJECT_DIR$/connect.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/account.html" afterPath="$PROJECT_DIR$/templates/account.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/uploads/testJson.json" afterPath="$PROJECT_DIR$/uploads/testJson.json" />
     </list>
     <ignored path=".idea/dataSources.local.xml" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -17,8 +17,8 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/ArgDb$api.coverage" NAME="api Coverage Results" MODIFIED="1510767924381" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ArgDb$connect.coverage" NAME="connect Coverage Results" MODIFIED="1510775127411" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ArgDb$api.coverage" NAME="api Coverage Results" MODIFIED="1510791990723" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ArgDb$connect.coverage" NAME="connect Coverage Results" MODIFIED="1510795641198" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -29,11 +29,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-      <file leaf-file-name="connect.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="connect.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/connect.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="359">
-              <caret line="616" column="21" selection-start-line="616" selection-start-column="21" selection-end-line="616" selection-end-column="21" />
+            <state relative-caret-position="-1302">
+              <caret line="1451" column="14" selection-start-line="1451" selection-start-column="8" selection-end-line="1451" selection-end-column="14" />
               <folding>
                 <element signature="e#1882#1975#0" expanded="false" />
                 <element signature="e#2065#9364#0" expanded="false" />
@@ -92,7 +92,6 @@
                 <element signature="e#14673#14745#0" expanded="false" />
                 <element signature="e#14855#14894#0" expanded="false" />
                 <element signature="e#14918#15058#0" expanded="false" />
-                <element signature="e#15301#15384#0" expanded="false" />
                 <element signature="e#15414#16520#0" expanded="false" />
                 <element signature="e#15468#16498#0" expanded="false" />
                 <element signature="e#15530#15573#0" expanded="false" />
@@ -234,8 +233,6 @@
                 <element signature="e#56344#56516#0" expanded="false" />
                 <element signature="e#56692#56960#0" expanded="false" />
                 <element signature="e#57468#57501#0" expanded="false" />
-                <element signature="e#57679#59930#0" expanded="false" />
-                <element signature="e#57738#57814#0" expanded="false" />
                 <element signature="e#57988#59886#0" expanded="false" />
                 <element signature="e#58030#58106#0" expanded="false" />
                 <element signature="e#58106#58135#0" expanded="false" />
@@ -246,35 +243,31 @@
                 <element signature="e#59020#59431#0" expanded="false" />
                 <element signature="e#59068#59274#0" expanded="false" />
                 <element signature="e#59606#59650#0" expanded="false" />
-                <element signature="e#60018#62049#0" expanded="false" />
-                <element signature="e#60077#60153#0" expanded="false" />
-                <element signature="e#60158#60180#0" expanded="false" />
-                <element signature="e#60258#60321#0" expanded="false" />
-                <element signature="e#60420#62019#0" expanded="false" />
-                <element signature="e#60737#60826#0" expanded="false" />
-                <element signature="e#60762#60825#0" expanded="false" />
-                <element signature="e#60880#61075#0" expanded="false" />
-                <element signature="e#61102#61288#0" expanded="false" />
-                <element signature="e#61297#61375#0" expanded="false" />
-                <element signature="e#62110#62360#0" expanded="false" />
-                <element signature="e#62110#62142#0" expanded="false" />
-                <element signature="e#62203#62235#0" expanded="false" />
-                <element signature="e#62430#62856#0" expanded="false" />
-                <element signature="e#62470#62699#0" expanded="false" />
-                <element signature="e#62628#62699#0" expanded="false" />
-                <element signature="e#62952#64837#0" expanded="false" />
-                <element signature="e#63011#63087#0" expanded="false" />
-                <element signature="e#63259#64817#0" expanded="false" />
-                <element signature="e#63491#63769#0" expanded="false" />
-                <element signature="e#63796#63996#0" expanded="false" />
-                <element signature="e#64038#64212#0" expanded="false" />
-                <element signature="e#64512#64552#0" expanded="false" />
-                <element signature="e#64938#64998#0" expanded="false" />
-                <element signature="e#65026#65074#0" expanded="false" />
-                <element signature="e#65102#65153#0" expanded="false" />
-                <element signature="e#65191#65247#0" expanded="false" />
-                <element signature="e#65284#65603#0" expanded="false" />
-                <element signature="e#65637#65686#0" expanded="false" />
+                <element signature="e#62270#62520#0" expanded="false" />
+                <element signature="e#62270#62302#0" expanded="false" />
+                <element signature="e#62363#62395#0" expanded="false" />
+                <element signature="e#62590#63016#0" expanded="false" />
+                <element signature="e#62630#62859#0" expanded="false" />
+                <element signature="e#62788#62859#0" expanded="false" />
+                <element signature="e#65134#65194#0" expanded="false" />
+                <element signature="e#65222#65270#0" expanded="false" />
+                <element signature="e#65298#65349#0" expanded="false" />
+                <element signature="e#65387#65443#0" expanded="false" />
+                <element signature="e#65480#65799#0" expanded="false" />
+                <element signature="e#65833#65882#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="account.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/account.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="168">
+              <caret line="121" column="85" selection-start-line="121" selection-start-column="85" selection-end-line="121" selection-end-column="85" />
+              <folding>
+                <element signature="e#8555#9313#0#HTML" expanded="false" />
+                <element signature="e#9342#10763#0#HTML" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -295,6 +288,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="408">
               <caret line="24" column="47" selection-start-line="24" selection-start-column="37" selection-end-line="24" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="testJson.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/uploads/testJson.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="32" column="45" selection-start-line="32" selection-start-column="45" selection-end-line="32" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -388,8 +391,6 @@
         <option value="$PROJECT_DIR$/READ.html" />
         <option value="$PROJECT_DIR$/templates/single_arg.html" />
         <option value="$PROJECT_DIR$/static/js/custom.js" />
-        <option value="$PROJECT_DIR$/templates/account.html" />
-        <option value="$PROJECT_DIR$/uploads/testJson.json" />
         <option value="$PROJECT_DIR$/templates/upload_results.html" />
         <option value="$PROJECT_DIR$/uploads/sadFace.json" />
         <option value="$PROJECT_DIR$/templates/register.html" />
@@ -412,7 +413,9 @@
         <option value="$PROJECT_DIR$/templates/advanced_search.html" />
         <option value="$PROJECT_DIR$/sadface/python/jono.json" />
         <option value="$PROJECT_DIR$/templates/homepage.html" />
+        <option value="$PROJECT_DIR$/uploads/testJson.json" />
         <option value="$PROJECT_DIR$/connect.py" />
+        <option value="$PROJECT_DIR$/templates/account.html" />
       </list>
     </option>
   </component>
@@ -481,7 +484,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
+              <option name="myItemId" value="uploads" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -496,38 +499,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ArgDb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ArgDb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ArgDb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ArgDb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sadfacelib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -929,13 +900,6 @@
       <option name="presentableId" value="Default" />
       <updated>1505255971533</updated>
     </task>
-    <task id="LOCAL-00006" summary="API changes&#10;Implemented User registration from the API using a json file with a username an password.&#10;Also implemented token authorisation. When loging in if the user is given a token that expires in 30 minutes. If the user has the admin property set to true they will be able to execute the API functions if not they wont. &#10;This should be modified later on to have more than roles for the users. Also maybe the registration should be done from the WebUI and the Token should be received from the WebUI as well?&#10;">
-      <created>1505684181318</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1505684181318</updated>
-    </task>
     <task id="LOCAL-00007" summary="API changes&#10;Tokens arent generated in the api anymore and authorization takes the encoded token value from the database. Where it was created when a user logged in the Web UI&#10;&#10;WebUI changes&#10;When registering an Empty token is supplied to the user and when they login for th first time they get a token which is sent to the DB.">
       <created>1505845398042</created>
       <option name="number" value="00007" />
@@ -1272,7 +1236,14 @@
       <option name="project" value="LOCAL" />
       <updated>1510776092444</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="added post o the api_doc page">
+      <created>1510780843801</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1510780843802</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -1290,27 +1261,27 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16257995" sideWeight="0.49509802" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1590909" sideWeight="0.5143923" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36363637" sideWeight="0.5165245" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43073592" sideWeight="0.49418023" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32792208" sideWeight="0.49883604" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36363637" sideWeight="0.48347548" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33874458" sideWeight="0.4975058" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33874458" sideWeight="0.4975058" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15831557" sideWeight="0.50490195" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39935064" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug Logs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32929516" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36363637" sideWeight="0.48560768" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.340589" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Concurrent Activities Diagram" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32971245" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39935064" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1329,7 +1300,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="API&#10;&#10;Turned off the expiration for the JWT they now should be valid forever." />
     <MESSAGE value="WEB UI&#10;&#10;Added password change in the user page&#10;&#10;Added links to the single arg pages which display all args for that name or email&#10;API &#10;&#10;Added 404 handler and mover secret key to config file&#10;" />
     <MESSAGE value="API&#10;Added a JSON file used for the advanced searches .&#10;Created the advanced search function for the API.&#10;It uses a JSON file with keys and values corresponding to the search fields in the WebUI" />
     <MESSAGE value="WebUI&#10;Added a download button to each argument page&#10;" />
@@ -1354,7 +1324,8 @@
     <MESSAGE value="done with doc page for the API" />
     <MESSAGE value="WebUI&#10;Added a 404 handler and page&#10;&#10;removed the email  restriction form adv search&#10;&#10;made the ids of newly uploaded documents links to those pages&#10;" />
     <MESSAGE value="added abort404 to get arg" />
-    <option name="LAST_COMMIT_MESSAGE" value="added abort404 to get arg" />
+    <MESSAGE value="added post o the api_doc page" />
+    <option name="LAST_COMMIT_MESSAGE" value="added post o the api_doc page" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1460,13 +1431,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/account.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="131" column="43" selection-start-line="131" selection-start-column="43" selection-end-line="131" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/uploads/sadFace.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="116">
@@ -1503,14 +1467,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="6" column="57" selection-start-line="6" selection-start-column="57" selection-end-line="6" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/uploads/testJson.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="8" column="56" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="56" />
           <folding />
         </state>
       </provider>
@@ -1929,10 +1885,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/uploads/testJson.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="32" column="45" selection-start-line="32" selection-start-column="45" selection-end-line="32" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/connect.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="616" column="21" selection-start-line="616" selection-start-column="21" selection-end-line="616" selection-end-column="21" />
+        <state relative-caret-position="-1302">
+          <caret line="1451" column="14" selection-start-line="1451" selection-start-column="8" selection-end-line="1451" selection-end-column="14" />
           <folding>
             <element signature="e#1882#1975#0" expanded="false" />
             <element signature="e#2065#9364#0" expanded="false" />
@@ -1991,7 +1955,6 @@
             <element signature="e#14673#14745#0" expanded="false" />
             <element signature="e#14855#14894#0" expanded="false" />
             <element signature="e#14918#15058#0" expanded="false" />
-            <element signature="e#15301#15384#0" expanded="false" />
             <element signature="e#15414#16520#0" expanded="false" />
             <element signature="e#15468#16498#0" expanded="false" />
             <element signature="e#15530#15573#0" expanded="false" />
@@ -2133,8 +2096,6 @@
             <element signature="e#56344#56516#0" expanded="false" />
             <element signature="e#56692#56960#0" expanded="false" />
             <element signature="e#57468#57501#0" expanded="false" />
-            <element signature="e#57679#59930#0" expanded="false" />
-            <element signature="e#57738#57814#0" expanded="false" />
             <element signature="e#57988#59886#0" expanded="false" />
             <element signature="e#58030#58106#0" expanded="false" />
             <element signature="e#58106#58135#0" expanded="false" />
@@ -2145,35 +2106,29 @@
             <element signature="e#59020#59431#0" expanded="false" />
             <element signature="e#59068#59274#0" expanded="false" />
             <element signature="e#59606#59650#0" expanded="false" />
-            <element signature="e#60018#62049#0" expanded="false" />
-            <element signature="e#60077#60153#0" expanded="false" />
-            <element signature="e#60158#60180#0" expanded="false" />
-            <element signature="e#60258#60321#0" expanded="false" />
-            <element signature="e#60420#62019#0" expanded="false" />
-            <element signature="e#60737#60826#0" expanded="false" />
-            <element signature="e#60762#60825#0" expanded="false" />
-            <element signature="e#60880#61075#0" expanded="false" />
-            <element signature="e#61102#61288#0" expanded="false" />
-            <element signature="e#61297#61375#0" expanded="false" />
-            <element signature="e#62110#62360#0" expanded="false" />
-            <element signature="e#62110#62142#0" expanded="false" />
-            <element signature="e#62203#62235#0" expanded="false" />
-            <element signature="e#62430#62856#0" expanded="false" />
-            <element signature="e#62470#62699#0" expanded="false" />
-            <element signature="e#62628#62699#0" expanded="false" />
-            <element signature="e#62952#64837#0" expanded="false" />
-            <element signature="e#63011#63087#0" expanded="false" />
-            <element signature="e#63259#64817#0" expanded="false" />
-            <element signature="e#63491#63769#0" expanded="false" />
-            <element signature="e#63796#63996#0" expanded="false" />
-            <element signature="e#64038#64212#0" expanded="false" />
-            <element signature="e#64512#64552#0" expanded="false" />
-            <element signature="e#64938#64998#0" expanded="false" />
-            <element signature="e#65026#65074#0" expanded="false" />
-            <element signature="e#65102#65153#0" expanded="false" />
-            <element signature="e#65191#65247#0" expanded="false" />
-            <element signature="e#65284#65603#0" expanded="false" />
-            <element signature="e#65637#65686#0" expanded="false" />
+            <element signature="e#62270#62520#0" expanded="false" />
+            <element signature="e#62270#62302#0" expanded="false" />
+            <element signature="e#62363#62395#0" expanded="false" />
+            <element signature="e#62590#63016#0" expanded="false" />
+            <element signature="e#62630#62859#0" expanded="false" />
+            <element signature="e#62788#62859#0" expanded="false" />
+            <element signature="e#65134#65194#0" expanded="false" />
+            <element signature="e#65222#65270#0" expanded="false" />
+            <element signature="e#65298#65349#0" expanded="false" />
+            <element signature="e#65387#65443#0" expanded="false" />
+            <element signature="e#65480#65799#0" expanded="false" />
+            <element signature="e#65833#65882#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/account.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="121" column="85" selection-start-line="121" selection-start-column="85" selection-end-line="121" selection-end-column="85" />
+          <folding>
+            <element signature="e#8555#9313#0#HTML" expanded="false" />
+            <element signature="e#9342#10763#0#HTML" expanded="false" />
           </folding>
         </state>
       </provider>

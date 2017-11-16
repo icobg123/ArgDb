@@ -363,7 +363,7 @@ def page_not_found(e):
 @app.before_request
 def make_session_permanent():
     session.permanent = True
-    app.permanent_session_lifetime = timedelta(minutes=10)
+    app.permanent_session_lifetime = timedelta(minutes=30)
 
 
 def token_required(f):
@@ -1447,6 +1447,10 @@ def login():
 # @token_required
 def account():
     arg_string = None
+    newapi=None
+    if 'newapi' in session:
+        newapi = session['newapi']
+        session.pop('newapi', None)
     if 'errorString' in session:
         arg_string = session['errorString']
         session.pop('errorString', None)
@@ -1490,7 +1494,7 @@ def account():
                                verified=verified,
                                user_email=user_email,
                                argument_ids_list=argument_ids_list,
-
+                               newapi=newapi,
                                # token=token
                                token=token.decode('UTF-8'),
                                arg_string=arg_string
@@ -1564,7 +1568,7 @@ def generate_new_api_key():
             verified = session['verified']
         else:
             verified = 'None'
-
+        session['newapi'] = 'newapi'
         return redirect(url_for('account'))
         # return render_template('account.html',
         #                        current_user=login_user.get('name'),
