@@ -1465,13 +1465,20 @@ def account():
     if 'username' in session:
         login_user = users.find_one({'name': session['username']})
         token = login_user.get('token')
+        public_id = login_user.get('public_id')
         user_email = login_user.get('email')
 
         search_results = argument.find({'sadface.analyst_email': user_email}).limit(10)
+        uploaded_by = argument.find({'uploader': public_id}).limit(10)
 
         argument_ids_list = []
+        uploaded_by_you = []
         for argument in search_results:
             argument_ids_list.append({
+                "id": argument['sadface']["id"]
+            })
+        for argument in uploaded_by:
+            uploaded_by_you.append({
                 "id": argument['sadface']["id"]
             })
 
@@ -1494,6 +1501,7 @@ def account():
                                verified=verified,
                                user_email=user_email,
                                argument_ids_list=argument_ids_list,
+                               uploaded_by_you=uploaded_by_you,
                                newapi=newapi,
                                # token=token
                                token=token.decode('UTF-8'),

@@ -114,13 +114,15 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs tabs-left">
                         {% if newapi %}
-                            <li><a href="#home" data-toggle="tab">Home {{ newapi }}</a></li>
-                            <li><a href="#args-by-you" data-toggle="tab"> Arguments by You</a></li>
+                            <li><a href="#home" data-toggle="tab">Home</a></li>
+                            <li><a href="#args-by-you" data-toggle="tab"> Arguments Analysed by You</a></li>
+                            <li><a href="#uploaded_by_you" data-toggle="tab"> Arguments Uploaded by You</a></li>
                             <li class="active"><a href="#api-token" data-toggle="tab">API</a></li>
                             <li><a href="#settings" data-toggle="tab">Settings</a></li>
                         {% else %}
                             <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
-                            <li><a href="#args-by-you" data-toggle="tab"> Arguments by You</a></li>
+                            <li><a href="#args-by-you" data-toggle="tab"> Arguments Analysed by You</a></li>
+                            <li><a href="#uploaded_by_you" data-toggle="tab"> Arguments Uploaded by You</a></li>
                             <li><a href="#api-token" data-toggle="tab">API</a></li>
                             <li><a href="#settings" data-toggle="tab">Settings</a></li>
                         {% endif %}
@@ -144,29 +146,54 @@
                                     {% endif %}
                                 </div>
                             </div>
-                            <div class="tab-pane" id="args-by-you">   {% if argument_ids_list %}
-                                <div class="col-sm-12">
-                                    <p>
-                                        The last documents your email appears in.
-                                    </p>
-                                    <div class="list-group">
-                                        {% for item in argument_ids_list %}
-                                            {#                            {{ item }}#}
-                                            <a class="list-group-item list-group-item-action"
-                                               href="{{ url_for('.get_argument_by_id',arg_id=item['id']) }}">
-                                                {{ loop.index }}: {{ item['id'] }}
-                                                {#                                {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
-                                            </a>
+                            <div class="tab-pane" id="args-by-you">
+                                {% if argument_ids_list %}
+                                    <div class="col-sm-12">
+                                        <p>
+                                            The last arguments your email appears in.
+                                        </p>
+                                        <div class="list-group">
+                                            {% for item in argument_ids_list %}
+                                                {#                            {{ item }}#}
+                                                <a class="list-group-item list-group-item-action"
+                                                   href="{{ url_for('.get_argument_by_id',arg_id=item['id']) }}">
+                                                    {{ loop.index }}: {{ item['id'] }}
+                                                    {#                                {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
+                                                </a>
 
 
-                                        {% endfor %}
+                                            {% endfor %}
+                                        </div>
                                     </div>
-                                </div>
-                            {% else %}
-                                <div class="col-sm-12">
-                                    <p>Your email address does not appear in any documents.</p>
-                                </div>
-                            {% endif %}</div>
+                                {% else %}
+                                    <div class="col-sm-12">
+                                        <p>Your email address does not appear in any arguments.</p>
+                                    </div>
+                                {% endif %}</div>
+                            <div class="tab-pane" id="uploaded_by_you">
+                                {% if uploaded_by_you %}
+                                    <div class="col-sm-12">
+                                        <p>
+                                            The last arguments you have uploaded.
+                                        </p>
+                                        <div class="list-group">
+                                            {% for item in uploaded_by_you %}
+                                                {#                            {{ item }}#}
+                                                <a class="list-group-item list-group-item-action"
+                                                   href="{{ url_for('.get_argument_by_id',arg_id=item['id']) }}">
+                                                    {{ loop.index }}: {{ item['id'] }}
+                                                    {#                                {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
+                                                </a>
+
+
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="col-sm-12">
+                                        <p>You have no uploaded arguments.</p>
+                                    </div>
+                                {% endif %}</div>
                             <div class="tab-pane active" id="api-token">
                                 <div class="col-sm-12">
                                     <div class="row">
@@ -272,29 +299,52 @@
                                     {% endif %}
                                 </div>
                             </div>
-                            <div class="tab-pane" id="args-by-you">   {% if argument_ids_list %}
-                                <div class="col-sm-12">
-                                    <p>
-                                        The last documents your email appears in.
-                                    </p>
-                                    <div class="list-group">
-                                        {% for item in argument_ids_list %}
-                                            {#                            {{ item }}#}
-                                            <a class="list-group-item list-group-item-action"
-                                               href="{{ url_for('.get_argument_by_id',arg_id=item['id']) }}">
-                                                {{ loop.index }}: {{ item['id'] }}
-                                                {#                                {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
-                                            </a>
+                            <div class="tab-pane" id="args-by-you">
+                                {% if argument_ids_list %}
+                                    <div class="col-sm-12">
+                                        <p>
+                                            The last arguments your email appears in.
+                                        </p>
+                                        <div class="list-group">
+                                            {% for item in argument_ids_list %}
+                                                {#                            {{ item }}#}
+                                                <a class="list-group-item list-group-item-action"
+                                                   href="{{ url_for('.get_argument_by_id',arg_id=item['id']) }}">
+                                                    {{ loop.index }}: {{ item['id'] }}
+                                                    {#                                {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
+                                                </a>
 
 
-                                        {% endfor %}
+                                            {% endfor %}
+                                        </div>
                                     </div>
-                                </div>
-                            {% else %}
-                                <div class="col-sm-12">
-                                    <p>Your email address does not appear in any documents.</p>
-                                </div>
-                            {% endif %}</div>
+                                {% else %}
+                                    <div class="col-sm-12">
+                                        <p>Your email address does not appear in any arguments.</p>
+                                    </div>
+                                {% endif %}</div>
+                            <div class="tab-pane" id="uploaded_by_you">
+                                {% if uploaded_by_you %}
+                                    <div class="col-sm-12">
+                                        <p>The last arguments you have uploaded.</p>
+                                        <div class="list-group">
+                                            {% for item in uploaded_by_you %}
+                                                {#                            {{ item }}#}
+                                                <a class="list-group-item list-group-item-action"
+                                                   href="{{ url_for('.get_argument_by_id',arg_id=item['id']) }}">
+                                                    {{ loop.index }}: {{ item['id'] }}
+                                                    {#                                {{ loop.index + (page - 1) * per_page }}: {{ search_nodes[loop.index - 1] }}#}
+                                                </a>
+
+
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="col-sm-12">
+                                        <p>You have no uploaded arguments.</p>
+                                    </div>
+                                {% endif %}</div>
                             <div class="tab-pane" id="api-token">
                                 <div class="col-sm-12">
                                     <div class="row">
