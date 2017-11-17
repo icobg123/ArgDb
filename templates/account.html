@@ -213,6 +213,10 @@
                                     {% if verified %}
                                         <div class="row">
                                             <div class="col-sm-12">
+
+                                                <div class="alert alert-success" role="alert">
+                                                    {% if newapi %} A new token has been generated. {% endif %}
+                                                </div>
                                                 <div class="alert alert-info" role="alert">
                                                     Please include this API token in the headers of your requests in
                                                     "x-access-token" key.

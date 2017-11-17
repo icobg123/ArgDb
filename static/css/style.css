@@ -43,7 +43,9 @@ p {
     height: 91vh;
     /*border: 1px solid;*/
 }
-
+.width32{
+    width: 31.333333%!important;
+}
 .fileUpload {
     position: relative;
     overflow: hidden;

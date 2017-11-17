@@ -580,7 +580,7 @@ def search_for_arg():
         return redirect(url_for('get_one_argument', arg_str=arg_str))
 
 
-@app.route('/api_documentation', methods=['GET','POST'])
+@app.route('/api_documentation', methods=['GET', 'POST'])
 def documentation():
     arg_string = None
     if 'errorString' in session:
@@ -1380,6 +1380,19 @@ def register():
                 link = url_for('confirm_email', token=token, _external=True)
 
                 msg.body = 'Your link is {}'.format(link)
+                username = request.form['username']
+                msg.html = """\
+                <html>
+                  <head></head>
+                  <body>
+                    <p>Hi!<br>
+                       Thank you for registering for ArgDb <strong>%s</strong><br>!
+                       Please click the link below in order to verify your email address and gain access to the API.
+                       Here is the link - <a href="%s">Verify Account</a>
+                    </p>
+                  </body>
+                </html>
+                """ %(username, link)
 
                 mail.send(msg)
                 # session['username'] = request.form['username']
@@ -1447,7 +1460,7 @@ def login():
 # @token_required
 def account():
     arg_string = None
-    newapi=None
+    newapi = None
     if 'newapi' in session:
         newapi = session['newapi']
         session.pop('newapi', None)
