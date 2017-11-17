@@ -101,6 +101,8 @@
             {% if current_user %}
                 {#                    <h3 class="pull-right"> {{ current_user }}</h3>#}
                 <ul class="nav pull-right navbar-nav margin-left">
+                    <li><a href="{{ url_for('documentation') }}"><i class="fa fa-book" aria-hidden="true"></i> API
+                        Documentation</a></li>
                     <li><a href="{{ url_for('account') }}">Hi there, {{ current_user }} !</a></li>
                     <li><a href="{{ url_for('logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Sign out</a>
                     </li>
