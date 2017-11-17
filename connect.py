@@ -674,15 +674,15 @@ def get_argument_by_id(arg_id):
     sadface_results = search_results.get("sadface", {})
     result = sadface_results.get('id')
     arg_found = json.dumps({
-        "Analyst Email": sadface_results.get("analyst_email"),
-        "Analyst Name": sadface_results.get("analyst_name"),
-        "Created": sadface_results.get("created"),
-        "Edges": sadface_results.get("edges"),
-        "Edited": sadface_results.get("edited"),
+        "analyst_email": sadface_results.get("analyst_email"),
+        "analyst_name": sadface_results.get("analyst_name"),
+        "created": sadface_results.get("created"),
+        "edges": sadface_results.get("edges"),
+        "edited": sadface_results.get("edited"),
         "id": sadface_results.get("id"),
-        "Metadata": sadface_results.get("metadata"),
-        "Nodes": sadface_results.get("nodes"),
-        "Resources": sadface_results.get("resources")}, sort_keys=False, indent=2)
+        "metadata": sadface_results.get("metadata"),
+        "nodes": sadface_results.get("nodes"),
+        "resources": sadface_results.get("resources")}, sort_keys=False, indent=2)
 
     sadface.sd = sadface_results
     dot_string = sadface.export_dot()
@@ -1227,15 +1227,15 @@ def download_arg(arg_id):
         result = search_results.get("sadface", {})
 
         single_argument = {
-            "Analyst Email": result.get("analyst_email"),
-            "Analyst Name": result.get("analyst_name"),
-            "Created": result.get("created"),
-            "Edges": result.get("edges"),
-            "Edited": result.get("edited"),
+            "analyst_email": result.get("analyst_email"),
+            "analyst_name": result.get("analyst_name"),
+            "created": result.get("created"),
+            "edges": result.get("edges"),
+            "edited": result.get("edited"),
             "id": result.get("id"),
-            "Metadata": result.get("metadata"),
-            "Nodes": result.get("nodes"),
-            "Resources": result.get("resources")}
+            "metadata": result.get("metadata"),
+            "nodes": result.get("nodes"),
+            "resources": result.get("resources")}
         to_pass = jsonify(single_argument)
 
         to_pass.headers['Content-Disposition'] = 'attachment;filename=' + result.get("id") + '.json'

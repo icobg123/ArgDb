@@ -639,14 +639,14 @@ def upload_file(current_user):
                         return json.dumps({'An argument with this ID already exists': ({
                             # "Analyst Email": parsed_to_json.get("analyst_email"),
                             # "Analyst Name": parsed_to_json.get("analyst_name"),
-                            # "Created": parsed_to_json.get("created"),
-                            # "Edges": parsed_to_json.get("edges"),
-                            # "Edited": parsed_to_json.get("edited"),
+                            # "created": parsed_to_json.get("created"),
+                            # "edges": parsed_to_json.get("edges"),
+                            # "edited": parsed_to_json.get("edited"),
                             "id": parsed_to_json.get("sadface", {}).get('id'),
                             # "id": parsed_to_json.get("id"),
-                            # "Metadata": parsed_to_json.get("metadata"),
-                            # "Nodes": parsed_to_json.get("nodes"),
-                            # "Resources": parsed_to_json.get("resources"),
+                            # "metadata": parsed_to_json.get("metadata"),
+                            # "nodes": parsed_to_json.get("nodes"),
+                            # "resources": parsed_to_json.get("resources"),
                             # "found": check_if_exists_dumps
 
                         })}, sort_keys=False, indent=2), 409, {
@@ -838,13 +838,13 @@ def index():
 #     #         # "MongoDB ID": q["_id"],
 #     #         "Analyst Email": q["analyst_email"],
 #     #         "Analyst Name": q["analyst_name"],
-#     #         "Created": q["created"],
-#     #         "Edges": q["edges"],
-#     #         "Edited": q["edited"],
+#     #         "created": q["created"],
+#     #         "edges": q["edges"],
+#     #         "edited": q["edited"],
 #     #         "id": q["id"],
-#     #         "Metadata": q["metadata"],
-#     #         "Nodes": q["nodes"],
-#     #         "Resources": q["resources"],
+#     #         "metadata": q["metadata"],
+#     #         "nodes": q["nodes"],
+#     #         "resources": q["resources"],
 #     #
 #     #     })
 #
@@ -903,13 +903,13 @@ def get_arguments_with_txt(current_user, arg_str):
     #         # "MongoDB ID": q["_id"],
     #         "Analyst Email": q["analyst_email"],
     #         "Analyst Name": q["analyst_name"],
-    #         "Created": q["created"],
-    #         "Edges": q["edges"],
-    #         "Edited": q["edited"],
+    #         "created": q["created"],
+    #         "edges": q["edges"],
+    #         "edited": q["edited"],
     #         "id": q["id"],
-    #         "Metadata": q["metadata"],
-    #         "Nodes": q["nodes"],
-    #         "Resources": q["resources"],
+    #         "metadata": q["metadata"],
+    #         "nodes": q["nodes"],
+    #         "resources": q["resources"],
     #
     #     })
 
@@ -917,14 +917,14 @@ def get_arguments_with_txt(current_user, arg_str):
         results.append({
             # "MongoDB ID": q["_id"],
             "Analyst Email": q['sadface']["analyst_email"],
-            "Analyst Name": q['sadface']["analyst_name"],
-            "Created": q['sadface']["created"],
-            "Edges": q['sadface']["edges"],
-            "Edited": q['sadface']["edited"],
+            "analyst_name": q['sadface']["analyst_name"],
+            "created": q['sadface']["created"],
+            "edges": q['sadface']["edges"],
+            "edited": q['sadface']["edited"],
             "id": q['sadface']["id"],
-            "Metadata": q['sadface']["metadata"],
-            "Nodes": q['sadface']["nodes"],
-            "Resources": q['sadface']["resources"],
+            "metadata": q['sadface']["metadata"],
+            "nodes": q['sadface']["nodes"],
+            "resources": q['sadface']["resources"],
 
         })
 
@@ -980,14 +980,14 @@ def get_argument_by_id(current_user, arg_id):
         # return render_template('homepage.html', doomed=result)
         return jsonify({
             "Analyst Email": result.get("analyst_email"),
-            "Analyst Name": result.get("analyst_name"),
-            "Created": result.get("created"),
-            "Edges": result.get("edges"),
-            "Edited": result.get("edited"),
+            "analyst_name": result.get("analyst_name"),
+            "created": result.get("created"),
+            "edges": result.get("edges"),
+            "edited": result.get("edited"),
             "id": result.get("id"),
-            "Metadata": result.get("metadata"),
-            "Nodes": result.get("nodes"),
-            "Resources": result.get("resources"),
+            "metadata": result.get("metadata"),
+            "nodes": result.get("nodes"),
+            "resources": result.get("resources"),
 
         }), 200
 
@@ -1149,15 +1149,15 @@ def advanced_search_test():
     for q in search_results:
         output.append({
             # "MongoDB ID": q["_id"],
-            "Analyst Email": q['sadface']["analyst_email"],
-            "Analyst Name": q['sadface']["analyst_name"],
-            "Created": q['sadface']["created"],
-            "Edges": q['sadface']["edges"],
-            "Edited": q['sadface']["edited"],
+            "analyst_email": q['sadface']["analyst_email"],
+            "analyst_name": q['sadface']["analyst_name"],
+            "created": q['sadface']["created"],
+            "edges": q['sadface']["edges"],
+            "edited": q['sadface']["edited"],
             "id": q['sadface']["id"],
-            "Metadata": q['sadface']["metadata"],
-            "Nodes": q['sadface']["nodes"],
-            "Resources": q['sadface']["resources"],
+            "metadata": q['sadface']["metadata"],
+            "nodes": q['sadface']["nodes"],
+            "resources": q['sadface']["resources"],
 
         })
 
@@ -1234,15 +1234,15 @@ def advanced_search_find():
                 for q in search_results:
                     output.append({
                         # "MongoDB ID": q["_id"],
-                        "Analyst Email": q['sadface']["analyst_email"],
-                        "Analyst Name": q['sadface']["analyst_name"],
-                        "Created": q['sadface']["created"],
-                        "Edges": q['sadface']["edges"],
-                        "Edited": q['sadface']["edited"],
+                        "analyst_email": q['sadface']["analyst_email"],
+                        "analyst_name": q['sadface']["analyst_name"],
+                        "created": q['sadface']["created"],
+                        "edges": q['sadface']["edges"],
+                        "edited": q['sadface']["edited"],
                         "id": q['sadface']["id"],
-                        "Metadata": q['sadface']["metadata"],
-                        "Nodes": q['sadface']["nodes"],
-                        "Resources": q['sadface']["resources"],
+                        "metadata": q['sadface']["metadata"],
+                        "nodes": q['sadface']["nodes"],
+                        "resources": q['sadface']["resources"],
 
                     })
 
@@ -1490,15 +1490,15 @@ def api_get_argument_by_id(current_user, arg_id):
 
         # return render_template('homepage.html', doomed=result)
         return jsonify({
-            "Analyst Email": result.get("analyst_email"),
-            "Analyst Name": result.get("analyst_name"),
-            "Created": result.get("created"),
-            "Edges": result.get("edges"),
-            "Edited": result.get("edited"),
+            "analyst_email": result.get("analyst_email"),
+            "analyst_name": result.get("analyst_name"),
+            "created": result.get("created"),
+            "edges": result.get("edges"),
+            "edited": result.get("edited"),
             "id": result.get("id"),
-            "Metadata": result.get("metadata"),
-            "Nodes": result.get("nodes"),
-            "Resources": result.get("resources"),
+            "metadata": result.get("metadata"),
+            "nodes": result.get("nodes"),
+            "resources": result.get("resources"),
 
         }), 200,
     else:

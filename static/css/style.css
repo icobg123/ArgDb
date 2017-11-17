@@ -43,9 +43,15 @@ p {
     height: 91vh;
     /*border: 1px solid;*/
 }
-.width32{
-    width: 31.333333%!important;
+
+.width32 {
+    width: 31.333333% !important;
 }
+
+.btn-404 a:focus {
+    background-color: #337ab7;
+}
+
 .fileUpload {
     position: relative;
     overflow: hidden;
