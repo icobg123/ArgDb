@@ -1409,17 +1409,19 @@ def unauthorized(error=None):
 
 # real API
 
-@app.route('/api/v1/login',methods=['GET'])
+@app.route('/api/v1/login', methods=['GET'])
 def login():
     authorization = request.authorization
     if not authorization or not authorization.username or not authorization.password:
-        return make_response(jsonify({"error":"Invalid username/password combination."}), 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
+        return make_response(jsonify({"error": "Invalid username/password combination."}), 401,
+                             {'WWW-Authenticate': 'Basic realm="Login required!"'})
 
     users = mongo.db.users
     user = users.find_one({'name': authorization.username})
 
     if not user:
-        return make_response({"error":"Please provide login credentials."}, 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
+        return make_response({"error": "Please provide login credentials."}, 401,
+                             {'WWW-Authenticate': 'Basic realm="Login required!"'})
 
     if check_password_hash(user.get('password'), authorization.password):
         # payload = {'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=1),
@@ -1443,7 +1445,8 @@ def login():
 
             # return jsonify({'token': token})
 
-    return make_response('{"error":"Invalid username/password combination."}', 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
+    return make_response('{"error":"Invalid username/password combination."}', 401,
+                         {'WWW-Authenticate': 'Basic realm="Login required!"'})
 
 
 @app.route('/api/v1/arguments/<arg_id>', methods=['DELETE'])
@@ -1455,14 +1458,17 @@ def api_delete_one_arg(current_user, arg_id):
     argument = mongo.db.argument
     users = mongo.db.users
 
-    search_results = argument.find_one({"sadface.id": {'$regex': ".*" + arg_id + ".*", "$options": "i"}})
+    search_results = argument.find_one({"sadface.id": arg_id})
+    # search_results = argument.find_one({"sadface.id": {'$regex': ".*" + arg_id + ".*", "$options": "i"}})
+
 
     if search_results:
         doc_to_be_delted = search_results.get("sadface", {})
 
         # current_user = users.find_one({'public_id': token_data['public_id']})
         if search_results.get("uploader") == current_user.get('public_id'):
-            result = argument.delete_one({"sadface.id": {'$regex': ".*" + arg_id + ".*", "$options": "i"}})
+            result = argument.delete_one({"sadface.id": arg_id})
+            # result = argument.delete_one({"sadface.id": {'$regex': ".*" + arg_id + ".*", "$options": "i"}})
 
             return jsonify({"message": "Successfully deleted argument with SADFace id: " + arg_id}), 200,
         else:
@@ -1589,7 +1595,7 @@ def api_edit_argument(current_user, arg_id):
                         else:
                             outcome = "The provided URL id: " + arg_id + " does not match the argument id in the JSON file you supplied."
 
-                        return jsonify({'errors': outcome}), 404,
+                        return jsonify({'errors': outcome}), 409,
 
                         # return json.dumps({'errors': errors_list}, sort_keys=False, indent=2), 200, {
                         #     'Content-Type': 'application/json'}
@@ -1647,7 +1653,9 @@ def api_advanced_search():
         # for each query parameter add its contents to a dict in order to
         # create the query which to pass to the mongoGB search function
         for field in populated_search_fields:
-            query_dict['sadface.' + field] = {'$regex': '.*' + search_fields[field] + '.*', '$options': 'i'}
+            query_dict['sadface.' + field] = {"$regex": ".*" + search_fields.get(field) + ".*", "$options": "i"}
+            # query_dict['sadface.' + field] = {'$regex': '.*' + search_fields[field] + '.*', '$options': 'i'}
+            # {"sadface.nodes.text": {'$regex': ".*" + arg_str + ".*", "$options": "i"}}).skip(offset).limit(per_page)
 
         search_results = argument.find(query_dict)
 
@@ -1686,7 +1694,7 @@ def api_advanced_search():
                 })
 
         resp = jsonify(
-            {"Results found": count_me},
+            {"Results found": count_me},{"Q DICT": query_dict},
             # {"fields to return": fields_to_return},
             {"Results": output}), 200
 
