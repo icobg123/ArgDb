@@ -1694,7 +1694,7 @@ def api_advanced_search():
                 })
 
         resp = jsonify(
-            {"Results found": count_me},{"Q DICT": query_dict},
+            {"Results found": count_me},
             # {"fields to return": fields_to_return},
             {"Results": output}), 200
 
