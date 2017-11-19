@@ -539,7 +539,6 @@ Returns a list of arguments which match the provided parameters.
 Upload an argument 
 ----
 Uploads an argument in the SADFace format to the database. 
-
 Takes SADFace argument with an id that does not exists in the database. 
 
  

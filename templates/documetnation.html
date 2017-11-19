@@ -12,21 +12,19 @@
                 <ul class="nav nav-list" data-spy="">
                     {#                <ul class="nav nav-list bs-docs-sidenav" data-spy="affix">#}
                     <li><a href="#1">1. ArgDB API</a></li>
-                    <li><a href="#2">1.1. Returns JSON data about a single SADFace argument.</a></li>
-                    <li><a href="#3">1.2. Edits or modifies an argument in the SADFace format to the database. </a></li>
-                    <li><a href="#4">1.3. Deletes an argument from the database with the provided id if the caller is
-                        the
-                        user that uploaded the argument.</a></li>
-                    <li><a href="#5">1.4. Returns a list of arguments which match the provided parameters.</a></li>
-                    <li><a href="#6">1.5. Uploads an argument in the SADFace format to the database. </a></li>
-                    <li><a href="#7">1.6. Returns a JWT when a user provides their username and password as
-                        authentication.</a></li>
+                    <li><a href="#2">1.1. Retrieve an argument</a></li>
+                    <li><a href="#3">1.2. Edit an argument</a></li>
+                    <li><a href="#4">1.3. Remove an argument</a></li>
+                    <li><a href="#5">1.4. Advanced search</a></li>
+                    <li><a href="#6">1.5. Upload an argument</a></li>
+                    <li><a href="#7">1.6. Sign in</a></li>
                 </ul>
             </div>
             <div class="col-sm-12"><h1 id="1">1. <strong>ArgDB API</strong></h1>
 
 
-                <h2 id="2">1.1. Returns JSON data about a single SADFace argument.</h2>
+                <h2 id="2">1.1. Retrieve an argument</h2>
+                <h3>Returns JSON data about a single SADFace argument.</h3>
 
                 <ul>
                     <li><p><strong>URL</strong></p>
@@ -165,7 +163,8 @@
                     </li>
                 </ul>
 
-                <h2 id="3">1.2. Edits or modifies an argument in the SADFace format to the database. </h2>
+                <h2 id="3">1.2. Edit an argument</h2>
+                <h3>Edits or modifies an argument in the SADFace format to the database. </h3>
 
                 <p>Takes SADFace JSON file with the same id as the argument to be edited. </p>
 
@@ -276,9 +275,10 @@
                     </li>
                 </ul>
 
-                <h2 id="4">1.3. Deletes an argument from the database with the provided id if the caller is the user
+                <h2 id="4">Remove an argument</h2>
+                <h3>Deletes an argument from the database with the provided id if the caller is the user
                     that
-                    uploaded the argument.</h2>
+                    uploaded the argument.</h3>
 
                 <ul>
                     <li><p><strong>URL</strong></p>
@@ -352,7 +352,8 @@
                     </li>
                 </ul>
 
-                <h2 id="5">1.4. Returns a list of arguments which match the provided parameters.</h2>
+                <h2 id="5">1.4. Advanced search</h2>
+                <h3>Returns a list of arguments which match the provided parameters.</h3>
 
                 <ul>
                     <li><p><strong>URL</strong></p>
@@ -588,7 +589,8 @@
                     </li>
                 </ul>
 
-                <h2 id="6">1.5. Uploads an argument in the SADFace format to the database. </h2>
+                <h2 id="6">1.5. Upload an argument</h2>
+                <h3>Uploads an argument in the SADFace format to the database. </h3>
 
                 <p>Takes SADFace argument with an id that does not exists in the database. </p>
 
@@ -685,7 +687,8 @@
                     </li>
                 </ul>
 
-                <h2 id="7">1.6. Returns a JWT when a user provides their username and password as authentication.</h2>
+                <h2 id="7">1.6. Sign in</h2>
+                <h3>1.6. Returns a JWT when a user provides their username and password as authentication.</h3>
 
                 <ul>
                     <li><p><strong>URL</strong></p>
