@@ -1313,7 +1313,7 @@ def change_pass():
 
                 mail.send(msg)
                 err = "Your password has been changed."
-                session['err'] = err
+                session['pass_change'] = err
                 return redirect(url_for('account'))
 
     return redirect(url_for('account'))
@@ -1466,10 +1466,14 @@ def login():
 # @token_required
 def account():
     arg_string = None
+    pass_changed = None
     newapi = None
     if 'newapi' in session:
         newapi = session['newapi']
         session.pop('newapi', None)
+    if 'pass_change' in session:
+        pass_changed = session['pass_change']
+        session.pop('pass_change', None)
     if 'errorString' in session:
         arg_string = session['errorString']
         session.pop('errorString', None)
@@ -1522,6 +1526,7 @@ def account():
                                argument_ids_list=argument_ids_list,
                                uploaded_by_you=uploaded_by_you,
                                newapi=newapi,
+                               pass_changed=pass_changed,
                                # token=token
                                token=token.decode('UTF-8'),
                                arg_string=arg_string
