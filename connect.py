@@ -1392,10 +1392,10 @@ def register():
                     </p>
                   </body>
                 </html>
-                """ %(username, link)
+                """ % (username, link)
 
                 mail.send(msg)
-                # session['username'] = request.form['username']
+                session['registered'] = request.form['email']
                 return redirect(url_for('login'))
 
                 # err = "Username already exists"
@@ -1407,6 +1407,11 @@ def register():
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     arg_string = None
+    emails_sess = None
+    if 'registered' in session:
+        emails_sess = session['registered']
+        session.pop('registered', None)
+
     if 'errorString' in session:
         arg_string = session['errorString']
         session.pop('errorString', None)
@@ -1451,9 +1456,10 @@ def login():
                     return redirect(url_for('account'))
 
             invalidComb = True
-            return render_template('log_ing.html', invalidComb=invalidComb, arg_string=arg_string)
+            return render_template('log_ing.html', invalidComb=invalidComb, arg_string=arg_string,
+                                   emails_sess=emails_sess)
 
-    return render_template('log_ing.html')
+    return render_template('log_ing.html',emails_sess=emails_sess)
 
 
 @app.route('/account', methods=['POST', 'GET'])
