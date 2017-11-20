@@ -1661,7 +1661,10 @@ def api_advanced_search():
 
         count_me = search_results.count()
         # # TODO: counts how many results were found
-
+        if count_me < 1:
+            resp = jsonify({"error": "No results were found matching your search criteria."})
+            resp.status_code = 404
+            return resp
         output = []
 
         fields_to_return = []
@@ -1700,10 +1703,10 @@ def api_advanced_search():
 
         return resp
 
-    resp = jsonify({"Information": "Please provide arguments to search on."},
-                   {"Example URL": "/api/v1/arguments?analyst_name=simon&fields=id Will return all ids of SADFace "
+    resp = jsonify({"error": "Please provide arguments to search on."},
+                   {"example URL": "/api/v1/arguments?analyst_name=simon&fields=id Will return all ids of SADFace "
                                    "arguments which contain simon in their analst_name field."})
-    resp.status_code = 406
+    resp.status_code = 404
     return resp
 
 
