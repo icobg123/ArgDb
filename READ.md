@@ -1,9 +1,9 @@
 **ArgDB API**
 ====================
 
-Returns JSON data about a single SADFace argument.
+Retrieve an argument
 ----
-
+Returns JSON data about a single SADFace argument.
 
 * **URL**
 
@@ -124,9 +124,10 @@ Returns JSON data about a single SADFace argument.
     ```
  
 
-Edits or modifies an argument in the SADFace format to the database. 
+Edit an argument
 ---------------------
- 
+Edits or modifies an argument in the SADFace format to the database. 
+
  Takes SADFace JSON file with the same id as the argument to be edited. 
 
 
@@ -214,8 +215,10 @@ Edits or modifies an argument in the SADFace format to the database.
     ```
  
 
-Deletes an argument from the database with the provided id if the caller is the user that uploaded the argument.
+Remove an argument
 ----
+Deletes an argument from the database with the provided id if the caller is the user that uploaded the argument.
+
 * **URL**
 
   /api/v1/arguments/<arg_id>
@@ -269,8 +272,10 @@ Deletes an argument from the database with the provided id if the caller is the 
     ```
      
 
-Returns a list of arguments which match the provided parameters.
+Advanced search
 ----
+Returns a list of arguments which match the provided parameters.
+
 * **URL**
 
   /api/v1/arguments
@@ -531,8 +536,9 @@ Returns a list of arguments which match the provided parameters.
     ```
  
 
-Uploads an argument in the SADFace format to the database. 
+Upload an argument 
 ----
+Uploads an argument in the SADFace format to the database. 
 Takes SADFace argument with an id that does not exists in the database. 
 
  
