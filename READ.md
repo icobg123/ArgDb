@@ -309,7 +309,7 @@ Returns a list of arguments which match the provided parameters.
     **Content:** 
         
     ```json
-        [
+    [
       {
         "Results found": 2
       }, 
@@ -508,7 +508,7 @@ Returns a list of arguments which match the provided parameters.
         ]
       }
     ]
-     ```
+    ```
  
 * **Error Response:**
 

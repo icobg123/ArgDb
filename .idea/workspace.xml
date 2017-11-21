@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e0db6b7f-cf94-4adc-91ec-65b0af295886" name="Default" comment="ncier api description">
+    <list default="true" id="e0db6b7f-cf94-4adc-91ec-65b0af295886" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/connect.py" afterPath="$PROJECT_DIR$/connect.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/log_ing.html" afterPath="$PROJECT_DIR$/templates/log_ing.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/READ.md" afterPath="$PROJECT_DIR$/READ.md" />
     </list>
     <ignored path=".idea/dataSources.local.xml" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -16,7 +15,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/ArgDb$connect.coverage" NAME="connect Coverage Results" MODIFIED="1511201224619" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ArgDb$connect.coverage" NAME="connect Coverage Results" MODIFIED="1511202962798" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ArgDb$api.coverage" NAME="api Coverage Results" MODIFIED="1511120315327" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
@@ -31,8 +30,8 @@
       <file leaf-file-name="connect.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/connect.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="779">
-              <caret line="1460" column="0" lean-forward="true" selection-start-line="1460" selection-start-column="0" selection-end-line="1460" selection-end-column="0" />
+            <state relative-caret-position="544">
+              <caret line="1528" column="43" lean-forward="false" selection-start-line="1528" selection-start-column="31" selection-end-line="1528" selection-end-column="43" />
               <folding>
                 <element signature="e#1882#1975#0" expanded="false" />
                 <element signature="e#2065#9364#0" expanded="false" />
@@ -212,61 +211,65 @@
                 <element signature="e#49229#49617#0" expanded="false" />
                 <element signature="e#49317#49611#0" expanded="false" />
                 <element signature="e#49617#49696#0" expanded="false" />
+                <element signature="e#50503#50647#0" expanded="false" />
                 <element signature="e#50739#51872#0" expanded="false" />
                 <element signature="e#50798#50874#0" expanded="false" />
                 <element signature="e#51087#51748#0" expanded="false" />
                 <element signature="e#51157#51580#0" expanded="false" />
                 <element signature="e#51872#51908#0" expanded="false" />
                 <element signature="e#52632#52728#0" expanded="false" />
-                <element signature="e#52908#54331#0" expanded="false" />
-                <element signature="e#52908#52937#0" expanded="false" />
-                <element signature="e#53128#54214#0" expanded="false" />
-                <element signature="e#53240#54214#0" expanded="false" />
-                <element signature="e#53283#54214#0" expanded="false" />
-                <element signature="e#53332#53532#0" expanded="false" />
-                <element signature="e#53897#53959#0" expanded="false" />
-                <element signature="e#60824#63366#0" expanded="false" />
-                <element signature="e#60896#60958#0" expanded="false" />
-                <element signature="e#61000#61076#0" expanded="false" />
-                <element signature="e#61081#61103#0" expanded="false" />
-                <element signature="e#61181#61244#0" expanded="false" />
-                <element signature="e#61343#63336#0" expanded="false" />
-                <element signature="e#61808#61897#0" expanded="false" />
-                <element signature="e#61833#61896#0" expanded="false" />
-                <element signature="e#61947#62034#0" expanded="false" />
-                <element signature="e#61970#62033#0" expanded="false" />
-                <element signature="e#62088#62283#0" expanded="false" />
-                <element signature="e#62310#62496#0" expanded="false" />
-                <element signature="e#62505#62583#0" expanded="false" />
-                <element signature="e#63427#63677#0" expanded="false" />
-                <element signature="e#63427#63459#0" expanded="false" />
-                <element signature="e#63520#63552#0" expanded="false" />
-                <element signature="e#63747#64173#0" expanded="false" />
-                <element signature="e#63787#64016#0" expanded="false" />
-                <element signature="e#63945#64016#0" expanded="false" />
-                <element signature="e#64269#66190#0" expanded="false" />
-                <element signature="e#64328#64404#0" expanded="false" />
-                <element signature="e#64576#66170#0" expanded="false" />
-                <element signature="e#64808#65086#0" expanded="false" />
-                <element signature="e#65113#65313#0" expanded="false" />
-                <element signature="e#65355#65529#0" expanded="false" />
-                <element signature="e#65865#65905#0" expanded="false" />
-                <element signature="e#66291#66351#0" expanded="false" />
-                <element signature="e#66379#66427#0" expanded="false" />
-                <element signature="e#66455#66506#0" expanded="false" />
-                <element signature="e#66544#66600#0" expanded="false" />
-                <element signature="e#66637#66956#0" expanded="false" />
-                <element signature="e#66990#67039#0" expanded="false" />
+                <element signature="e#58269#60744#0" expanded="false" />
+                <element signature="e#58350#58425#0" expanded="false" />
+                <element signature="e#58468#58544#0" expanded="false" />
+                <element signature="e#58718#60676#0" expanded="false" />
+                <element signature="e#58760#58836#0" expanded="false" />
+                <element signature="e#58836#58865#0" expanded="false" />
+                <element signature="e#58968#60676#0" expanded="false" />
+                <element signature="e#59043#59164#0" expanded="false" />
+                <element signature="e#59321#60485#0" expanded="false" />
+                <element signature="e#59415#60485#0" expanded="false" />
+                <element signature="e#59750#60161#0" expanded="false" />
+                <element signature="e#59798#60004#0" expanded="false" />
+                <element signature="e#60336#60380#0" expanded="false" />
+                <element signature="e#63637#63887#0" expanded="false" />
+                <element signature="e#63637#63669#0" expanded="false" />
+                <element signature="e#63730#63762#0" expanded="false" />
+                <element signature="e#63957#64383#0" expanded="false" />
+                <element signature="e#63997#64226#0" expanded="false" />
+                <element signature="e#64155#64226#0" expanded="false" />
+                <element signature="e#64479#66400#0" expanded="false" />
+                <element signature="e#64538#64614#0" expanded="false" />
+                <element signature="e#64786#66380#0" expanded="false" />
+                <element signature="e#65018#65296#0" expanded="false" />
+                <element signature="e#65323#65523#0" expanded="false" />
+                <element signature="e#65565#65739#0" expanded="false" />
+                <element signature="e#66075#66115#0" expanded="false" />
+                <element signature="e#66501#66561#0" expanded="false" />
+                <element signature="e#66589#66637#0" expanded="false" />
+                <element signature="e#66665#66716#0" expanded="false" />
+                <element signature="e#66754#66810#0" expanded="false" />
+                <element signature="e#66847#67166#0" expanded="false" />
+                <element signature="e#67200#67249#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="log_ing.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="account.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/account.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="327">
+              <caret line="280" column="50" lean-forward="true" selection-start-line="280" selection-start-column="50" selection-end-line="280" selection-end-column="50" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="log_ing.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/log_ing.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="12" column="33" lean-forward="false" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
+            <state relative-caret-position="360">
+              <caret line="10" column="26" lean-forward="true" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -278,6 +281,98 @@
             <state relative-caret-position="1656">
               <caret line="46" column="20" lean-forward="false" selection-start-line="46" selection-start-column="20" selection-end-line="46" selection-end-column="20" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="READ.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/READ.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="189">
+                <caret line="286" column="17" lean-forward="true" selection-start-line="286" selection-start-column="17" selection-end-line="286" selection-end-column="17" />
+                <folding>
+                  <marker date="1511231489542" expanded="true" signature="364:3347" ph="{&quot;id&quot;: &quot;94a975db-25ae-4d25-93cc-1c07c932e2f8&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="510:1674" ph="[...]" />
+                  <marker date="1511231489542" expanded="true" signature="524:740" ph="{&quot;id&quot;: &quot;d7bcef81-0d74-4ae5-96f9-bfb07031f1fa&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="755:971" ph="{&quot;id&quot;: &quot;f57ecb48-dfd5-4789-b3c5-46f770f4113d&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="986:1202" ph="{&quot;id&quot;: &quot;c48c3d75-a8b3-439a-9a2f-b987eaae2c9a&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="1217:1433" ph="{&quot;id&quot;: &quot;86e797aa-ecb0-4fcd-8838-263ceedb099e&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="1448:1664" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8386&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="1816:3311" ph="[...]" />
+                  <marker date="1511231489542" expanded="true" signature="1830:2120" ph="{&quot;id&quot;: &quot;9bfb7cdc-116f-47f5-b85d-ff7c5d329f45&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="2135:2282" ph="{&quot;id&quot;: &quot;49a786ce-9066-4230-8e18-42086882a160&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="2297:2568" ph="{&quot;id&quot;: &quot;30c9c0ac-ddef-44e7-897d-52ffee97b837&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="2583:2840" ph="{&quot;id&quot;: &quot;02b4009b-1a12-4d53-ab3a-efabe6c44694&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="2855:3003" ph="{&quot;id&quot;: &quot;5760a93a-55e7-447c-a245-7f8d7e7e4434&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="3018:3301" ph="{&quot;id&quot;: &quot;fbaa9b79-0965-45a1-9fd4-60701c2102cf&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="4143:4272" ph="{...}" />
+                  <marker date="1511231489542" expanded="true" signature="4193:4266" ph="{&quot;id&quot;: &quot;uuid4&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="4376:4476" ph="{&quot;error&quot;: &quot;The provided URL id:  'arg_id' does not match any arguments in the database.&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="4560:4675" ph="{&quot;error&quot;: &quot;An argument with that id does not exist or you don't have permissions to edit this argument&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="4763:4805" ph="{&quot;error&quot;: &quot;Token is missing!&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="4894:5000" ph="{&quot;error&quot;: &quot;The provided URL id: uuid4 does not match the argument id in the JSON file you supplied.&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="5095:5219" ph="{...}" />
+                  <marker date="1511231489542" expanded="true" signature="5113:5213" ph="[...]" />
+                  <marker date="1511231489542" expanded="true" signature="5123:5205" ph="{&quot;error&quot;: &quot;'id' is a required property&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="5617:5697" ph="{&quot;message&quot;: &quot;Successfully deleted argument with SADFace id: uuid4&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="5803:5844" ph="{&quot;error&quot;: &quot;Token is missing!&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="5922:5979" ph="{&quot;error&quot;: &quot;No argument found with id :uuid4&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="6057:6131" ph="{&quot;error&quot;: &quot;You cannot delete argument with SADFace id: uuid4&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="6741:14374" ph="[...]" />
+                  <marker date="1511231489542" expanded="true" signature="6749:6785" ph="{&quot;Results found&quot;: 2...}" />
+                  <marker date="1511231489542" expanded="true" signature="6794:14368" ph="{...}" />
+                  <marker date="1511231489542" expanded="true" signature="6815:14360" ph="[...]" />
+                  <marker date="1511231489542" expanded="true" signature="6827:11359" ph="{&quot;id&quot;: &quot;94b975db-25ae-4d25-93cc-1c07c932e2f2&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="6985:9113" ph="[...]" />
+                  <marker date="1511231489542" expanded="true" signature="7001:7219" ph="{&quot;id&quot;: &quot;d7bcef81-0d74-4ae5-96f9-bfb07031f1fa&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="7236:7454" ph="{&quot;id&quot;: &quot;f57ecb48-dfd5-4789-b3c5-46f770f4113d&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="7471:7689" ph="{&quot;id&quot;: &quot;c48c3d75-a8b3-439a-9a2f-b987eaae2c9a&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="7706:7924" ph="{&quot;id&quot;: &quot;86e797aa-ecb0-4fcd-8838-263ceedb099e&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="7941:8159" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8386&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="8176:8394" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8385&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="8411:8629" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8384&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="8646:8864" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8383&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="8881:9099" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8382&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="9225:11317" ph="[...]" />
+                  <marker date="1511231489542" expanded="true" signature="9241:9467" ph="{&quot;id&quot;: &quot;9bfb7cdc-116f-47f5-b85d-ff7c5d329f45&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="9484:9633" ph="{&quot;id&quot;: &quot;49a786ce-9066-4230-8e18-42086882a160&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="9650:9799" ph="{&quot;id&quot;: &quot;49a786ce-9066-4230-8e18-42086882a161&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="9816:10024" ph="{&quot;id&quot;: &quot;30c9c0ac-ddef-44e7-897d-52ffee97b837&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="10041:10300" ph="{&quot;id&quot;: &quot;02b4009b-1a12-4d53-ab3a-efabe6c44694&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="10317:10467" ph="{&quot;id&quot;: &quot;5760a93a-55e7-447c-a245-7f8d7e7e4434&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="10484:10769" ph="{&quot;id&quot;: &quot;fbaa9b79-0965-45a1-9fd4-60701c2102cf&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="10786:11071" ph="{&quot;id&quot;: &quot;fbaa9b79-0965-45a1-9fd4-60701c2102cc&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="11088:11303" ph="{&quot;id&quot;: &quot;fbaa9b79-0965-45a1-9fd4-60701c2102cd&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="11367:14350" ph="{&quot;id&quot;: &quot;94a975db-25ae-4d25-93cc-1c07c932e2f8&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="11513:12677" ph="[...]" />
+                  <marker date="1511231489542" expanded="true" signature="11527:11743" ph="{&quot;id&quot;: &quot;d7bcef81-0d74-4ae5-96f9-bfb07031f1fa&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="11758:11974" ph="{&quot;id&quot;: &quot;f57ecb48-dfd5-4789-b3c5-46f770f4113d&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="11989:12205" ph="{&quot;id&quot;: &quot;c48c3d75-a8b3-439a-9a2f-b987eaae2c9a&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="12220:12436" ph="{&quot;id&quot;: &quot;86e797aa-ecb0-4fcd-8838-263ceedb099e&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="12451:12667" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8386&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="12819:14314" ph="[...]" />
+                  <marker date="1511231489542" expanded="true" signature="12833:13123" ph="{&quot;id&quot;: &quot;9bfb7cdc-116f-47f5-b85d-ff7c5d329f45&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="13138:13285" ph="{&quot;id&quot;: &quot;49a786ce-9066-4230-8e18-42086882a160&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="13300:13571" ph="{&quot;id&quot;: &quot;30c9c0ac-ddef-44e7-897d-52ffee97b837&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="13586:13843" ph="{&quot;id&quot;: &quot;02b4009b-1a12-4d53-ab3a-efabe6c44694&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="13858:14006" ph="{&quot;id&quot;: &quot;5760a93a-55e7-447c-a245-7f8d7e7e4434&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="14021:14304" ph="{&quot;id&quot;: &quot;fbaa9b79-0965-45a1-9fd4-60701c2102cf&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="14726:14955" ph="{&quot;Information&quot;: &quot;Please provide arguments to search on.&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="15449:15580" ph="{...}" />
+                  <marker date="1511231489542" expanded="true" signature="15501:15574" ph="{&quot;id&quot;: &quot;uuid4&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="15684:15784" ph="{&quot;error&quot;: &quot;The provided URL id:  'arg_id' does not match any arguments in the database.&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="15867:15955" ph="{...}" />
+                  <marker date="1511231489542" expanded="true" signature="15918:15949" ph="{&quot;id&quot;: &quot;uuid4&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="16043:16085" ph="{&quot;error&quot;: &quot;Token is missing!&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="16372:16475" ph="{...}" />
+                  <marker date="1511231489542" expanded="true" signature="16390:16469" ph="[...]" />
+                  <marker date="1511231489542" expanded="true" signature="16400:16461" ph="{&quot;error&quot;: &quot;'id' is a required property&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="16941:17134" ph="{&quot;token&quot;: &quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfaWQiOiIyY2M1ZTgyMGZhYzc0MDFiYmJhMzk3ZDYwMDRjYWVkYyIsImV4cCI6MTUwODc4MTkzNn0.xAfC4Iex9Ji9cAEZD7NSUndsk4kcDRAayQPBqZvAbuM&quot;...}" />
+                  <marker date="1511231489542" expanded="true" signature="17243:17306" ph="{&quot;error&quot;: &quot;Invalid username/password combination.&quot;...}" />
+                </folding>
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -314,11 +409,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>advanced</find>
-      <find>logo-transparent</find>
-      <find>arg</find>
-      <find>argumentString</find>
-      <find>argString</find>
       <find>get_one_argument</find>
       <find>login()</find>
       <find>p</find>
@@ -344,6 +434,11 @@
       <find>9e4c18c1-4de7-4db1-8d6d-b6f42d93e1b3</find>
       <find>1e538bd5</find>
       <find>page_not_found</find>
+      <find>err</find>
+      <find>kill</find>
+      <find>kille me</find>
+      <find>session['err']</find>
+      <find>placeholder=&quot;Password&quot;</find>
     </findStrings>
     <replaceStrings>
       <replace>username =  login_user.get('name')</replace>
@@ -351,6 +446,8 @@
       <replace>q['sadface']</replace>
       <replace>account</replace>
       <replace>arg_str</replace>
+      <replace>pass_changed</replace>
+      <replace>placeholder=&quot;New Password&quot;</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -402,7 +499,6 @@
         <option value="$PROJECT_DIR$/sadface/python/jono.json" />
         <option value="$PROJECT_DIR$/templates/homepage.html" />
         <option value="$PROJECT_DIR$/templates/advanced_search.html" />
-        <option value="$PROJECT_DIR$/templates/account.html" />
         <option value="$PROJECT_DIR$/templates/upload.html" />
         <option value="$PROJECT_DIR$/templates/header.html" />
         <option value="$PROJECT_DIR$/templates/single_arg.html" />
@@ -411,10 +507,11 @@
         <option value="$PROJECT_DIR$/uploads/testJson.json" />
         <option value="$PROJECT_DIR$/api.py" />
         <option value="$PROJECT_DIR$/templates/search_results.html" />
-        <option value="$PROJECT_DIR$/READ.md" />
         <option value="$PROJECT_DIR$/templates/documetnation.html" />
-        <option value="$PROJECT_DIR$/connect.py" />
         <option value="$PROJECT_DIR$/templates/log_ing.html" />
+        <option value="$PROJECT_DIR$/connect.py" />
+        <option value="$PROJECT_DIR$/templates/account.html" />
+        <option value="$PROJECT_DIR$/READ.md" />
       </list>
     </option>
   </component>
@@ -445,7 +542,7 @@
     </entry>
   </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -458,7 +555,24 @@
       <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ArgDb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ArgDb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -861,20 +975,6 @@
       <option name="presentableId" value="Default" />
       <updated>1505255971533</updated>
     </task>
-    <task id="LOCAL-00019" summary="API&#10;Implemented Flask-Limiter + Redis database for storing the limiter information&#10;&#10;WebUI&#10;Added a Generate token button to the account page to get new tokens if needed.&#10;&#10;">
-      <created>1508802410541</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1508802410541</updated>
-    </task>
-    <task id="LOCAL-00020" summary="API&#10;Need to add limits to all API calls, talk with Simon&#10;&#10;Added caching with Redis and Flask-Cache&#10;Need to add caching the WebUI views and memoize to the API routes+ limits&#10;&#10;&#10;">
-      <created>1508807308829</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1508807308829</updated>
-    </task>
     <task id="LOCAL-00021" summary="API&#10;Need to add limits to all API calls, talk with Simon&#10;&#10;Added caching with Redis and Flask-Cache&#10;Need to add caching the WebUI views and memoize to the API routes+ limits&#10;&#10;&#10;">
       <created>1508807838920</created>
       <option name="number" value="00021" />
@@ -1204,7 +1304,21 @@
       <option name="project" value="LOCAL" />
       <updated>1511122660733</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="added confirmation when a new user is registered">
+      <created>1511201554328</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1511201554329</updated>
+    </task>
+    <task id="LOCAL-00069" summary="added a success msg when user changes password">
+      <created>1511204159949</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1511204159949</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -1222,55 +1336,29 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug Logs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36363637" sideWeight="0.51865673" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43073592" sideWeight="0.49418023" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32792208" sideWeight="0.49883604" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3034571" sideWeight="0.48134327" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33802816" sideWeight="0.4975058" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21514343" sideWeight="0.49509802" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15831557" sideWeight="0.50490195" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39935064" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297055" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32929516" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.340589" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Concurrent Activities Diagram" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32971245" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-    </layout>
-    <layout-to-restore>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug Logs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36363637" sideWeight="0.51865673" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32929516" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36363637" sideWeight="0.51865673" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43073592" sideWeight="0.49418023" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32792208" sideWeight="0.49883604" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36363637" sideWeight="0.48134327" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33866838" sideWeight="0.4975058" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3034571" sideWeight="0.48134327" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33802816" sideWeight="0.4975058" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21514343" sideWeight="0.49509802" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.340589" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Concurrent Activities Diagram" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32971245" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15831557" sideWeight="0.50490195" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39935064" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297055" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-    </layout-to-restore>
+      <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297055" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="REST Client" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32929516" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.340589" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Concurrent Activities Diagram" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32971245" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
+    </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
@@ -1287,8 +1375,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added Documentation in md file &#10;&#10;API&#10;Fixed the PUT and POST to take in a sadface doc that doesnt have the sadface key in it&#10;&#10;WebUI&#10;same as above" />
-    <MESSAGE value="working on the MD file" />
     <MESSAGE value="&#10;" />
     <MESSAGE value="Added documentation page with pretty json&#10;a link for it to the header and created a footer with the same link&#10;&#10;" />
     <MESSAGE value="WebUi&#10;Reworked the upload page by adding success fail msges and also added the correct JSON schema for the validator." />
@@ -1312,7 +1398,9 @@
     <MESSAGE value="fixed upload error message &#10;" />
     <MESSAGE value="fixed the normal search and the read.md file" />
     <MESSAGE value="ncier api description" />
-    <option name="LAST_COMMIT_MESSAGE" value="ncier api description" />
+    <MESSAGE value="added confirmation when a new user is registered" />
+    <MESSAGE value="added a success msg when user changes password" />
+    <option name="LAST_COMMIT_MESSAGE" value="added a success msg when user changes password" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1465,13 +1553,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
           <caret line="45" column="17" lean-forward="false" selection-start-line="45" selection-start-column="16" selection-end-line="45" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/account.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7812">
-          <caret line="217" column="111" lean-forward="false" selection-start-line="217" selection-start-column="111" selection-end-line="217" selection-end-column="111" />
         </state>
       </provider>
     </entry>
@@ -1776,96 +1857,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/READ.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="36">
-            <caret line="540" column="59" lean-forward="false" selection-start-line="540" selection-start-column="59" selection-end-line="540" selection-end-column="59" />
-            <folding>
-              <marker date="1511122394178" expanded="true" signature="364:3347" ph="{&quot;id&quot;: &quot;94a975db-25ae-4d25-93cc-1c07c932e2f8&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="510:1674" ph="[...]" />
-              <marker date="1511122394178" expanded="true" signature="524:740" ph="{&quot;id&quot;: &quot;d7bcef81-0d74-4ae5-96f9-bfb07031f1fa&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="755:971" ph="{&quot;id&quot;: &quot;f57ecb48-dfd5-4789-b3c5-46f770f4113d&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="986:1202" ph="{&quot;id&quot;: &quot;c48c3d75-a8b3-439a-9a2f-b987eaae2c9a&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="1217:1433" ph="{&quot;id&quot;: &quot;86e797aa-ecb0-4fcd-8838-263ceedb099e&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="1448:1664" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8386&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="1816:3311" ph="[...]" />
-              <marker date="1511122394178" expanded="true" signature="1830:2120" ph="{&quot;id&quot;: &quot;9bfb7cdc-116f-47f5-b85d-ff7c5d329f45&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="2135:2282" ph="{&quot;id&quot;: &quot;49a786ce-9066-4230-8e18-42086882a160&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="2297:2568" ph="{&quot;id&quot;: &quot;30c9c0ac-ddef-44e7-897d-52ffee97b837&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="2583:2840" ph="{&quot;id&quot;: &quot;02b4009b-1a12-4d53-ab3a-efabe6c44694&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="2855:3003" ph="{&quot;id&quot;: &quot;5760a93a-55e7-447c-a245-7f8d7e7e4434&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="3018:3301" ph="{&quot;id&quot;: &quot;fbaa9b79-0965-45a1-9fd4-60701c2102cf&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="4143:4272" ph="{...}" />
-              <marker date="1511122394178" expanded="true" signature="4193:4266" ph="{&quot;id&quot;: &quot;uuid4&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="4376:4476" ph="{&quot;error&quot;: &quot;The provided URL id:  'arg_id' does not match any arguments in the database.&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="4560:4675" ph="{&quot;error&quot;: &quot;An argument with that id does not exist or you don't have permissions to edit this argument&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="4763:4805" ph="{&quot;error&quot;: &quot;Token is missing!&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="4894:5000" ph="{&quot;error&quot;: &quot;The provided URL id: uuid4 does not match the argument id in the JSON file you supplied.&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="5095:5219" ph="{...}" />
-              <marker date="1511122394178" expanded="true" signature="5113:5213" ph="[...]" />
-              <marker date="1511122394178" expanded="true" signature="5123:5205" ph="{&quot;error&quot;: &quot;'id' is a required property&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="5617:5697" ph="{&quot;message&quot;: &quot;Successfully deleted argument with SADFace id: uuid4&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="5803:5844" ph="{&quot;error&quot;: &quot;Token is missing!&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="5922:5979" ph="{&quot;error&quot;: &quot;No argument found with id :uuid4&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="6057:6131" ph="{&quot;error&quot;: &quot;You cannot delete argument with SADFace id: uuid4&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="6745:14378" ph="[...]" />
-              <marker date="1511122394178" expanded="true" signature="6753:6789" ph="{&quot;Results found&quot;: 2...}" />
-              <marker date="1511122394178" expanded="true" signature="6798:14372" ph="{...}" />
-              <marker date="1511122394178" expanded="true" signature="6819:14364" ph="[...]" />
-              <marker date="1511122394178" expanded="true" signature="6831:11363" ph="{&quot;id&quot;: &quot;94b975db-25ae-4d25-93cc-1c07c932e2f2&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="6989:9117" ph="[...]" />
-              <marker date="1511122394178" expanded="true" signature="7005:7223" ph="{&quot;id&quot;: &quot;d7bcef81-0d74-4ae5-96f9-bfb07031f1fa&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="7240:7458" ph="{&quot;id&quot;: &quot;f57ecb48-dfd5-4789-b3c5-46f770f4113d&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="7475:7693" ph="{&quot;id&quot;: &quot;c48c3d75-a8b3-439a-9a2f-b987eaae2c9a&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="7710:7928" ph="{&quot;id&quot;: &quot;86e797aa-ecb0-4fcd-8838-263ceedb099e&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="7945:8163" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8386&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="8180:8398" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8385&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="8415:8633" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8384&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="8650:8868" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8383&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="8885:9103" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8382&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="9229:11321" ph="[...]" />
-              <marker date="1511122394178" expanded="true" signature="9245:9471" ph="{&quot;id&quot;: &quot;9bfb7cdc-116f-47f5-b85d-ff7c5d329f45&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="9488:9637" ph="{&quot;id&quot;: &quot;49a786ce-9066-4230-8e18-42086882a160&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="9654:9803" ph="{&quot;id&quot;: &quot;49a786ce-9066-4230-8e18-42086882a161&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="9820:10028" ph="{&quot;id&quot;: &quot;30c9c0ac-ddef-44e7-897d-52ffee97b837&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="10045:10304" ph="{&quot;id&quot;: &quot;02b4009b-1a12-4d53-ab3a-efabe6c44694&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="10321:10471" ph="{&quot;id&quot;: &quot;5760a93a-55e7-447c-a245-7f8d7e7e4434&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="10488:10773" ph="{&quot;id&quot;: &quot;fbaa9b79-0965-45a1-9fd4-60701c2102cf&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="10790:11075" ph="{&quot;id&quot;: &quot;fbaa9b79-0965-45a1-9fd4-60701c2102cc&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="11092:11307" ph="{&quot;id&quot;: &quot;fbaa9b79-0965-45a1-9fd4-60701c2102cd&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="11371:14354" ph="{&quot;id&quot;: &quot;94a975db-25ae-4d25-93cc-1c07c932e2f8&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="11517:12681" ph="[...]" />
-              <marker date="1511122394178" expanded="true" signature="11531:11747" ph="{&quot;id&quot;: &quot;d7bcef81-0d74-4ae5-96f9-bfb07031f1fa&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="11762:11978" ph="{&quot;id&quot;: &quot;f57ecb48-dfd5-4789-b3c5-46f770f4113d&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="11993:12209" ph="{&quot;id&quot;: &quot;c48c3d75-a8b3-439a-9a2f-b987eaae2c9a&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="12224:12440" ph="{&quot;id&quot;: &quot;86e797aa-ecb0-4fcd-8838-263ceedb099e&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="12455:12671" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8386&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="12823:14318" ph="[...]" />
-              <marker date="1511122394178" expanded="true" signature="12837:13127" ph="{&quot;id&quot;: &quot;9bfb7cdc-116f-47f5-b85d-ff7c5d329f45&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="13142:13289" ph="{&quot;id&quot;: &quot;49a786ce-9066-4230-8e18-42086882a160&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="13304:13575" ph="{&quot;id&quot;: &quot;30c9c0ac-ddef-44e7-897d-52ffee97b837&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="13590:13847" ph="{&quot;id&quot;: &quot;02b4009b-1a12-4d53-ab3a-efabe6c44694&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="13862:14010" ph="{&quot;id&quot;: &quot;5760a93a-55e7-447c-a245-7f8d7e7e4434&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="14025:14308" ph="{&quot;id&quot;: &quot;fbaa9b79-0965-45a1-9fd4-60701c2102cf&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="14731:14960" ph="{&quot;Information&quot;: &quot;Please provide arguments to search on.&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="15454:15585" ph="{...}" />
-              <marker date="1511122394178" expanded="true" signature="15506:15579" ph="{&quot;id&quot;: &quot;uuid4&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="15689:15789" ph="{&quot;error&quot;: &quot;The provided URL id:  'arg_id' does not match any arguments in the database.&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="15872:15960" ph="{...}" />
-              <marker date="1511122394178" expanded="true" signature="15923:15954" ph="{&quot;id&quot;: &quot;uuid4&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="16048:16090" ph="{&quot;error&quot;: &quot;Token is missing!&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="16377:16480" ph="{...}" />
-              <marker date="1511122394178" expanded="true" signature="16395:16474" ph="[...]" />
-              <marker date="1511122394178" expanded="true" signature="16405:16466" ph="{&quot;error&quot;: &quot;'id' is a required property&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="16946:17139" ph="{&quot;token&quot;: &quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfaWQiOiIyY2M1ZTgyMGZhYzc0MDFiYmJhMzk3ZDYwMDRjYWVkYyIsImV4cCI6MTUwODc4MTkzNn0.xAfC4Iex9Ji9cAEZD7NSUndsk4kcDRAayQPBqZvAbuM&quot;...}" />
-              <marker date="1511122394178" expanded="true" signature="17248:17311" ph="{&quot;error&quot;: &quot;Invalid username/password combination.&quot;...}" />
-            </folding>
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/search_results.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
@@ -1882,10 +1873,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/log_ing.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="10" column="26" lean-forward="true" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/account.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="280" column="50" lean-forward="true" selection-start-line="280" selection-start-column="50" selection-end-line="280" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/connect.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="779">
-          <caret line="1460" column="0" lean-forward="true" selection-start-line="1460" selection-start-column="0" selection-end-line="1460" selection-end-column="0" />
+        <state relative-caret-position="544">
+          <caret line="1528" column="43" lean-forward="false" selection-start-line="1528" selection-start-column="31" selection-end-line="1528" selection-end-column="43" />
           <folding>
             <element signature="e#1882#1975#0" expanded="false" />
             <element signature="e#2065#9364#0" expanded="false" />
@@ -2065,60 +2072,136 @@
             <element signature="e#49229#49617#0" expanded="false" />
             <element signature="e#49317#49611#0" expanded="false" />
             <element signature="e#49617#49696#0" expanded="false" />
+            <element signature="e#50503#50647#0" expanded="false" />
             <element signature="e#50739#51872#0" expanded="false" />
             <element signature="e#50798#50874#0" expanded="false" />
             <element signature="e#51087#51748#0" expanded="false" />
             <element signature="e#51157#51580#0" expanded="false" />
             <element signature="e#51872#51908#0" expanded="false" />
             <element signature="e#52632#52728#0" expanded="false" />
-            <element signature="e#52908#54331#0" expanded="false" />
-            <element signature="e#52908#52937#0" expanded="false" />
-            <element signature="e#53128#54214#0" expanded="false" />
-            <element signature="e#53240#54214#0" expanded="false" />
-            <element signature="e#53283#54214#0" expanded="false" />
-            <element signature="e#53332#53532#0" expanded="false" />
-            <element signature="e#53897#53959#0" expanded="false" />
-            <element signature="e#60824#63366#0" expanded="false" />
-            <element signature="e#60896#60958#0" expanded="false" />
-            <element signature="e#61000#61076#0" expanded="false" />
-            <element signature="e#61081#61103#0" expanded="false" />
-            <element signature="e#61181#61244#0" expanded="false" />
-            <element signature="e#61343#63336#0" expanded="false" />
-            <element signature="e#61808#61897#0" expanded="false" />
-            <element signature="e#61833#61896#0" expanded="false" />
-            <element signature="e#61947#62034#0" expanded="false" />
-            <element signature="e#61970#62033#0" expanded="false" />
-            <element signature="e#62088#62283#0" expanded="false" />
-            <element signature="e#62310#62496#0" expanded="false" />
-            <element signature="e#62505#62583#0" expanded="false" />
-            <element signature="e#63427#63677#0" expanded="false" />
-            <element signature="e#63427#63459#0" expanded="false" />
-            <element signature="e#63520#63552#0" expanded="false" />
-            <element signature="e#63747#64173#0" expanded="false" />
-            <element signature="e#63787#64016#0" expanded="false" />
-            <element signature="e#63945#64016#0" expanded="false" />
-            <element signature="e#64269#66190#0" expanded="false" />
-            <element signature="e#64328#64404#0" expanded="false" />
-            <element signature="e#64576#66170#0" expanded="false" />
-            <element signature="e#64808#65086#0" expanded="false" />
-            <element signature="e#65113#65313#0" expanded="false" />
-            <element signature="e#65355#65529#0" expanded="false" />
-            <element signature="e#65865#65905#0" expanded="false" />
-            <element signature="e#66291#66351#0" expanded="false" />
-            <element signature="e#66379#66427#0" expanded="false" />
-            <element signature="e#66455#66506#0" expanded="false" />
-            <element signature="e#66544#66600#0" expanded="false" />
-            <element signature="e#66637#66956#0" expanded="false" />
-            <element signature="e#66990#67039#0" expanded="false" />
+            <element signature="e#58269#60744#0" expanded="false" />
+            <element signature="e#58350#58425#0" expanded="false" />
+            <element signature="e#58468#58544#0" expanded="false" />
+            <element signature="e#58718#60676#0" expanded="false" />
+            <element signature="e#58760#58836#0" expanded="false" />
+            <element signature="e#58836#58865#0" expanded="false" />
+            <element signature="e#58968#60676#0" expanded="false" />
+            <element signature="e#59043#59164#0" expanded="false" />
+            <element signature="e#59321#60485#0" expanded="false" />
+            <element signature="e#59415#60485#0" expanded="false" />
+            <element signature="e#59750#60161#0" expanded="false" />
+            <element signature="e#59798#60004#0" expanded="false" />
+            <element signature="e#60336#60380#0" expanded="false" />
+            <element signature="e#63637#63887#0" expanded="false" />
+            <element signature="e#63637#63669#0" expanded="false" />
+            <element signature="e#63730#63762#0" expanded="false" />
+            <element signature="e#63957#64383#0" expanded="false" />
+            <element signature="e#63997#64226#0" expanded="false" />
+            <element signature="e#64155#64226#0" expanded="false" />
+            <element signature="e#64479#66400#0" expanded="false" />
+            <element signature="e#64538#64614#0" expanded="false" />
+            <element signature="e#64786#66380#0" expanded="false" />
+            <element signature="e#65018#65296#0" expanded="false" />
+            <element signature="e#65323#65523#0" expanded="false" />
+            <element signature="e#65565#65739#0" expanded="false" />
+            <element signature="e#66075#66115#0" expanded="false" />
+            <element signature="e#66501#66561#0" expanded="false" />
+            <element signature="e#66589#66637#0" expanded="false" />
+            <element signature="e#66665#66716#0" expanded="false" />
+            <element signature="e#66754#66810#0" expanded="false" />
+            <element signature="e#66847#67166#0" expanded="false" />
+            <element signature="e#67200#67249#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/log_ing.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="12" column="33" lean-forward="false" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
-          <folding />
+    <entry file="file://$PROJECT_DIR$/READ.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="189">
+            <caret line="286" column="17" lean-forward="true" selection-start-line="286" selection-start-column="17" selection-end-line="286" selection-end-column="17" />
+            <folding>
+              <marker date="1511231489542" expanded="true" signature="364:3347" ph="{&quot;id&quot;: &quot;94a975db-25ae-4d25-93cc-1c07c932e2f8&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="510:1674" ph="[...]" />
+              <marker date="1511231489542" expanded="true" signature="524:740" ph="{&quot;id&quot;: &quot;d7bcef81-0d74-4ae5-96f9-bfb07031f1fa&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="755:971" ph="{&quot;id&quot;: &quot;f57ecb48-dfd5-4789-b3c5-46f770f4113d&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="986:1202" ph="{&quot;id&quot;: &quot;c48c3d75-a8b3-439a-9a2f-b987eaae2c9a&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="1217:1433" ph="{&quot;id&quot;: &quot;86e797aa-ecb0-4fcd-8838-263ceedb099e&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="1448:1664" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8386&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="1816:3311" ph="[...]" />
+              <marker date="1511231489542" expanded="true" signature="1830:2120" ph="{&quot;id&quot;: &quot;9bfb7cdc-116f-47f5-b85d-ff7c5d329f45&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="2135:2282" ph="{&quot;id&quot;: &quot;49a786ce-9066-4230-8e18-42086882a160&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="2297:2568" ph="{&quot;id&quot;: &quot;30c9c0ac-ddef-44e7-897d-52ffee97b837&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="2583:2840" ph="{&quot;id&quot;: &quot;02b4009b-1a12-4d53-ab3a-efabe6c44694&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="2855:3003" ph="{&quot;id&quot;: &quot;5760a93a-55e7-447c-a245-7f8d7e7e4434&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="3018:3301" ph="{&quot;id&quot;: &quot;fbaa9b79-0965-45a1-9fd4-60701c2102cf&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="4143:4272" ph="{...}" />
+              <marker date="1511231489542" expanded="true" signature="4193:4266" ph="{&quot;id&quot;: &quot;uuid4&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="4376:4476" ph="{&quot;error&quot;: &quot;The provided URL id:  'arg_id' does not match any arguments in the database.&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="4560:4675" ph="{&quot;error&quot;: &quot;An argument with that id does not exist or you don't have permissions to edit this argument&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="4763:4805" ph="{&quot;error&quot;: &quot;Token is missing!&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="4894:5000" ph="{&quot;error&quot;: &quot;The provided URL id: uuid4 does not match the argument id in the JSON file you supplied.&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="5095:5219" ph="{...}" />
+              <marker date="1511231489542" expanded="true" signature="5113:5213" ph="[...]" />
+              <marker date="1511231489542" expanded="true" signature="5123:5205" ph="{&quot;error&quot;: &quot;'id' is a required property&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="5617:5697" ph="{&quot;message&quot;: &quot;Successfully deleted argument with SADFace id: uuid4&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="5803:5844" ph="{&quot;error&quot;: &quot;Token is missing!&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="5922:5979" ph="{&quot;error&quot;: &quot;No argument found with id :uuid4&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="6057:6131" ph="{&quot;error&quot;: &quot;You cannot delete argument with SADFace id: uuid4&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="6741:14374" ph="[...]" />
+              <marker date="1511231489542" expanded="true" signature="6749:6785" ph="{&quot;Results found&quot;: 2...}" />
+              <marker date="1511231489542" expanded="true" signature="6794:14368" ph="{...}" />
+              <marker date="1511231489542" expanded="true" signature="6815:14360" ph="[...]" />
+              <marker date="1511231489542" expanded="true" signature="6827:11359" ph="{&quot;id&quot;: &quot;94b975db-25ae-4d25-93cc-1c07c932e2f2&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="6985:9113" ph="[...]" />
+              <marker date="1511231489542" expanded="true" signature="7001:7219" ph="{&quot;id&quot;: &quot;d7bcef81-0d74-4ae5-96f9-bfb07031f1fa&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="7236:7454" ph="{&quot;id&quot;: &quot;f57ecb48-dfd5-4789-b3c5-46f770f4113d&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="7471:7689" ph="{&quot;id&quot;: &quot;c48c3d75-a8b3-439a-9a2f-b987eaae2c9a&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="7706:7924" ph="{&quot;id&quot;: &quot;86e797aa-ecb0-4fcd-8838-263ceedb099e&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="7941:8159" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8386&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="8176:8394" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8385&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="8411:8629" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8384&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="8646:8864" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8383&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="8881:9099" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8382&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="9225:11317" ph="[...]" />
+              <marker date="1511231489542" expanded="true" signature="9241:9467" ph="{&quot;id&quot;: &quot;9bfb7cdc-116f-47f5-b85d-ff7c5d329f45&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="9484:9633" ph="{&quot;id&quot;: &quot;49a786ce-9066-4230-8e18-42086882a160&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="9650:9799" ph="{&quot;id&quot;: &quot;49a786ce-9066-4230-8e18-42086882a161&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="9816:10024" ph="{&quot;id&quot;: &quot;30c9c0ac-ddef-44e7-897d-52ffee97b837&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="10041:10300" ph="{&quot;id&quot;: &quot;02b4009b-1a12-4d53-ab3a-efabe6c44694&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="10317:10467" ph="{&quot;id&quot;: &quot;5760a93a-55e7-447c-a245-7f8d7e7e4434&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="10484:10769" ph="{&quot;id&quot;: &quot;fbaa9b79-0965-45a1-9fd4-60701c2102cf&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="10786:11071" ph="{&quot;id&quot;: &quot;fbaa9b79-0965-45a1-9fd4-60701c2102cc&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="11088:11303" ph="{&quot;id&quot;: &quot;fbaa9b79-0965-45a1-9fd4-60701c2102cd&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="11367:14350" ph="{&quot;id&quot;: &quot;94a975db-25ae-4d25-93cc-1c07c932e2f8&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="11513:12677" ph="[...]" />
+              <marker date="1511231489542" expanded="true" signature="11527:11743" ph="{&quot;id&quot;: &quot;d7bcef81-0d74-4ae5-96f9-bfb07031f1fa&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="11758:11974" ph="{&quot;id&quot;: &quot;f57ecb48-dfd5-4789-b3c5-46f770f4113d&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="11989:12205" ph="{&quot;id&quot;: &quot;c48c3d75-a8b3-439a-9a2f-b987eaae2c9a&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="12220:12436" ph="{&quot;id&quot;: &quot;86e797aa-ecb0-4fcd-8838-263ceedb099e&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="12451:12667" ph="{&quot;id&quot;: &quot;b2531a60-6559-4560-b57b-320f1f3b8386&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="12819:14314" ph="[...]" />
+              <marker date="1511231489542" expanded="true" signature="12833:13123" ph="{&quot;id&quot;: &quot;9bfb7cdc-116f-47f5-b85d-ff7c5d329f45&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="13138:13285" ph="{&quot;id&quot;: &quot;49a786ce-9066-4230-8e18-42086882a160&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="13300:13571" ph="{&quot;id&quot;: &quot;30c9c0ac-ddef-44e7-897d-52ffee97b837&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="13586:13843" ph="{&quot;id&quot;: &quot;02b4009b-1a12-4d53-ab3a-efabe6c44694&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="13858:14006" ph="{&quot;id&quot;: &quot;5760a93a-55e7-447c-a245-7f8d7e7e4434&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="14021:14304" ph="{&quot;id&quot;: &quot;fbaa9b79-0965-45a1-9fd4-60701c2102cf&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="14726:14955" ph="{&quot;Information&quot;: &quot;Please provide arguments to search on.&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="15449:15580" ph="{...}" />
+              <marker date="1511231489542" expanded="true" signature="15501:15574" ph="{&quot;id&quot;: &quot;uuid4&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="15684:15784" ph="{&quot;error&quot;: &quot;The provided URL id:  'arg_id' does not match any arguments in the database.&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="15867:15955" ph="{...}" />
+              <marker date="1511231489542" expanded="true" signature="15918:15949" ph="{&quot;id&quot;: &quot;uuid4&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="16043:16085" ph="{&quot;error&quot;: &quot;Token is missing!&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="16372:16475" ph="{...}" />
+              <marker date="1511231489542" expanded="true" signature="16390:16469" ph="[...]" />
+              <marker date="1511231489542" expanded="true" signature="16400:16461" ph="{&quot;error&quot;: &quot;'id' is a required property&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="16941:17134" ph="{&quot;token&quot;: &quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfaWQiOiIyY2M1ZTgyMGZhYzc0MDFiYmJhMzk3ZDYwMDRjYWVkYyIsImV4cCI6MTUwODc4MTkzNn0.xAfC4Iex9Ji9cAEZD7NSUndsk4kcDRAayQPBqZvAbuM&quot;...}" />
+              <marker date="1511231489542" expanded="true" signature="17243:17306" ph="{&quot;error&quot;: &quot;Invalid username/password combination.&quot;...}" />
+            </folding>
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
