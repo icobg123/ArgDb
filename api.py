@@ -35,7 +35,7 @@ import datetime
 from functools import wraps
 from werkzeug.utils import secure_filename
 from werkzeug.wsgi import SharedDataMiddleware
-from flask_limiter import Limiter
+from flask_limiter import Limiter, HEADERS
 from flask_limiter.util import get_remote_address
 import limits.storage
 from werkzeug.contrib.cache import RedisCache
@@ -44,8 +44,7 @@ from flask_cache import Cache
 
 app = Flask(__name__)
 redis_url = 'redis://:argdbnapier@redis-14649.c15.us-east-1-4.ec2.cloud.redislabs.com:14649'
-cache = Cache(app, config={'CACHE_TYPE': 'redis', 'CACHE_REDIS_URL': redis_url
-                           })
+cache = Cache(app, config={'CACHE_TYPE': 'redis', 'CACHE_REDIS_URL': redis_url})
 
 
 # cache = Cache(app, config={'CACHE_TYPE': 'redis',
@@ -67,7 +66,12 @@ def get_api_key_for_limiter():
     return request.headers['x-access-token']
 
 
-limiter = Limiter(app, key_func=get_api_key_for_limiter, storage_uri=redis_url)
+limiter = Limiter(app, key_func=get_api_key_for_limiter, storage_uri=redis_url, headers_enabled=True)
+limiter.header_mapping = {
+    HEADERS.LIMIT: "X-My-Limit",
+    HEADERS.RESET: "X-My-Reset",
+    HEADERS.REMAINING: "X-My-Remaining"
+}
 # storage_uri="redis://redistogo:c56eaca0869ccfa71db3d2a519281070@koi.redistogo.com:11156/")
 
 UPLOAD_FOLDER = 'uploads'
@@ -539,7 +543,9 @@ advanced_search_schema = {
 # app.config['ALLOWED_EXTENSIONS'] = set(['json'])
 # app.config['SECRET_KEY'] = '1234'
 
-api_routes = [
+api_routes = {"message": "Please visit the API documentation page of the ArgDB website."}
+
+api_routes_back = [
     "/ : Returns a description of the API routes.",
     "/api/argument/id/<arg_id> :  Fetches a document from the DB matching the provided ID.",
     "/api/argument/text/<arg_str> :  Fetches a list with all documents containing the provided text.",
@@ -1378,7 +1384,7 @@ def advanced_search_find():
 @app.errorhandler(429)
 def ratelimit_handler(e):
     return make_response(
-        jsonify(error="ratelimit exceeded %s" % e.description)
+        jsonify(error="Eatelimit exceeded %s" % e.description)
         , 429
     )
 
@@ -1407,9 +1413,16 @@ def unauthorized(error=None):
     return resp
 
 
+@app.after_request
+def add_header(response):
+    response.cache_control.max_age = 10
+    return response
+
+
 # real API
 
 @app.route('/api/v1/login', methods=['GET'])
+@limiter.limit('100 per minute', key_func=make_cache_key)
 def login():
     authorization = request.authorization
     if not authorization or not authorization.username or not authorization.password:
@@ -1451,6 +1464,9 @@ def login():
 
 @app.route('/api/v1/arguments/<arg_id>', methods=['DELETE'])
 @token_required
+@limiter.limit('100 per minute', key_func=make_cache_key)
+# @cache.cached(timeout=10, key_prefix=make_cache_key)
+# @cache.memoize(timeout=2, make_name=make_cache_key)
 def api_delete_one_arg(current_user, arg_id):
     if not current_user.get('admin'):
         return unauthorized()
@@ -1479,9 +1495,9 @@ def api_delete_one_arg(current_user, arg_id):
 
 @app.route('/api/v1/arguments/<arg_id>', methods=['GET'])
 @token_required
-# @cache.cached(timeout=10, key_prefix=make_cache_key)
-# @cache.memoize(20, make_name=make_cache_key)
-# @limiter.limit('3 per minute', key_func=make_cache_key)
+@cache.cached(timeout=10, key_prefix=make_cache_key)
+# @cache.memoize(2, make_name=make_cache_key)
+@limiter.limit('100 per minute', key_func=make_cache_key)
 # @cache.cached(timeout=600, key_prefix=make_cache_key)
 def api_get_argument_by_id(current_user, arg_id):
     if not current_user.get('admin'):
@@ -1513,6 +1529,7 @@ def api_get_argument_by_id(current_user, arg_id):
 
 @app.route('/api/v1/arguments/<arg_id>', methods=['PUT'])
 @token_required
+@limiter.limit('100 per minute', key_func=make_cache_key)
 def api_edit_argument(current_user, arg_id):
     if not current_user.get('admin'):
         return unauthorized()
@@ -1612,9 +1629,11 @@ def api_edit_argument(current_user, arg_id):
                    ' With all keys including the ones you wish to override'}, {'schema': argument_schema})
 
 
-@app.route('/api/v1/arguments', methods=['GET'])
-# @token_required
-def api_advanced_search():
+@app.route('/api/v1/arguments/q', methods=['GET'])
+@token_required
+# @cache.cached(timeout=5, key_prefix=make_cache_key)
+@limiter.limit('100 per minute', key_func=make_cache_key)
+def api_advanced_search(current_user):
     # if not current_user.get('admin'):
     #     return unauthorized()
     argument = mongo.db.argument
@@ -1712,6 +1731,7 @@ def api_advanced_search():
 
 @app.route('/api/v1/arguments', methods=['POST'])
 @token_required
+@limiter.limit('100 per minute', key_func=make_cache_key)
 def api_upload(current_user):
     # def api_upload_file(current_user):
     #     if not current_user.get('admin'):
