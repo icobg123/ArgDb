@@ -1629,7 +1629,7 @@ def api_edit_argument(current_user, arg_id):
                    ' With all keys including the ones you wish to override'}, {'schema': argument_schema})
 
 
-@app.route('/api/v1/arguments/q', methods=['GET'])
+@app.route('/api/v1/arguments', methods=['GET'])
 @token_required
 # @cache.cached(timeout=5, key_prefix=make_cache_key)
 @limiter.limit('100 per minute', key_func=make_cache_key)
