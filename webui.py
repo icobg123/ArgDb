@@ -1313,7 +1313,7 @@ def change_pass():
 
                 mail.send(msg)
                 err = "Your password has been changed."
-                session['err'] = err
+                session['pass_change'] = err
                 return redirect(url_for('account'))
 
     return redirect(url_for('account'))
@@ -1392,10 +1392,10 @@ def register():
                     </p>
                   </body>
                 </html>
-                """ %(username, link)
+                """ % (username, link)
 
                 mail.send(msg)
-                # session['username'] = request.form['username']
+                session['registered'] = request.form['email']
                 return redirect(url_for('login'))
 
                 # err = "Username already exists"
@@ -1407,6 +1407,11 @@ def register():
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     arg_string = None
+    emails_sess = None
+    if 'registered' in session:
+        emails_sess = session['registered']
+        session.pop('registered', None)
+
     if 'errorString' in session:
         arg_string = session['errorString']
         session.pop('errorString', None)
@@ -1451,19 +1456,24 @@ def login():
                     return redirect(url_for('account'))
 
             invalidComb = True
-            return render_template('log_ing.html', invalidComb=invalidComb, arg_string=arg_string)
+            return render_template('log_ing.html', invalidComb=invalidComb, arg_string=arg_string,
+                                   emails_sess=emails_sess)
 
-    return render_template('log_ing.html')
+    return render_template('log_ing.html',emails_sess=emails_sess)
 
 
 @app.route('/account', methods=['POST', 'GET'])
 # @token_required
 def account():
     arg_string = None
+    pass_changed = None
     newapi = None
     if 'newapi' in session:
         newapi = session['newapi']
         session.pop('newapi', None)
+    if 'pass_change' in session:
+        pass_changed = session['pass_change']
+        session.pop('pass_change', None)
     if 'errorString' in session:
         arg_string = session['errorString']
         session.pop('errorString', None)
@@ -1516,6 +1526,7 @@ def account():
                                argument_ids_list=argument_ids_list,
                                uploaded_by_you=uploaded_by_you,
                                newapi=newapi,
+                               pass_changed=pass_changed,
                                # token=token
                                token=token.decode('UTF-8'),
                                arg_string=arg_string
